@@ -13,4 +13,6 @@
 
 Route::get('/', function () {
     return view('login');
-});
+})->name('login_page');
+
+Route::post('dologin','userController@dologin');

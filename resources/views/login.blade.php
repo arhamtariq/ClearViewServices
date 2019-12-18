@@ -24,6 +24,19 @@
 </head>
 <body>
 <div class="jumbotron jumbotron-fluid mb-0 bg-grey">
+  <!--   <div class="container">
+     <div class="row">
+        
+        <div class="alert alert-danger" style="">
+            error
+        </div>
+    </div>
+   
+   </div> -->
+   <div class="row d-flex justify-content-center">
+
+  @include('error')
+   </div>
     <div class="container-login">
         <div class="wrapper-login p-2">
             <div class="login-form-title">
@@ -41,7 +54,7 @@
 
                 <div class="form-input validate-input m-b-18" data-validate = "Password is required">
                     <span class="form-label">Password</span>
-                    <input class="form-text" type="password" name="pass" placeholder="Enter password">
+                    <input class="form-text" type="password" name="password" placeholder="Enter password">
                     <span class="focus-input"></span>
                 </div>
 
