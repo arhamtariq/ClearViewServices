@@ -16,3 +16,7 @@ Route::get('/', function () {
 })->name('login_page');
 
 Route::post('dologin','userController@dologin');
+Route::get('forgotPasswordRequest','userController@forgotPasswordRequest');
+Route::post('resetPasswordRequest','userController@resetPasswordRequest');
+
+

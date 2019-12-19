@@ -36,25 +36,14 @@
             </div>
         </div>
         <div class="wrapper-login-lower">
-            <form class="login-form validate-form" action="/dologin" method="post">
+            <form class="login-form validate-form" action="/resetPasswordRequest" method="post">
                 <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
                 <div class="form-input validate-input m-b-26" data-validate="Username is required">
-                    <span class="form-label">Username</span>
-                    <input class="form-text" type="text" name="username" placeholder="Enter username">
+                    <span class="form-label">Email</span>
+                    <input class="form-text" type="email" name="email" placeholder="Enter your email">
                     <span class="focus-input"></span>
                 </div>
 
-                <div class="form-input validate-input m-b-18" data-validate = "Password is required">
-                    <span class="form-label">Password</span>
-                    <input class="form-text" type="password" name="password" placeholder="Enter password">
-                    <span class="focus-input"></span>
-                </div>
-                   <div class="flex-sb-m w-full p-b-30 mt-2">
-                    <a href="/forgotPasswordRequest">Forgot Password</a>
-                </div>
-                <div class="flex-sb-m w-full p-b-30 mt-2">
-                    <a href="{{ url('/register') }}">Click here to Register</a>
-                </div>
 
                 <div class="container-btn mt-4">
                     <button class="form-btn"><i class = "fa fa-arrow-right" style="color:white;"> </i></button>
