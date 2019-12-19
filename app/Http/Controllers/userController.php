@@ -45,7 +45,7 @@ class userController extends Controller
   	$validator=Validator::make($req->all(),[
          'email' => 'required|email|exists:users',   
         ]);
-        if (!$validator->fails()) {
+        if ($validator->fails()) {
             $errors = $validator->errors();
             return redirect()->back()
             ->withError($validator->errors()->first())
