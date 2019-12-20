@@ -21,6 +21,11 @@ Route::post('resetPasswordRequest','userController@resetPasswordRequest');
 Route::get('resetPasswordLink','userController@resetPasswordLink');
 Route::post('setNewPassword','userController@setNewPassword');
 
+Route::get('/', 'HomeController@index');
+Route::get('/home', 'HomeController@index');
+
+Route::get('/welcome', 'WelcomeController@index');
+
 
 
 
