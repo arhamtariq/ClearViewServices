@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->integer('company_code')->comment('The code associated with the user');
             $table->string('username', 25)->comment('This field is the username of the user');
             $table->string('email', 100)->comment('this is the email address of the user');
-            $table->string('password', 25)->comment('this is the password of the user');
+            $table->string('password',99)->comment('this is the password of the user');
             $table->string('first_name', 45)->comment('this is the first name of ther user');
             $table->string('last_name', 45)->comment('This is the last name of the user');
             $table->string('phone_number', 10)->nullable()->comment('The phone number of the user');

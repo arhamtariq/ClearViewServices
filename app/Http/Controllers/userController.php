@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Validator;
 use Mail;
+use DB;
 
 class userController extends Controller
 {
@@ -29,6 +30,7 @@ class userController extends Controller
 
    if(Auth::attempt($credentials)) {
     //password verified
+   // dd(Auth::user()->role);
     }
     else
    {
@@ -50,14 +52,18 @@ class userController extends Controller
             return redirect()->back()
             ->withError($validator->errors()->first())
             ->withInput();
-        } 
-      $unique_token=str_random(32);   
+        }
+        $unique_token=str_random(32);  
+      \DB::table('password_resets')->insert([
+            'email' =>$req->email,
+            'token' => $unique_token,
+        ]);       
    	Mail::send([], [], function ($message) use($req,$unique_token) {
   		$message->to($req->email)
   		->subject('Rest Password')
   		->setBody('<h1>Reset Password Request</h1><br>
   			<p>You are receiving this email because we received a password reset request for your account</p><br>
-        <p>Click on the link if you want to reset your password:<a href="http://localhost:8000/resetPasswordRequest?token='.$unique_token.'">Click Here</a></p> ', 'text/html'); // for HTML rich messages
+        <p>Click on the link if you want to reset your password:<a href="http://localhost:8000/resetPasswordLink?token='.$unique_token.'">Click Here</a></p> ', 'text/html'); // for HTML rich messages
   	});
   	if(count(Mail::failures())==0)
   	{
@@ -68,5 +74,43 @@ class userController extends Controller
      return redirect()->back()->withError('Something went wrong please try again');
   	}
 
+  }
+  public function resetPasswordLink(Request $req)
+  {
+	  if(\DB::table('password_resets')->where('token',$req->token)->exists())
+	  {
+	  	$token=$req->token;
+	  	return view('newPassword',compact('token'));
+	  }
+
+  }
+  public function setNewPassword(Request $req)
+  {
+   // dd($req);
+  	$validator=Validator::make($req->all(),[
+         'newPassword' => 'required|string|same:oldPassword',
+         'oldPassword' =>'required|string',  
+        ]);
+  	if ($validator->fails()) {
+            $errors = $validator->errors();
+            return redirect()->back()
+            ->withError($validator->errors()->first())
+            ->withInput();
+        }
+    else
+    {
+    
+    DB::table('users')->whereIn('email', function($query) use ($req)
+    {
+        $query->select('email')
+              ->from('password_resets')
+              ->where('token',$req->token);
+    })->update(['password'=>bcrypt($req->newPassword),
+    ]);
+    DB::table('password_resets')->where('token',$req->token)->delete();
+    return redirect()->to('/')->withSuccess('Password Updated Successfully');
+
+    }    
+  	
   }
 }

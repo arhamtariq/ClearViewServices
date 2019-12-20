@@ -28,6 +28,7 @@
    <div class="row d-flex justify-content-center">
 
   @include('error')
+  @include('success')
    </div>
     <div class="container-login">
         <div class="wrapper-login p-2">
