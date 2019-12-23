@@ -11,20 +11,31 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/login', function () {
+ //   dd(\Config::get('paypal'));
     return view('login');
+ 
 })->name('login_page');
+
+Route::get('/register', function () {
+    return view('register');
+})->name('register_page');
+Route::get('paywithpaypal', array('as' => 'addmoney.paywithpaypal','uses' => 'AddMoneyController@payWithPaypal',));
+Route::post('paypal', array('as' => 'addmoney.paypal','uses' => 'AddMoneyController@postPaymentWithpaypal',));
+Route::get('paypal', array('as' => 'payment.status','uses' => 'AddMoneyController@getPaymentStatus'));
 
 Route::post('dologin','userController@dologin');
 Route::get('forgotPasswordRequest','userController@forgotPasswordRequest');
 Route::post('resetPasswordRequest','userController@resetPasswordRequest');
 Route::get('resetPasswordLink','userController@resetPasswordLink');
 Route::post('setNewPassword','userController@setNewPassword');
-
+Route::get('resetPasswordLink','userController@resetPasswordLink');
+Route::get('ActiveUser','userController@ActiveUser');
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
 
 Route::get('/welcome', 'WelcomeController@index');
+Route::post('/create','userController@create');
 
 
 

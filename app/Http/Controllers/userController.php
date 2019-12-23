@@ -22,15 +22,29 @@ class userController extends Controller
             ->withError($validator->errors()->first())
             ->withInput();
         }
-
-  	$credentials = [
+      $credentials = [
             'username' => $req['username'],
             'password' => $req['password'],
+          
         ];
+  	  $credentials_with_email_verification = [
+            'username' => $req['username'],
+            'password' => $req['password'],
+            'email_verified'=>1,
+      ];
 
    if(Auth::attempt($credentials)) {
     //password verified
-   // dd(Auth::user()->role);
+    //know check email is verified or not
+    if(Auth::attempt($credentials_with_email_verification))
+    {
+     dd('credentials ok and email verification ok');
+    }
+    else
+    {
+      return redirect()->back()->withError('Email not verifed');
+    }
+
     }
     else
    {
@@ -86,31 +100,94 @@ class userController extends Controller
   }
   public function setNewPassword(Request $req)
   {
-   // dd($req);
+ 
   	$validator=Validator::make($req->all(),[
          'newPassword' => 'required|string|same:oldPassword',
          'oldPassword' =>'required|string',  
         ]);
-  	if ($validator->fails()) {
-            $errors = $validator->errors();
-            return redirect()->back()
-            ->withError($validator->errors()->first())
-            ->withInput();
-        }
-    else
-    {
-    
-    DB::table('users')->whereIn('email', function($query) use ($req)
-    {
-        $query->select('email')
-              ->from('password_resets')
-              ->where('token',$req->token);
-    })->update(['password'=>bcrypt($req->newPassword),
-    ]);
-    DB::table('password_resets')->where('token',$req->token)->delete();
-    return redirect()->to('/')->withSuccess('Password Updated Successfully');
+      	if ($validator->fails()) {
+                $errors = $validator->errors();
+                return redirect()->back()
+                ->withError($validator->errors()->first())
+                ->withInput();
+            }
+        else
+        {
+        
+        DB::table('users')->whereIn('email', function($query) use ($req)
+        {
+            $query->select('email')
+                  ->from('password_resets')
+                  ->where('token',$req->token);
+        })->update(['password'=>bcrypt($req->newPassword),
+        ]);
+        DB::table('password_resets')->where('token',$req->token)->delete();
+        return redirect()->to('/')->withSuccess('Password Updated Successfully');
 
     }    
   	
   }
+  public function create(Request $req)
+  {
+    $validator=Validator::make($req->all(),[
+        'user-name' => 'required|string|unique:users',
+         'email' => 'required|unique:users',
+         'first_name' => 'required|string',
+         'last_name' => 'required|string',
+         'phone' =>'required',
+         'address'=> 'required|string',
+         'city'=> 'required|string',
+         'state' => 'required|string',
+         'zip' => 'required|integer',
+         'company_name' => 'required|string',
+         'company_address' => 'required|string',
+         'company_city' =>'required|string' ,
+         'company_state' =>'required|string',
+         'company_zip' => 'required|string',
+         'password' => 'required|string|same:confirm_password',
+         'confirm_password' =>'required|string',  
+        ]);
+     if ($validator->fails()) {
+       return redirect()->back()
+                ->withError($validator->errors()->first())
+                ->withInput();
+      }
+      else
+      {
+        $unique_token=str_random(32);   
+          DB::table('users')->insert([
+            'username' => $req->input('user-name'),
+            'first_name' => $req->first_name,
+            'last_name' => $req->last_name,
+            'email' => $req->email,
+            'password' => bcrypt($req->password),
+            'phone_number'=>$req->phone,
+            'address'=>$req->address,
+            'city'=>$req->city,
+            'zip_code'=>$req->zip,
+            'email_verification_token'=>$unique_token,
+            'role'=>'admin',
+        ]);
+        Mail::send([], [], function ($message) use($req,$unique_token) {
+      $message->to($req->email)
+      ->subject('Registration')
+      ->setBody('<h1>Regsitraion Process</h1><br>
+        <p>Click on the link to complete registration process <a href="http://localhost:8000/ActiveUser?token='.$unique_token.'">Click Here</a></p> ', 'text/html'); // for HTML rich messages
+     });
+    if(count(Mail::failures())==0)
+    {
+     return redirect()->back()->withSuccess('Email Sent Successfully verify your email');
+    }       
+        //send email and store data in database   
+      }
+  }
+  public function ActiveUser(Request $req)
+  {
+    if(DB::table('users')->where('email_verification_token',$req->token)->update(['email_verified'=>1]))
+    {
+    return redirect()->to('/login')->withSuccess('Account Activated  Successfully');
+
+    }
+    return redirect()->to('/login')->withError('Something went wrong');
+  }     
 }

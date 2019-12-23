@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             ///$table->bigIncrements('id');
             $table->integer('user_code', true);
-            $table->integer('company_code')->comment('The code associated with the user');
+            $table->integer('company_code')->comment('The code associated with the user')->nullable();
             $table->string('username', 25)->comment('This field is the username of the user');
             $table->string('email', 100)->comment('this is the email address of the user');
             $table->string('password',99)->comment('this is the password of the user');
@@ -28,6 +28,8 @@ class CreateUsersTable extends Migration
             $table->string('state', 2)->nullable()->comment('The state of the user');
             $table->integer('zip_code')->nullable()->comment('the zip code of the user');
             $table->string('role', 45);
+            $table->boolean('email_verified')->comment('The status that email is verifed or not')->default(0);
+            $table->string('email_verification_token')->comment('The token that is sent for registration verification',45)->nullable();
             $table->timestamp('time_stamp_for_record_creation')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'))->comment('This is the time of when the record was create');
         });
     }
