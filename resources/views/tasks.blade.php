@@ -46,7 +46,7 @@
                 <td><i title="Edit" class="fa fa-edit"></i>&nbsp;&nbsp;<i title="Cancel" class="fa fa-ban"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash"></i></td>
             </tr>
             <tr>
-                <td>test</td>
+                <td>ABC</td>
                 <td>Mr. xyz</td>
                 <td>Mon, 11 Dec 2019</td>
                 <td>Mon, 11 Dec 2019</td>
@@ -134,7 +134,7 @@
                     </div>
                     <div class="form-row form-group">
                         <div class="col">
-                            <label for="assignedto">Notes:</label>
+                            <label for="tasksnotes">Notes:</label>
                             <textarea class="form-control rounded-1" id="tasksnotes" name="tasksnotes" rows="3"></textarea>
                         </div>
                         
@@ -148,4 +148,5 @@
         </div>
     </div>
 </div>
+
 @endsection
