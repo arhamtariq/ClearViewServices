@@ -1,4 +1,30 @@
 $(function() {
+
+    $('#createdon').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
+    $('#created-on').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
+
+    $('#duedate').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
+
+    $('#sale-date').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
+
+    // to display the name of the file select
+    $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+
     /*-------------------register form styling-----------------*/
     $("#overall-form").steps({
         headerTag: "h2",
@@ -42,17 +68,16 @@ $(function() {
 
     //"use strict";
     $('.form-text').each(function() {
-        alert('hhh');
-        $(this).on('blur', function() {
-            if ($(this).val().trim() != "") {
-                $(this).addClass('has-val');
-            } else {
-                $(this).removeClass('has-val');
-            }
+            alert('hhh');
+            $(this).on('blur', function() {
+                if ($(this).val().trim() != "") {
+                    $(this).addClass('has-val');
+                } else {
+                    $(this).removeClass('has-val');
+                }
+            })
         })
-    })
-
-    /*-------------------login form validations----------------*/
+        /*-------------------login form validations----------------*/
     var input = $('.validate-input .form-text');
 
     $('.validate-form').on('submit', function() {
