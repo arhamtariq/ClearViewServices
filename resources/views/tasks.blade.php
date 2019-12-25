@@ -46,7 +46,7 @@
                 <td><i title="Edit" class="fa fa-edit"></i>&nbsp;&nbsp;<i title="Cancel" class="fa fa-ban"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash"></i></td>
             </tr>
             <tr>
-                <td>ABC</td>
+                <td>test</td>
                 <td>Mr. xyz</td>
                 <td>Mon, 11 Dec 2019</td>
                 <td>Mon, 11 Dec 2019</td>

@@ -13,4 +13,8 @@ class OwnerController extends Controller
     {
         return view('owner');
     }
+    public function showDetails()
+    {
+        return view ('ownerdetails');
+    }
 }
