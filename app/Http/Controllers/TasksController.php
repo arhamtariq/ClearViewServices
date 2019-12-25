@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
-class WelcomeController extends Controller
+class TasksController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -24,7 +24,7 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        return view('tasks');
     }
 
 }
