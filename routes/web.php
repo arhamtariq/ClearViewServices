@@ -12,10 +12,9 @@
 */
 
 Route::get('/login', function () {
- //   dd(\Config::get('paypal'));
     return view('login');
  
-})->name('login_page');
+})->name('login');
 
 Route::get('/register', function () {
     return view('register');
@@ -34,7 +33,9 @@ Route::get('ActiveUser','userController@ActiveUser');
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
 
-Route::get('/welcome', 'WelcomeController@index');
+Route::get('/welcome', 'WelcomeController@index')->middleware('auth')->name('welcome');
+Route::get('/getUsersForAssigning', 'WelcomeController@getUsersForAssigning');
+
 Route::post('/create','userController@create');
 
 

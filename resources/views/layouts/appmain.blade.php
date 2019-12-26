@@ -23,6 +23,7 @@
     <script src="{{ asset('js/jquery.steps.js') }}"></script>
     @stack('scripts')
     <script src="{{ asset('js/core.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-expand-sm navbar-dark bg-yellow navbar-static-top mb-0 ">

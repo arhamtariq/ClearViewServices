@@ -107,7 +107,7 @@
                     <div class="form-row form-group">
                         <div class="col">
                             <label for="assignedto">Assigned To:</label>
-                            <input type="text" class="form-control" id="assignedto" name="assignedto" required>
+                            <input type="text" class="form-control typeahead" id="assignedto" name="assignedto" required>
                             <div class="valid-feedback">Valid.</div>
                             <div class="invalid-feedback">Please fill out this field.</div>
                         </div>
@@ -127,4 +127,17 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    var path = "/getUsersForAssigning";
+    $('input.typeahead').typeahead({
+        source:  function (query, process) {
+        return $.get(path, { query: query }, function (data) {
+            //console.log(data);
+          //  data=data.toLowerCase();
+          
+                return process(data);
+            });
+        }
+    });
+</script>
 @endsection

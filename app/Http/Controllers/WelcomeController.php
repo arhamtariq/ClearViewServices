@@ -26,5 +26,12 @@ class WelcomeController extends Controller
     {
         return view('welcome');
     }
+   public function getUsersForAssigning(Request $request)
+   {
+     $data = \DB::table('users')->select("username as name")
+                ->where("username","LIKE","%{$request->input('query')}%")
+                ->get();
+        return response()->json($data);
+   }
 
 }

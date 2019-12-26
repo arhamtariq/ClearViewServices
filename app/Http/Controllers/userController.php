@@ -38,7 +38,11 @@ class userController extends Controller
     //know check email is verified or not
     if(Auth::attempt($credentials_with_email_verification))
     {
-     dd('credentials ok and email verification ok');
+     $user=DB::table('users')->where('username',$req['username'])->first();
+     //dd($user);
+     Auth::loginUsingId($user->id);
+      return redirect()->to('/welcome');
+    // dd('credentials ok and email verification ok');
     }
     else
     {
