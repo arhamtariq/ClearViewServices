@@ -25,6 +25,24 @@ $(function() {
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 
+    //For state autocomplete
+    var state = [
+        "Albama",
+        "Alaska",
+        " American Samoa",
+        "Arizona",
+        "Arkansas",
+    ];
+
+    $('#state').autocomplete({
+        source: state
+    });
+
+    //For county's panels
+    $("#btnDoc").click(function() {
+        $("#documents").toggle();
+    });
+
     /*-------------------register form styling-----------------*/
     $("#overall-form").steps({
         headerTag: "h2",
