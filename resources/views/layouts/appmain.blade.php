@@ -7,44 +7,49 @@
     
     <title>Clearview Services</title>
 
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('images/favicon.png')}}" type="image/gif" sizes="16x16">
+
     <!-- Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
 
     <!-- Styles -->
+    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('css/stylemain.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css')}}">
+
     @stack('styles')
     
     <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
     <script src="{{ asset('js/jquery.steps.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+
     @stack('scripts')
     <script src="{{ asset('js/core.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-expand-sm navbar-dark bg-yellow navbar-static-top mb-0 ">
-        <div class="container">
-            <!-- Brand -->
-            <a class="navbar-brand  w-75 mr-0" href="#">
-                <img src="images/logo-white.png"  alt="Clear View Services" width="150" height="25" class="img-fluid"/>
-            </a>
-            <div class="collapse navbar-collapse w-100" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav w-50 ml-0 text-center">
-                    <li class="nav-item text-white"><b>Hello! Patrick Jean Paul</b></a></li>
-                </ul>
-                
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right pl-5">
-                    <li class="nav-item"><a title="Profile" class="nav-link text-white pl-5 ml-5" href="{{ url('/profile') }}"><i class="fa fa-user"></i></a></li>
-                    <li class="nav-item"><a title="Logoff" class="nav-link text-white" href="{{ url('/logout') }}"><i class="fa fa-sign-out"></i></a></li>
-                    <li class="nav-item"><a title="Help" class="nav-link text-white" href="{{ url('/help') }}"><i class="fa fa-question"></i></a></li>
-                </ul>
-            </div>
+        <!-- Brand -->
+        <a class="navbar-brand" href="#">
+            <img src="images/logo-white.png"  alt="Clear View Services" width="150" height="25" class="img-fluid"/>
+        </a>
+        <div class="collapse navbar-collapse w-100" id="app-navbar-collapse">
+            
+            <!-- Right Side Of Navbar -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item text-white"><a class="nav-link text-white " href="#"><b>Hello! Patrick Jean Paul</b></a></li>
+                <li class="nav-item"><a title="Profile" class="nav-link text-white " href="{{ url('/profile') }}"><i class="fa fa-user"></i></a></li>
+                <li class="nav-item"><a title="Logoff" class="nav-link text-white" href="{{ url('/logout') }}"><i class="fa fa-sign-out"></i></a></li>
+                <li class="nav-item"><a title="Help" class="nav-link text-white" href="{{ url('/help') }}"><i class="fa fa-question"></i></a></li>
+            </ul>
         </div>
     </nav>
     
@@ -58,10 +63,10 @@
             <div class="collapse navbar-collapse justify-content-left w-75" id="nav">
                 <ul class="navbar-nav navbar-brand nav" style="font-size:18px;height:100%;">
                     <li class="nav-item border-right border-secondary">
-                        <a class="nav-link ml-0 text-white" href="{{ url('/') }}"><b>Task</b></a>
+                        <a class="nav-link ml-0 text-white" href="{{ url('/tasks') }}"><b>Task</b></a>
                     </li>
                     <li class="nav-item border-right border-secondary" >
-                        <a class="nav-link ml-2 text-white" href="#aboutus"><b>List</b></a>
+                        <a class="nav-link ml-2 text-white" href="{{ url('/owner') }}"><b>Owners</b></a>
                     </li>
                     <li class="nav-item border-right border-secondary">
                         <a class="nav-link ml-2 text-white" href="#contact"><b>County</b></a>

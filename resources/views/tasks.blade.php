@@ -4,16 +4,16 @@
 <div class="jumbotron jumbotron-fluid p-0 pt-3 pb-2">
     <div class="container pl-0">
         <form class="form-inline" method="post" action="">
-            <input type="text" class="form-control mb-2 mr-sm-2" id="first-name" name="first-name" placeholder="Last Name">
-            <input type="text" class="form-control mb-2 mr-sm-2" id="last-name" name="last-name" placeholder="Last Name">
-            <input type="text" class="form-control mb-2 mr-sm-2" id="phone" name="phone" placeholder="Phone Number">
-            <button type="submit" class="btn bg-yellow mb-2 mr-sm-2"><i title="Add Task" class="fa fa-search text-white"></i></button>
+            <input type="text" class="form-control mb-2 mr-sm-2" id="task-name" name="task-name" placeholder="Task Name">
+            <input type="text" class="form-control mb-2 mr-sm-2" id="created-by" name="created-by" placeholder="Created By">
+            <input type="text" class="form-control mb-2 mr-sm-2" id="created-on" name="created-on" placeholder="Created On">
+            <button type="submit" class="btn bg-yellow mb-2 mr-sm-2 text-white">Search&nbsp;<i title="Search Task" class="fa fa-search text-white"></i></button>
             
         </form>
     </div>
     <div class="container bg-white pb-5 mb-4">
         <h2 class="float-left">Task List</h2>
-        <p class="float-right pt-2 pr-5"><button type="button" class="btn bg-yellow mb-2" data-toggle="modal" data-target="#addtaskModal"><i title="Add Task" class="fa fa-plus text-white"></i></button></p>            
+        <p class="float-right pt-2 pr-5"><button type="button" class="btn bg-yellow mb-2 text-white" data-toggle="modal" data-target="#addtaskModal">Add Task&nbsp;<i title="Add Task" class="fa fa-plus text-white"></i></button></p>            
         <table class="table table-striped">
           <thead>
             <tr>
@@ -118,6 +118,27 @@
                             <div class="invalid-feedback">Please fill out this field.</div>
                         </div>
                     </div>
+                    <div class="form-row form-group">
+                        <div class="col">
+                            <label for="assignedto">Esculate STask:</label>
+                            <input type="text" class="form-control" id="esculate_stask" name="esculate_stask" required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                        <div class="col form-group">
+                            <label for="status">Esculate_Task:</label>
+                            <input type="text" class="form-control" id="esculate_task" name="esculate_task" required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                    </div>
+                    <div class="form-row form-group">
+                        <div class="col">
+                            <label for="tasksnotes">Notes:</label>
+                            <textarea class="form-control rounded-1" id="tasksnotes" name="tasksnotes" rows="3"></textarea>
+                        </div>
+                        
+                    </div>
                 </div>
                 <!-- Modal footer -->
                 <div class="modal-footer">
@@ -140,4 +161,5 @@
         }
     });
 </script>
+
 @endsection
