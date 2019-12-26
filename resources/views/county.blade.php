@@ -4,8 +4,7 @@
 <div class="jumbotron jumbotron-fluid p-0 pt-3 pb-2">
     <div class="container pl-0 pt-1 pb-3">
         <form class="form-inline" method="post" action="">
-            <label for="state">Type state name to get county list:&nbsp;</label>
-            <input type="search" class="form-control mdb-autocomplete mb-2 mr-sm-2 " id="state" name="state">           
+            <input type="search" class="form-control mdb-autocomplete mb-2 mr-sm-2 " id="state" name="state" placeholder="State Name">           
             <button type="submit" class="btn bg-yellow mb-2 mr-sm-2 text-white">Search&nbsp;<i title="Search Task" class="fa fa-search text-white"></i></button>
         </form>
     </div>
