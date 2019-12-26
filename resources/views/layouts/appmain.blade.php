@@ -77,7 +77,7 @@
                         <a class="nav-link ml-2 text-white" href="#aboutus"><b>States</b></a>
                     </li>
                     <li class="nav-item border-right border-secondary" >
-                        <a class="nav-link ml-2 text-white" href="#aboutus"><b>Documents</b></a>
+                        <a class="nav-link ml-2 text-white" href="{{ url('/document') }}"><b>Documents</b></a>
                     </li>
                     <li class="nav-item" >
                         <a class="nav-link ml-2 text-white" href="#aboutus"><b>Administration</b></a>

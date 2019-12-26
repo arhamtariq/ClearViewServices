@@ -40,6 +40,7 @@ Route::post('/create','userController@create');
 Route::get('/owner', 'OwnerController@index');
 Route::get('/ownerdetails', 'OwnerController@showDetails');
 Route::get('/county', 'CountyController@index');
+Route::get('/document' , 'DocumentController@index');
 
 
 
