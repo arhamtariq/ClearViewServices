@@ -41,6 +41,7 @@ Route::get('/owner', 'OwnerController@index');
 Route::get('/ownerdetails', 'OwnerController@showDetails');
 Route::get('/county', 'CountyController@index');
 Route::get('/document' , 'DocumentController@index');
+Route::get('/admin' , 'AdminController@index');
 
 
 
