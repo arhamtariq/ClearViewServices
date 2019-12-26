@@ -37,6 +37,9 @@ Route::get('/welcome', 'WelcomeController@index')->middleware('auth')->name('wel
 Route::get('/getUsersForAssigning', 'WelcomeController@getUsersForAssigning');
 
 Route::post('/create','userController@create');
+Route::get('/owner', 'OwnerController@index');
+Route::get('/ownerdetails', 'OwnerController@showDetails');
+Route::get('/county', 'CountyController@index');
 
 
 
