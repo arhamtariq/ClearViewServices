@@ -38,6 +38,7 @@ Route::any('/task', 'WelcomeController@index')->middleware('auth')->name('task')
 Route::get('/getUsersForAssigning', 'WelcomeController@getUsersForAssigning');
 
 Route::post('/create','userController@create');
+
 Route::post('/createTask','TasksController@createTask')->middleware('auth');
 Route::get('/deleteTask','TasksController@deleteTask')->middleware('auth');
 Route::get('/getTaskData','TasksController@getTaskData')->middleware('auth');
@@ -45,13 +46,11 @@ Route::get('/getAssigneeName','TasksController@getAssigneeName')->middleware('au
 Route::post('/updateTask','TasksController@updateTask')->middleware('auth');
 
 Route::get('/getTrailStatus','userController@getTrailStatus')->middleware('auth');
-
-
-
-
-
-
-
+Route::get('/owner', 'OwnerController@index');
+Route::get('/ownerdetails', 'OwnerController@showDetails');
+Route::get('/county', 'CountyController@index');
+Route::get('/document' , 'DocumentController@index');
+Route::get('/admin' , 'AdminController@index');
 
 
 

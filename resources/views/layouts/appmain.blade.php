@@ -12,11 +12,12 @@
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans|Oswald|Roboto&display=swap"">
 
     <!-- Styles -->
     <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="{{ asset('css/stylemain.css')}}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css')}}">
 
@@ -26,6 +27,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
     <script src="{{ asset('js/jquery.steps.js') }}"></script>
@@ -69,16 +71,16 @@
                         <a class="nav-link ml-2 text-white" href="{{ url('/owner') }}"><b>Owners</b></a>
                     </li>
                     <li class="nav-item border-right border-secondary">
-                        <a class="nav-link ml-2 text-white" href="#contact"><b>County</b></a>
+                        <a class="nav-link ml-2 text-white" href="{{ url('/county') }}"><b>County</b></a>
                     </li>
                     <li class="nav-item border-right border-secondary" >
                         <a class="nav-link ml-2 text-white" href="#aboutus"><b>States</b></a>
                     </li>
                     <li class="nav-item border-right border-secondary" >
-                        <a class="nav-link ml-2 text-white" href="#aboutus"><b>Documents</b></a>
+                        <a class="nav-link ml-2 text-white" href="{{ url('/document') }}"><b>Documents</b></a>
                     </li>
                     <li class="nav-item" >
-                        <a class="nav-link ml-2 text-white" href="#aboutus"><b>Administration</b></a>
+                        <a class="nav-link ml-2 text-white" href="{{ url('/admin') }}"><b>Administration</b></a>
                     </li>
                 </ul>
             </div>
