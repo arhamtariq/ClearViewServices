@@ -100,5 +100,104 @@
             </div>
         </div>
     </nav>
+    <!-- Modal -->
+
+<div class="modal" id="trailModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+               
+                <input type="hidden" name="task_id" id="task_id">
+                <!-- Modal Header -->
+                <div class="modal-header bg-yellow">
+                    <h4 class="modal-title">Trail Time</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col form-group">
+                            <label for="taskname" id="message">Your Trail Time will expire in <span id="time"></span> days <br> Click on the button to buy package</label>
+                            <p id="expiry_msg"></p>
+                                <!-- <button class="btn bg-yellow">Buy</button></label> -->
+
+                        </div>
+                       
+                 
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn bg-yellow" onclick="submitPaymentForm()">Buy</button>
+                </div>
+            
+        </div>
+    </div>
+</div>
+<!-- expiry modal -->
+
+<div class="modal" id="expireModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="/updateTime" class="needs-validation" novalidate method="post">
+            
+                <!-- Modal Header -->
+                <div class="modal-header bg-yellow">
+                    <h4 class="modal-title">Trail Expire</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col form-group">
+                            <label for="taskname">Your Trail is expire <span id="time"></span> days <br> Click on the button to buy package
+                                <!-- <button class="btn bg-yellow">Buy</button></label> -->
+
+                        </div>
+                       
+                 
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn bg-yellow" onclick="submitPaymentForm()">Buy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- end here -->
+<!-- payment form -->
+<form class="form-horizontal" method="POST" id="payment-form" role="form" action="{!! URL::route('addmoney.paypal') !!}" >
+    @csrf
+                                <input id="amount" name="amount" type="hidden" value="29.99">
+
+</form>
 </body>
+<script>
+    $.ajax({
+        type: "GET",
+        url: "/getTrailStatus",
+        dataType: "json",
+        cache: false,
+        success: function(data) {
+        if(data==0)
+        {
+            return false;
+        }    
+         if(data >7)
+         {
+            $('#message').hide();
+            $('#expiry_msg').text('Your Trail is expired.Buy package by clicking on the button below');
+          $('#trailModal').modal('show');
+         }
+         else
+         {
+            data=7-data;
+            $('#time').text(data);
+           $('#trailModal').modal('show');
+          
+         }
+      }
+      });
+  function submitPaymentForm()
+  {
+    $('#payment-form').submit();
+  }  
+</script>
 </html>

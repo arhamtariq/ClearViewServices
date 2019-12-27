@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/login', function () {
     return view('login');
  
@@ -33,10 +34,25 @@ Route::get('ActiveUser','userController@ActiveUser');
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
 
-Route::get('/welcome', 'WelcomeController@index')->middleware('auth')->name('welcome');
+Route::any('/task', 'WelcomeController@index')->middleware('auth')->name('task');
 Route::get('/getUsersForAssigning', 'WelcomeController@getUsersForAssigning');
 
 Route::post('/create','userController@create');
+Route::post('/createTask','TasksController@createTask')->middleware('auth');
+Route::get('/deleteTask','TasksController@deleteTask')->middleware('auth');
+Route::get('/getTaskData','TasksController@getTaskData')->middleware('auth');
+Route::get('/getAssigneeName','TasksController@getAssigneeName')->middleware('auth');
+Route::post('/updateTask','TasksController@updateTask')->middleware('auth');
+
+Route::get('/getTrailStatus','userController@getTrailStatus')->middleware('auth');
+
+
+
+
+
+
+
+
 
 
 

@@ -7,6 +7,7 @@ use Auth;
 use Validator;
 use Mail;
 use DB;
+use Carbon\Carbon;
 
 class userController extends Controller
 {
@@ -41,7 +42,8 @@ class userController extends Controller
      $user=DB::table('users')->where('username',$req['username'])->first();
      //dd($user);
      Auth::loginUsingId($user->id);
-      return redirect()->to('/welcome');
+     
+      return redirect()->to('/task');
     // dd('credentials ok and email verification ok');
     }
     else
@@ -193,5 +195,24 @@ class userController extends Controller
 
     }
     return redirect()->to('/login')->withError('Something went wrong');
+  }
+  public function getTrailStatus()
+  {
+   $creation_time=DB::table('users')->where('id',auth()->user()->id)->first();
+    $created = new Carbon($creation_time->time_stamp_for_record_creation);
+    $now = Carbon::now();
+   $difference = $created->diff($now)->days;
+   if($difference > 8 and $difference < 10)
+   {
+   echo json_encode($difference);
+
+  // echo json_encode(0);
+   }
+   else
+   {
+   echo json_encode(0);
+
+   //echo json_encode($difference);
+   }
   }     
 }

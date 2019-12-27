@@ -21,6 +21,8 @@ use PayPal\Api\RedirectUrls;
 use PayPal\Api\ExecutePayment;
 use PayPal\Api\PaymentExecution;
 use PayPal\Api\Transaction;
+use Carbon\Carbon;
+use DB;
 /*use Illuminate\Support\Facades\Input;
 */
 class AddMoneyController extends HomeController
@@ -57,13 +59,14 @@ class AddMoneyController extends HomeController
      */
     public function postPaymentWithpaypal(Request $request)
     {
+
         $payer = new Payer();
         $payer->setPaymentMethod('paypal');
         $item_1 = new Item();
         $item_1->setName('Item 1') /** item name **/
             ->setCurrency('USD')
             ->setQuantity(1)
-            ->setPrice($request->get('amount')); /** unit price **/
+            ->setPrice(29.99); /** unit price **/
         $item_list = new ItemList();
         $item_list->setItems(array($item_1));
         $amount = new Amount();
@@ -142,8 +145,15 @@ class AddMoneyController extends HomeController
             
             /** it's all right **/
             /** Here Write your database logic like that insert record or value in database if you want **/
-            dd('payment Done ');
-            return Redirect::route('addmoney.paywithpaypal');
+           
+         $user_data= DB::table('users')->where('id',auth()->user()->id)->first(); 
+        $start = new Carbon($user_data->time_stamp_for_record_creation);
+
+         $extended_time=$start->addDays(30);
+         DB::table('users')->where('id',auth()->user()->id)->update(['time_stamp_for_record_creation'=>$extended_time]);
+         session()->flash('success','Payment Successfully done');
+            return redirect('/task');
+          //  return Redirect::route('addmoney.paywithpaypal');
         }
       dd('paymnet false');
         return Redirect::route('addmoney.paywithpaypal');
