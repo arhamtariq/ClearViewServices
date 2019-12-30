@@ -16,12 +16,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     
-    <!-- Scripts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     
-    <script src="{{ asset('js/core.js') }}"></script>
 </head>
 <body>
 <div class="jumbotron jumbotron-fluid mb-0 bg-grey">
@@ -38,8 +33,8 @@
             </div>
         </div>
         <div class="wrapper-login-lower">
-            <form class="login-form validate-form" action="/dologin" method="post">
-                <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
+            <form class="login-form validate-form needs-validation" action="/dologin" method="post" novalidate>
+                <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>" required>
                 <div class="form-input validate-input m-b-26" data-validate="Username is required">
                     <span class="form-label">Username</span>
                     <input class="form-text" type="text" name="username" placeholder="Enter username">
@@ -48,14 +43,14 @@
 
                 <div class="form-input validate-input m-b-18" data-validate = "Password is required">
                     <span class="form-label">Password</span>
-                    <input class="form-text" type="password" name="password" placeholder="Enter password">
+                    <input class="form-text" type="password" name="password" placeholder="Enter password" required>
                     <span class="focus-input"></span>
                 </div>
                    <div class="flex-sb-m w-full p-b-30 mt-2">
                     <a href="/forgotPasswordRequest">Forgot Password</a>
                 </div>
                 <div class="flex-sb-m w-full p-b-30 mt-2">
-                    <a href="{{ url('/register') }}">Click here to Register</a>
+                    <a href="{{ url('/terms') }}">Click here to Register</a>
                 </div>
 
                 <div class="container-btn mt-4">
@@ -65,5 +60,10 @@
         </div>
     </div>
 </div>
+<!-- Scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="{{ asset('js/jslogin.js') }}"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,9 +17,16 @@ Route::get('/login', function () {
  
 })->name('login');
 
+Route::get('/terms',function() {
+    return view('terms');
+});
+
 Route::get('/register', function () {
     return view('register');
 })->name('register_page');
+
+//Route::get('/register' , 'RegisterController@index');
+
 Route::get('paywithpaypal', array('as' => 'addmoney.paywithpaypal','uses' => 'AddMoneyController@payWithPaypal',));
 Route::post('paypal', array('as' => 'addmoney.paypal','uses' => 'AddMoneyController@postPaymentWithpaypal',));
 Route::get('paypal', array('as' => 'payment.status','uses' => 'AddMoneyController@getPaymentStatus'));
