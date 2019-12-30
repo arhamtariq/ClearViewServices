@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password',99)->comment('this is the password of the user');
             $table->string('first_name', 45)->comment('this is the first name of ther user');
             $table->string('last_name', 45)->comment('This is the last name of the user');
-            $table->string('phone_number', 10)->nullable()->comment('The phone number of the user');
+            $table->string('phone_number',45)->nullable()->comment('The phone number of the user');
             $table->string('address', 250)->nullable()->comment('the address of the user');
             $table->string('city', 45)->nullable()->comment('The city of the user');
             $table->string('state', 2)->nullable()->comment('The state of the user');

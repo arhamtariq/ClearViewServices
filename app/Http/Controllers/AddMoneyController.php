@@ -59,14 +59,24 @@ class AddMoneyController extends HomeController
      */
     public function postPaymentWithpaypal(Request $request)
     {
+        if($request->amount==9.99)
+        {
+        $amount=9.99;
 
+        session()->put('amount',9.99);
+        }
+        else {
+            session()->put('amount',29.99);
+        $amount=29.99;        
+        }
+    
         $payer = new Payer();
         $payer->setPaymentMethod('paypal');
         $item_1 = new Item();
         $item_1->setName('Item 1') /** item name **/
             ->setCurrency('USD')
             ->setQuantity(1)
-            ->setPrice(29.99); /** unit price **/
+            ->setPrice($amount); /** unit price **/
         $item_list = new ItemList();
         $item_list->setItems(array($item_1));
         $amount = new Amount();
@@ -119,9 +129,10 @@ class AddMoneyController extends HomeController
     }
     public function getPaymentStatus(Request $request)
     {
-    //	dd($request);
+    //	dump($request);
+      //  die();
         /** Get the payment ID before session clear **/
-        $payment_id = session()->get('paypal_payment_id');;
+        $payment_id = session()->get('paypal_payment_id');
         /** clear the session payment ID **/
         session()->forget('paypal_payment_id');
         if (empty($request->PayerID) || empty($request->token)) {
@@ -145,14 +156,28 @@ class AddMoneyController extends HomeController
             
             /** it's all right **/
             /** Here Write your database logic like that insert record or value in database if you want **/
-           
+        if(session()->get('amount')==29.99)
+        {   
          $user_data= DB::table('users')->where('id',auth()->user()->id)->first(); 
         $start = new Carbon($user_data->time_stamp_for_record_creation);
 
          $extended_time=$start->addDays(30);
          DB::table('users')->where('id',auth()->user()->id)->update(['time_stamp_for_record_creation'=>$extended_time]);
+         DB::table('users')
+            ->join('administartion_users', 'users.id', '=', 'administartion_users.user_code')
+            ->where('administartion_users.created_by_code',auth()->user()->id)->update(['users.time_stamp_for_record_creation'=>$extended_time]);
          session()->flash('success','Payment Successfully done');
             return redirect('/task');
+        }
+        else 
+        {
+            $user_data= DB::table('users')->where('id',auth()->user()->id)->first(); 
+         DB::table('administartion_users')->insert(['created_by_code'=>auth()->user()->id]);
+         DB::table('administartion_users')->insert(['created_by_code'=>auth()->user()->id]);
+         session()->flash('success','Payment Successfully done');
+            return redirect('/admin');
+         
+        } 
           //  return Redirect::route('addmoney.paywithpaypal');
         }
       dd('paymnet false');

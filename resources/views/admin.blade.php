@@ -3,14 +3,23 @@
 @section('content')
 <div class="jumbotron jumbotron-fluid p-0 pt-3 pb-2">
     <div class="container bg-white mb-4 pb-3 pt-3">
-        <h4>Patrick Jean Paul,</h4><h6> (Manager of Company XYZ)</h6>
+        @if(session()->has('success'))
+        <div class="alert alert-success">
+            {{session()->get('success')}}
+        </div>
+        @elseif(session()->has('error'))
+        <div class="alert alert-danger">
+            {{session()->get('error')}}
+        </div>
+        @endif 
+        <h4>{{auth()->user()->username}},</h4><h6> ({{auth()->user()->role}} of Company XYZ)</h6>
         <br>
         <h6>
-            Your subscription for this month has been started on <b>12/12/2019</b>. It will be expired on <b>1/12/2020</b>.
+            Your subscription for this month has been started on <b>{{\Carbon\Carbon::parse(auth()->user()->time_stamp_for_record_creation)->format('Y/m/d')}}</b>. It will be expired on <b>{{\Carbon\Carbon::parse(auth()->user()->time_stamp_for_record_creation)->addDays(30)->format('Y/m/d')}}</b>.
 
-            <a href="#">Click here to renew your subscription</a> for the next month.
+            <a href="javascript:void(0)" onclick="submitPaymentForm()">Click here to renew your subscription</a> for the next month.
             <br><br>
-            Currently you have 2 users registered with you, you can add more users by paying $9.99 per user per month.
+            Currently you have {{$userObj->getSubUsers()}} users registered with you, you can add more users by paying <a href="javascript:void(0)" onclick="payForUsers()"> $9.99</a> per user per month.
 
         </h6>            
     </div>
@@ -29,22 +38,24 @@
                 </tr>
             </thead>
             <tbody>
+            @foreach($users as $user)    
                 <tr>
+                    <td>{{$user->first_name}} {{$user->last_name}}</td>
+                    <td>{{$user->email}}</td>
+                    <td>{{$user->username}}</td>
+                    <td>{{$user->phone_number}}</td>
+                    <td>{{$user->role}}</td>
+                    <td><i title="Edit" class="fa fa-edit"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash"></i></td>
+                </tr>
+             @endforeach   
+            <!--     <tr>
                     <td>Patrick Jean Paul</td>
                     <td>pjp@gmail.com</td>
                     <td>pjp</td>
                     <td>777 888 9999</td>
                     <td>Manager</td>
                     <td><i title="Edit" class="fa fa-edit"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash"></i></td>
-                </tr>
-                <tr>
-                    <td>Patrick Jean Paul</td>
-                    <td>pjp@gmail.com</td>
-                    <td>pjp</td>
-                    <td>777 888 9999</td>
-                    <td>Manager</td>
-                    <td><i title="Edit" class="fa fa-edit"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash"></i></td>
-                </tr>
+                </tr> -->
             </tbody>
         </table>
         <ul class="pagination justify-content-end " style="margin:20px 0">
@@ -60,13 +71,15 @@
 <div class="modal " id="adduserModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="/action_page.php" class="needs-validation" novalidate>
+            <form action="/create_sub_user" class="needs-validation" novalidate method="post">
             <!-- Modal Header -->
             <div class="modal-header bg-yellow">
                 <h4 class="modal-title">New User</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <!-- Modal body -->
+           
+            @csrf 
             <div class="modal-body">
                 <div class="form-row">
                     <div class="col-sm-6 form-group">
@@ -85,7 +98,7 @@
                 <div class="form-row">
                     <div class="col-sm-6 form-group">
                         <label for="uname">User Name:</label>
-                        <input type="text" class="form-control" id="uname" name="uname" required>
+                        <input type="text" class="form-control" id="username" name="username" required>
                         <div class="valid-feedback">Valid.</div>
                         <div class="invalid-feedback">Please fill out this field.</div>
                     </div>
@@ -143,6 +156,14 @@
                         <label for="role">Role:</label>
                         <select class="form-control" id="role" name="role">
                             <option value="0">Please Select role:</option>
+                            <option value="admin">Administrator</option>
+                            <option value="manager">Manager</option>
+                            <option value="full_access">Full Access</option>
+                            <option value="skip_trace">Skip Trace</option>
+                            <option value="county_contact_list">Company Contact List</option>
+                            <option value="owner_contact_list">Owner Contact List</option>
+                            <option value="owner_contact">Owner Contact</option>
+                            <option value="county_form_submission">County Form Submistion</option>
                         </select>
                         <div class="valid-feedback">Valid.</div>
                         <div class="invalid-feedback">Please fill out this field.</div>
@@ -161,5 +182,13 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+function payForUsers()
+{
+  $('#amount').val(9.99);
+  $('#payment-form').submit();
 
+}    
+    //amount
+</script>
 @endsection
