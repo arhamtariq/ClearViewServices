@@ -53,14 +53,16 @@ Route::get('/getAssigneeName','TasksController@getAssigneeName')->middleware('au
 Route::post('/updateTask','TasksController@updateTask')->middleware('auth');
 
 Route::get('/getTrailStatus','userController@getTrailStatus')->middleware('auth');
-Route::get('/owner', 'OwnerController@index');
-Route::get('/ownerdetails', 'OwnerController@showDetails');
-Route::get('/county', 'CountyController@index');
+Route::get('/owner', 'OwnerController@index')->middleware('auth');
+Route::get('/ownerdetails', 'OwnerController@showDetails')->middleware('auth');
+Route::get('/county', 'CountyController@index')->middleware('auth');
 
-Route::get('/document' , 'DocumentController@index');
+Route::get('/document' , 'DocumentController@index')->middleware('auth');
 Route::post('/document_search' , 'DocumentController@search');
 
-Route::get('/admin' , 'AdminController@index');
+Route::get('/admin' , 'AdminController@index')->middleware('auth');
+Route::post('/create_sub_user' , 'AdminController@create_sub_user')->middleware('auth');
+
 
 
 

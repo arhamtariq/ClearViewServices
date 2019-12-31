@@ -178,9 +178,9 @@ class userController extends Controller
             'city'=>$req->city,
             'zip_code'=>$req->zip,
             'email_verification_token'=>$unique_token,
-            'role'=>'admin',
-          ]);
-      Mail::send([], [], function ($message) use($req,$unique_token) {
+            'role'=>'manager',
+        ]);
+        Mail::send([], [], function ($message) use($req,$unique_token) {
           $message->to($req->email)
           ->subject('Registration')
           ->setBody('<h1>Regsitraion Process</h1><br>

@@ -36,4 +36,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getSubUsers()
+    {
+      $count=\DB::table('administartion_users')->where('created_by_code',auth()->user()->id)->where('user_code','<>',null)->count();
+        return $count;
+    }
 }
