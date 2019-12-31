@@ -178,13 +178,8 @@ class userController extends Controller
             'city'=>$req->city,
             'zip_code'=>$req->zip,
             'email_verification_token'=>$unique_token,
-<<<<<<< HEAD
             'role'=>'manager',
         ]);
-=======
-            'role'=>'admin',
-          ]);
->>>>>>> ff05629104bae9ad78cc1d9de822d86051a18e5b
         Mail::send([], [], function ($message) use($req,$unique_token) {
           $message->to($req->email)
           ->subject('Registration')
