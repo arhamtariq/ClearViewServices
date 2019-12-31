@@ -13,112 +13,118 @@ class userController extends Controller
 {
   public function dologin(Request $req)
   {
-  	$validator=Validator::make($req->all(),[
-            'username' => 'required|string',
-            'password' => 'required|string',   
-        ]);
-        if ($validator->fails()) {
-            $errors = $validator->errors();
-            return redirect()->back()
-            ->withError($validator->errors()->first())
-            ->withInput();
-        }
+  	  $validator=Validator::make($req->all(),[
+        'username' => 'required|string',
+        'password' => 'required|string',   
+      ]);
+      if ($validator->fails()) {
+        $errors = $validator->errors();
+        return redirect()->back()
+                          ->withError($validator->errors()->first())
+                          ->withInput();
+      }
+
       $credentials = [
-            'username' => $req['username'],
-            'password' => $req['password'],
+        'username' => $req['username'],
+        'password' => $req['password'],
           
-        ];
-  	  $credentials_with_email_verification = [
-            'username' => $req['username'],
-            'password' => $req['password'],
-            'email_verified'=>1,
       ];
 
-   if(Auth::attempt($credentials)) {
-    //password verified
-    //know check email is verified or not
-    if(Auth::attempt($credentials_with_email_verification))
-    {
-     $user=DB::table('users')->where('username',$req['username'])->first();
-     //dd($user);
-     Auth::loginUsingId($user->id);
-     
-      return redirect()->to('/task');
-    // dd('credentials ok and email verification ok');
-    }
-    else
-    {
-      return redirect()->back()->withError('Email not verifed');
-    }
+  	  $credentials_with_email_verification = [
+        'username' => $req['username'],
+        'password' => $req['password'],
+        'email_verified'=>1,
+      ];
 
-    }
-    else
-   {
-   	return redirect()->back()->withError('Username or password does not match');
-   }
+      if(Auth::attempt($credentials)) {
+        //password verified
+        //know check email is verified or not
+        if(Auth::attempt($credentials_with_email_verification))
+        {
+          $user=DB::table('users')->where('username',$req['username'])->first();
+          //dd($user);
+          Auth::loginUsingId($user->id);
+          
+          return redirect()->to('/task');
+          // dd('credentials ok and email verification ok');
+        }
+        else
+        {
+          return redirect()->back()->withError('Email not verifed');
+        }
+      }
+      else
+      {
+   	    return redirect()->back()->withError('Username or password does not match');
+      }
   }
+
   public function forgotPasswordRequest()
   {
   	return view('resetPasswordView');
   }
+
   public function resetPasswordRequest(Request $req)
   {
   	
-  	$validator=Validator::make($req->all(),[
+  	  $validator=Validator::make($req->all(),[
          'email' => 'required|email|exists:users',   
-        ]);
-        if ($validator->fails()) {
+      ]);
+      if ($validator->fails()) {
             $errors = $validator->errors();
             return redirect()->back()
             ->withError($validator->errors()->first())
             ->withInput();
-        }
-        $unique_token=str_random(32);  
+      }
+      $unique_token=str_random(32);  
       \DB::table('password_resets')->insert([
             'email' =>$req->email,
             'token' => $unique_token,
-        ]);       
-   	Mail::send([], [], function ($message) use($req,$unique_token) {
-  		$message->to($req->email)
-  		->subject('Rest Password')
-  		->setBody('<h1>Reset Password Request</h1><br>
+      ]);       
+   	  Mail::send([], [], function ($message) use($req,$unique_token) {
+  		  $message->to($req->email)
+  		  ->subject('Rest Password')
+  		  ->setBody('<h1>Reset Password Request</h1><br>
   			<p>You are receiving this email because we received a password reset request for your account</p><br>
         <p>Click on the link if you want to reset your password:<a href="http://localhost:8000/resetPasswordLink?token='.$unique_token.'">Click Here</a></p> ', 'text/html'); // for HTML rich messages
-  	});
-  	if(count(Mail::failures())==0)
-  	{
-     return redirect()->back()->withSuccess('Email sent successfully.');
-  	}
-  	else
-  	{
-     return redirect()->back()->withError('Something went wrong please try again');
-  	}
+      });
+      
+  	  if(count(Mail::failures())==0)
+  	  {
+        return redirect()->back()->withSuccess('Email sent successfully.');
+  	  }
+  	  else
+  	  {
+        return redirect()->back()->withError('Something went wrong please try again');
+  	  }
 
   }
+
   public function resetPasswordLink(Request $req)
   {
-	  if(\DB::table('password_resets')->where('token',$req->token)->exists())
-	  {
-	  	$token=$req->token;
-	  	return view('newPassword',compact('token'));
-	  }
+	    if(\DB::table('password_resets')->where('token',$req->token)->exists())
+	    {
+	  	  $token=$req->token;
+	  	  return view('newPassword',compact('token'));
+	    }
 
   }
+
   public function setNewPassword(Request $req)
   {
  
-  	$validator=Validator::make($req->all(),[
+  	  $validator=Validator::make($req->all(),[
          'newPassword' => 'required|string|same:oldPassword',
          'oldPassword' =>'required|string',  
-        ]);
-      	if ($validator->fails()) {
+      ]);
+      if ($validator->fails()) {
                 $errors = $validator->errors();
                 return redirect()->back()
                 ->withError($validator->errors()->first())
                 ->withInput();
-            }
-        else
-        {
+      }
+      else
+      {
         
         DB::table('users')->whereIn('email', function($query) use ($req)
         {
@@ -130,12 +136,12 @@ class userController extends Controller
         DB::table('password_resets')->where('token',$req->token)->delete();
         return redirect()->to('/')->withSuccess('Password Updated Successfully');
 
-    }    
+      }    
   	
   }
   public function create(Request $req)
   {
-    $validator=Validator::make($req->all(),[
+      $validator=Validator::make($req->all(),[
         'user-name' => 'required|string|unique:users',
          'email' => 'required|unique:users',
          'first_name' => 'required|string',
@@ -153,8 +159,8 @@ class userController extends Controller
          'password' => 'required|string|same:confirm_password',
          'confirm_password' =>'required|string',  
         ]);
-     if ($validator->fails()) {
-       return redirect()->back()
+      if ($validator->fails()) {
+        return redirect()->back()
                 ->withError($validator->errors()->first())
                 ->withInput();
       }
@@ -172,47 +178,52 @@ class userController extends Controller
             'city'=>$req->city,
             'zip_code'=>$req->zip,
             'email_verification_token'=>$unique_token,
+<<<<<<< HEAD
             'role'=>'manager',
         ]);
+=======
+            'role'=>'admin',
+          ]);
+>>>>>>> ff05629104bae9ad78cc1d9de822d86051a18e5b
         Mail::send([], [], function ($message) use($req,$unique_token) {
-      $message->to($req->email)
-      ->subject('Registration')
-      ->setBody('<h1>Regsitraion Process</h1><br>
-        <p>Click on the link to complete registration process <a href="http://localhost:8000/ActiveUser?token='.$unique_token.'">Click Here</a></p> ', 'text/html'); // for HTML rich messages
-     });
-    if(count(Mail::failures())==0)
-    {
-     return redirect()->back()->withSuccess('Email Sent Successfully verify your email');
-    }       
+          $message->to($req->email)
+          ->subject('Registration')
+          ->setBody('<h1>Regsitraion Process</h1><br>
+          <p>Click on the link to complete registration process <a href="http://localhost:8000/ActiveUser?token='.$unique_token.'">Click Here</a></p> ', 'text/html'); // for HTML rich messages
+        });
+        if(count(Mail::failures())==0)
+        {
+            return redirect()->back()->withSuccess('Email Sent Successfully verify your email');
+        }       
         //send email and store data in database   
       }
   }
+
   public function ActiveUser(Request $req)
   {
-    if(DB::table('users')->where('email_verification_token',$req->token)->update(['email_verified'=>1]))
-    {
-    return redirect()->to('/login')->withSuccess('Account Activated  Successfully');
+      if(DB::table('users')->where('email_verification_token',$req->token)->update(['email_verified'=>1]))
+      {
+        return redirect()->to('/login')->withSuccess('Account Activated  Successfully');
 
-    }
-    return redirect()->to('/login')->withError('Something went wrong');
+      }
+      return redirect()->to('/login')->withError('Something went wrong');
   }
+
   public function getTrailStatus()
   {
-   $creation_time=DB::table('users')->where('id',auth()->user()->id)->first();
-    $created = new Carbon($creation_time->time_stamp_for_record_creation);
-    $now = Carbon::now();
-   $difference = $created->diff($now)->days;
-   if($difference > 8 and $difference < 10)
-   {
-   echo json_encode($difference);
-
-  // echo json_encode(0);
-   }
-   else
-   {
-   echo json_encode(0);
-
-   //echo json_encode($difference);
-   }
+      $creation_time=DB::table('users')->where('id',auth()->user()->id)->first();
+      $created = new Carbon($creation_time->time_stamp_for_record_creation);
+      $now = Carbon::now();
+      $difference = $created->diff($now)->days;
+      if($difference > 8 and $difference < 10)
+      {
+        echo json_encode($difference);
+        // echo json_encode(0);
+      }
+      else
+      {
+        echo json_encode(0);
+        //echo json_encode($difference);
+      }
   }     
 }
