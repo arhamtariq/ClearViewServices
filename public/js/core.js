@@ -47,7 +47,7 @@ $(function() {
 
 
 
-    alert('validation');
+    //alert('validation');
     // Disable form submissions if there are invalid fields
     'use strict';
     window.addEventListener('load', function() {

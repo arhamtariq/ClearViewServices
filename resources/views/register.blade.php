@@ -21,7 +21,7 @@
 
     <div class="container-form">
         <div class="wrapper-form">
-            <form id="rform" class="register-form" action="/create" method="post"  id="register-form" onsubmit="showSuscriptions();return false;" >
+            <form id="rform" class="register-form validate-form" action="/create" method="post"  id="register-form"  >
             @csrf
                 <div id="overall-form">
                     <!-- SECTION 1 -->
@@ -39,7 +39,7 @@
                                 <p>Please enter your infomation and proceed to the next step so we can build your accounts.  </p>
                             </div>
                             <div class="form-row">
-                                <div class="form-col form-col-2">
+                                <div class="form-col form-col-2 validate-input" data-validate="User name is required">
                                     <fieldset>
                                         <legend>User Name</legend>
                                         <input type="text" class="form-control" id="user-name" name="user-name" placeholder="User Name" required>
@@ -47,13 +47,13 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-col ">
+                                <div class="form-col validate-input" data-validate="Email is required">
                                     <fieldset>
                                         <legend>Email</legend>
                                         <input type="email" class="form-control" id="email" name="email" pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}" placeholder="youremail@email.com" required>
                                     </fieldset>
                                 </div>
-                                <div class="form-col">
+                                <div class="form-col validate-input" data-validate="Confirm Email is required">
                                     <fieldset>
                                         <legend>Confirm Email</legend>
                                         <input type="email" name="confirm_email" id="confirm_email" class="form-control" pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}" placeholder="confirmemail@email.com" required>
@@ -61,13 +61,13 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-col">
+                                <div class="form-col validate-input" data-validate="Password is required">
                                     <fieldset>
                                         <legend>Password</legend>
                                         <input type="password" class="form-control" id="password" name="password"  placeholder=".........." required>
                                     </fieldset>
                                 </div>
-                                <div class="form-col">
+                                <div class="form-col validate-input" data-validate="Confirm Password is required">
                                     <fieldset>
                                         <legend>Confirm Password</legend>
                                         <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder=".........." required>
@@ -87,21 +87,21 @@
                                 <p>Please enter your Personal infomation and proceed to the next step so we can create your accounts.</p>
                             </div>
                             <div class="form-row">
-                                <div class="form-col">
+                                <div class="form-col validate-input" data-validate="First Name is required">
                                     <fieldset>
                                         <legend>First Name</legend>
                                         <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" required>
                                     </fieldset>
                                 </div>
-                                <div class="form-col">
+                                <div class="form-col validate-input" data-validate="Last Name is required">
                                     <fieldset>
                                         <legend>Last Name</legend>
                                         <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" required>
                                     </fieldset>
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="form-col form-col-2">
+                            <div class="form-row ">
+                                <div class="form-col form-col-2 validate-input" data-validate="Phone Number is required">
                                     <fieldset>
                                         <legend>Phone Number</legend>
                                         <input type="text" class="form-control" id="phone" name="phone" placeholder="+1 888-999-7777" required>
@@ -109,7 +109,7 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-col form-col-2">
+                                <div class="form-col form-col-2 validate-input" data-validate="Address is required">
                                     <fieldset>
                                         <legend>Address</legend>
                                         <textarea class="form-control" id="address" name="address" placeholder="Your Address" required></textarea>
@@ -117,19 +117,19 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-col form-col-3">
+                                <div class="form-col form-col-3 validate-input" data-validate="City is required">
                                     <fieldset>
                                         <legend>City</legend>
                                         <input type="text" class="form-control" id="city" name="city" placeholder="City" required>
                                     </fieldset>
                                 </div>
-                                <div class="form-col form-col-3">
+                                <div class="form-col form-col-3 validate-input" data-validate="State is required">
                                     <fieldset>
                                         <legend>State</legend>
                                         <input type="text" class="form-control" id="state" name="state" placeholder="State" required>
                                     </fieldset>
                                 </div>
-                                <div class="form-col form-col-3">
+                                <div class="form-col form-col-3 validate-input" data-validate="ZIP Code is required">
                                     <fieldset>
                                         <legend>ZIP</legend>
                                         <input type="text" class="form-control" id="zip" name="zip" placeholder="46000" required>
@@ -147,7 +147,7 @@
                                 <p>Please enter your company's infomation and proceed to the next step so we can create your accounts.</p>
                             </div>
                             <div class="form-row">
-                                <div class="form-col form-col-2">
+                                <div class="form-col form-col-2 validate-input" data-validate="Company Name is required">
                                     <fieldset>
                                         <legend>Company Name</legend>
                                         <input type="text" class="form-control" id="company_name" name="company_name" placeholder="Company Name" required>
@@ -155,7 +155,7 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-col form-col-2">
+                                <div class="form-col form-col-2 validate-input" data-validate="Company Address is required">
                                     <fieldset>
                                         <legend>Company Address</legend>
                                         <textarea class="form-control" id="company_address" name="company_address" placeholder="Company Address" required></textarea>
@@ -163,19 +163,19 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-col form-col-3">
+                                <div class="form-col form-col-3 validate-input" data-validate="Company City is required">
                                     <fieldset>
                                         <legend>City</legend>
                                         <input type="text" class="form-control" id="company_city" name="company_city" placeholder="City" required>
                                     </fieldset>
                                 </div>
-                                <div class="form-col form-col-3">
+                                <div class="form-col form-col-3 validate-input" data-validate="Company State is required">
                                     <fieldset>
                                         <legend>State</legend>
                                         <input type="text" class="form-control" id="company_state" name="company_state" placeholder="State" required>
                                     </fieldset>
                                 </div>
-                                <div class="form-col form-col-3">
+                                <div class="form-col form-col-3 validate-input" data-validate="Company ZIP Code is required">
                                     <fieldset>
                                         <legend>ZIP</legend>
                                         <input type="text" class="form-control" id="company_zip" name="company_zip" placeholder="46000" required>

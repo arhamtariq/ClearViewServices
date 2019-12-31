@@ -57,7 +57,7 @@
     
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-xl bg-grey navbar-static-top navbar-light sticky-top "  >
-        <div class="container">
+        <div class="container pl-0">
             <button type="button" class="navbar-toggler bg-danger" id="navbtn" data-toggle="collapse" data-target="#nav" style="margin-right:80px;">
                 <span class="navbar-toggler-icon"></span>
             </button>

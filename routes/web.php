@@ -56,7 +56,10 @@ Route::get('/getTrailStatus','userController@getTrailStatus')->middleware('auth'
 Route::get('/owner', 'OwnerController@index');
 Route::get('/ownerdetails', 'OwnerController@showDetails');
 Route::get('/county', 'CountyController@index');
+
 Route::get('/document' , 'DocumentController@index');
+Route::post('/document_search' , 'DocumentController@search');
+
 Route::get('/admin' , 'AdminController@index');
 
 

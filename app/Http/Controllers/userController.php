@@ -141,7 +141,7 @@ class userController extends Controller
   }
   public function create(Request $req)
   {
-      $validator=Validator::make($req->all(),[
+    $validator=Validator::make($req->all(),[
         'user-name' => 'required|string|unique:users',
          'email' => 'required|unique:users',
          'first_name' => 'required|string',
@@ -158,15 +158,15 @@ class userController extends Controller
          'company_zip' => 'required|string',
          'password' => 'required|string|same:confirm_password',
          'confirm_password' =>'required|string',  
-        ]);
-      if ($validator->fails()) {
-        return redirect()->back()
+    ]);
+    if ($validator->fails()) {
+      return redirect()->back()
                 ->withError($validator->errors()->first())
                 ->withInput();
-      }
-      else
-      {
-        $unique_token=str_random(32);   
+    }
+    else
+    {
+      $unique_token=str_random(32);   
           DB::table('users')->insert([
             'username' => $req->input('user-name'),
             'first_name' => $req->first_name,
@@ -180,18 +180,18 @@ class userController extends Controller
             'email_verification_token'=>$unique_token,
             'role'=>'admin',
           ]);
-        Mail::send([], [], function ($message) use($req,$unique_token) {
+      Mail::send([], [], function ($message) use($req,$unique_token) {
           $message->to($req->email)
           ->subject('Registration')
           ->setBody('<h1>Regsitraion Process</h1><br>
           <p>Click on the link to complete registration process <a href="http://localhost:8000/ActiveUser?token='.$unique_token.'">Click Here</a></p> ', 'text/html'); // for HTML rich messages
         });
-        if(count(Mail::failures())==0)
-        {
-            return redirect()->back()->withSuccess('Email Sent Successfully verify your email');
-        }       
+      if(count(Mail::failures())==0)
+      {
+          return redirect()->back()->withSuccess('Email Sent Successfully verify your email');
+      }       
         //send email and store data in database   
-      }
+    }
   }
 
   public function ActiveUser(Request $req)

@@ -3,7 +3,8 @@
 @section('content')
 <div class="jumbotron jumbotron-fluid p-0 pt-3 pb-2">
     <div class="container pl-0">
-        <form class="form-inline" method="post" action="">
+        <form class="form-inline" method="post" action="/document_search">
+            <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>" required>
             <input type="search" class="form-control mb-2 mr-sm-2" id="state" name="state" placeholder="State Name">
             <input type="search" class="form-control mb-2 mr-sm-2" id="county" name="county" placeholder="County Name">
             <select class="form-control mb-2 mr-sm-2" id="doctype">
@@ -30,14 +31,21 @@
                 </tr>
             </thead>
             <tbody>
+                @if ($docs == null)
+                    No record found.
+                @else
+                    
+                @foreach ($docs as $d)
                 <tr>
-                    <td>Agreement</td>
-                    <td>glee.doc</td>
-                    <td>Mr. xyz</td>
+                    <td>{{ $d->document_type}}</td>
+                    <td>{{ $d->document_name}}</td>
                     <td></td>
                     <td></td>
+                    <td>{{ $d->county_name}}</td>
                     <td><i title="Delete" class="fa fa-eye"></i>&nbsp;&nbsp;<i title="Edit" class="fa fa-edit"></i></td>
                 </tr>
+                @endforeach
+                @endif
                 <tr>
                     <td>Agreement</td>
                     <td>glee.doc</td>
