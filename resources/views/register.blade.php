@@ -42,7 +42,7 @@
                                 <div class="form-col form-col-2 validate-input" data-validate="User name is required">
                                     <fieldset>
                                         <legend>User Name</legend>
-                                        <input type="text" class="form-control" id="user-name" name="user-name" placeholder="User Name" required>
+                                        <input type="text" class="form-control" id="username" name="username" placeholder="User Name" required>
                                     </fieldset>
                                 </div>
                             </div>
