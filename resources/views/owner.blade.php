@@ -3,16 +3,26 @@
 @section('content')
 <div class="jumbotron jumbotron-fluid p-0 pt-3 pb-2">
     <div class="container pl-0">
-        <form class="form-inline" method="post" action="">
-            <input type="text" class="form-control mb-2 mr-sm-2" id="county-record-srch" name="county-record-srch" placeholder="County Record Number">
-            <input type="text" class="form-control mb-2 mr-sm-2" id="owner-name" name="owner-name" placeholder="Owner Name">
+        @if(session()->has('success'))
+        <div class="alert alert-success">
+            {{session()->get('success')}}
+        </div>
+        @elseif(session()->has('error'))
+        <div class="alert alert-danger">
+            {{session()->get('error')}}
+        </div>
+        @endif 
+        <form class="form-inline" method="post" action="/searchOwner">
+            @csrf
+            <input type="hidden" value="searchForm" name="searchForm">
+            <input type="text" class="form-control mb-2 mr-sm-2" id="countyrecordsrch" name="countyrecordsrch" placeholder="County Record Number">
+            <input type="text" class="form-control mb-2 mr-sm-2" id="ownername" name="ownername" placeholder="Owner Name">
             <button type="submit" class="btn bg-yellow mb-2 mr-sm-2 text-white">Search&nbsp;<i title="Search" class="fa fa-search "></i></button>
-            
         </form>
     </div>
-    <div class="container bg-white pb-5 mb-4">
-        <h2 class="float-left">Owners List</h2>
-        <p class="float-right pt-2 pr-5"><button type="button" class="btn bg-yellow mb-2 text-white" data-toggle="modal" data-target="#addownerModal">Add Owner&nbsp;<i title="Add Task" class="fa fa-plus "></i></button></p>            
+    <div class="container bg-white pb-5 mb-4 pt-3">
+        <h4 class="float-left">Owners List</h4>
+        <p class="float-right pt-2 pr-5"><button id="btnAddOwner" type="button" class="btn bg-yellow mb-2 text-white"  onclick="clear();">Add Owner&nbsp;<i title="Add Task" class="fa fa-plus "></i></button></p>            
         <table class="table table-striped">
           <thead>
             <tr>
@@ -29,50 +39,33 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><a href="{{ url('/ownerdetails') }}">County Record No.</a></td>
-              <td>Mr. xyz</td>
-              <td>Mon, 11 Dec 2019</td>
-              <td>Mon, 11 Dec 2019</td>
-              <td>Mr. lmn</td>
-              <td>New</td>
-              <td>500,000</td>
-              <td><a href="#" type="button" data-toggle="modal" data-target="#adddocModal">0</a></td>
-              <td><a href="#" type="button" data-toggle="modal" data-target="#addnotesModal">2</a></td>
-              <td><i title="Edit" class="fa fa-edit"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash"></i></td>
-            </tr>
-            <tr>
-                <td><a href="#">County Record No.</a></td>
-                <td>Mr. xyz</td>
-                <td>Mon, 11 Dec 2019</td>
-                <td>Mon, 11 Dec 2019</td>
-                <td>Mr. lmn</td>
-                <td>New</td>
-                <td>500,000</td>
-                <td><a href="#" type="button" data-toggle="modal" data-target="#adddocModal">0</a></td>
-                <td><a href="#" type="button" data-toggle="modal" data-target="#addnotesModal">2</a></td>
-                <td><i title="Edit" class="fa fa-edit"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash"></i></td>
-            </tr>
-            <tr>
-                <td><a href="#">County Record No.</a></td>
-                <td>Mr. xyz</td>
-                <td>Mon, 11 Dec 2019</td>
-                <td>Mon, 11 Dec 2019</td>
-                <td>Mr. lmn</td>
-                <td>New</td>
-                <td>500,000</td>
-                <td><a href="#" type="button" data-toggle="modal" data-target="#adddocModal">0</a></td>
-                <td><a href="#" type="button" data-toggle="modal" data-target="#addnotesModal">2</a></td>
-                <td><i title="Edit" class="fa fa-edit"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash"></i></td>
-            </tr>
+            
+                @if($owner == null or count($owner) == 0)
+                    <tr><td class="text-center" colspan="10">No Record Exists.</td></tr>
+                @else
+                    @foreach($owner as $o)
+                    <tr>
+                        <td><a href="{{ url('/ownerdetails') }}">{{ $o->county_record_number}}</a></td>
+                        <td>{{$o->first_name . ' ' . $o->middle_name . ' ' . $o->last_name}}</td>
+                        <td>{{$o->property_address}}</td>
+                        <td>{{$o->parcel_number}}</td>
+                        <td>{{$o->sale_date}}</td>
+                        <td>{{$o->overage_amount_collected}}</td>
+                        <td>{{$o->available_funds}}</td>
+                        <td><a href="#" type="button" data-toggle="modal" data-target="#adddocModal">0</a></td>
+                        <td><a href="#" type="button" data-toggle="modal" data-target="#addnotesModal">2</a></td>
+                        <td><i title="Edit" class="fa fa-edit" onclick="updateOwner({{$o->record_number}})"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash" onclick="deleteOwner({{$o->record_number}})"></i></td>
+                    </tr>
+                    @endforeach
+                @endif            
           </tbody>
         </table>
         <ul class="pagination justify-content-end " style="margin:20px 0">
-            <li class="page-item"><a class="page-link text-black" href="#"><<</a></li>
-            <li class="page-item"><a class="page-link text-black" href="#">1</a></li>
-            <li class="page-item"><a class="page-link text-black" href="#">2</a></li>
-            <li class="page-item"><a class="page-link text-black" href="#">3</a></li>
-            <li class="page-item"><a class="page-link text-black" href="#">>></a></li>
+            <li class="page-item"><a class="page-link text-black" href="javascript:void(0)" onclick="previous()"><<</a></li>
+            <li class="page-item"><a class="page-link text-black" href="#" onclick="page(1)">1</a></li>
+            <li class="page-item"><a class="page-link text-black" href="#" onclick="page(2)">2</a></li>
+            <li class="page-item"><a class="page-link text-black" href="#" onclick="page(3)">3</a></li>
+            <li class="page-item"><a class="page-link text-black" href="javascript:void(0)" onclick="Next()">>></a></li>
         </ul>
       </div>
     </div>
@@ -82,7 +75,9 @@
 <div class="modal " id="addownerModal">
     <div class="modal-dialog mw-100 w-75">
         <div class="modal-content">
-            <form action="/action_page.php" class="needs-validation" novalidate>
+            <form id="frm-owner" class="validate-form" action="/createowner" method="post">
+            @csrf
+            <input type="hidden" name="recordnumber" id="recordnumber">
             <!-- Modal Header -->
             <div class="modal-header bg-yellow">
                 <h4 class="modal-title">Add New Owner</h4>
@@ -95,79 +90,67 @@
                         <fieldset>
                             <legend>Owner's Information</legend>
                             <div class="form-row">
-                                <div class="col-sm-6 form-group">
-                                    <label for="county-record-no">County Record Number:</label>
-                                    <input type="text" class="form-control" id="county-record-no" name="county-record-no" required>
-                                    <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                <div class="col-sm-6 form-group validate-input" data-validate = "Please fill out this field.">
+                                    <label for="countyrecno">County Record Number:</label>
+                                    <input type="text" class="form-control" id="countyrecno" name="countyrecno">
+                                    
                                 </div>
-                                <div class="col-sm-6 form-group">
-                                    <label for="county-code">County:</label>
-                                    <input type="text" class="form-control" id="county-code" name="county-code" required>
-                                    <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                <div class="col-sm-6 form-group validate-input" data-validate = "Please fill out this field.">
+                                    <label for="countycode">County:</label>
+                                    <input type="text" class="form-control" id="countycode" name="countycode">
+                                    
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-sm-5 form-group">
-                                    <label for="first-name">First Name:</label>
-                                    <input type="text" class="form-control" id="first-name" name="first-name" required>
-                                    <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                <div class="col-sm-4 form-group validate-input" data-validate = "Please fill out this field.">
+                                    <label for="firstname">First Name:</label>
+                                    <input type="text" class="form-control" id="firstname" name="firstname">
+                                    
                                 </div>
-                                <div class="col-sm-2 form-group">
-                                    <label for="middle-name">Mid Name</label>
-                                    <input type="text" class="form-control" id="middle-name" name="middle-name" required>
-                                    <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div>
-                                </div>
-                                <div class="col-sm-5 form-group">
-                                    <label for="last_name">Last Name:</label>
-                                    <input type="text" class="form-control" id="last_name" name="last_name" required>
-                                    <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-sm-12 form-group">
-                                    <label for="property-address">Property Address:</label>
-                                    <input type="text" class="form-control" id="property-address" name="property-address" required>
-                                    <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div>
-                                </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="col-sm-4 form-group">
+                                    <label for="middlename">Mid Name</label>
+                                    <input type="text" class="form-control" id="middlename" name="middlename">
+                                   
+                                </div>
+                                <div class="col-sm-4 form-group validate-input" data-validate = "Please fill out this field.">
+                                    <label for="lastname">Last Name:</label>
+                                    <input type="text" class="form-control" id="lastname" name="lastname">
+                                    
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-sm-12 form-group validate-input" data-validate = "Please fill out this field.">
+                                    <label for="propertyaddress">Property Address:</label>
+                                    <input type="text" class="form-control" id="propertyaddress" name="propertyaddress">
+                                    
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-sm-4 form-group validate-input" data-validate = "Please fill out this field.">
                                     <label for="city">City:</label>
-                                    <input type="text" class="form-control" id="city" name="city" required>
-                                    <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                    <input type="text" class="form-control" id="city" name="city">
+                                    
                                 </div>
-                                <div class="col-sm-4 form-group">
+                                <div class="col-sm-4 form-group validate-input" data-validate = "Please fill out this field.">
                                     <label for="state">State:</label>
-                                    <input type="text" class="form-control" id="state" name="state" required>
-                                    <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                    <input type="search" class="form-control" id="state" name="state">
                                 </div>
-                                <div class="col-sm-4 form-group">
+                                <div class="col-sm-4 form-group validate-input" data-validate = "Please fill out this field.">
                                     <label for="zip">ZIP:</label>
-                                    <input type="text" class="form-control" id="zip" name="zip" required>
-                                    <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                    <input type="text" class="form-control" id="zip" name="zip">
+                                    
                                 </div>
                             </div>
                             <div class="form-row ">
                                 <div class="col-sm-6 form-group">
-                                    <label for="parcel-no">Parcel Number:</label>
-                                    <input type="type" class="form-control" id="parcel-no" name="parcel-no" required>
-                                    <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                    <label for="parcelno">Parcel Number:</label>
+                                    <input type="type" class="form-control" id="parcelno" name="parcelno">
+                                    
                                 </div>
-                                <div class="col-sm-6 form-group">
-                                    <label for="sale-date">Sale Date:</label>
-                                    <input type="text" class="form-control" id="sale-date" name="sale-date" required>
-                                    <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                <div class="col-sm-6 form-group validate-input" data-validate = "Please fill out this field.">
+                                    <label for="saledate">Sale Date:</label>
+                                    <input type="text" class="form-control" id="saledate" name="saledate">
+                        
                                 </div>
                             </div>
                             
@@ -178,30 +161,28 @@
                             <legend>Other Information</legend>
                             <div class="form-row">
                                 <div class="col-sm-6 form-group">
-                                    <label for="overage-amount">Overage Amount Collected:</label>
-                                    <input type="text" class="form-control" id="overage-amount" name="overage-amount" required>
-                                    <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                    <label for="overageamount">Overage Amount Collected:</label>
+                                    <input type="text" class="form-control" id="overageamount" name="overageamount">
+                                    
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                    <label for="overage-amount-owned">Overage Amount Owned:</label>
-                                    <input type="text" class="form-control" id="overage-amount-owned" name="overage-amount-owned" required>
-                                    <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                    <label for="overageamountowned">Overage Amount Owned:</label>
+                                    <input type="text" class="form-control" id="overageamountowned" name="overageamountowned" >
+                                    
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-sm-6 form-group">
-                                    <label for="contacted-owner">Contacted Owner:</label>
-                                    <select class="form-control" id="contacted-owner" name="contacted-owner">
+                                    <label for="contactedowner">Contacted Owner:</label>
+                                    <select class="form-control" id="contactedowner" name="contactedowner">
                                         <option value="0">No</option>
                                         <option value="1">Yes - On Phone</option>
                                         <option value="2">Yes - On Mail</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                    <label for="contacted-county">Contacted County:</label>
-                                    <select class="form-control" id="contacted-county" name="contacted-county">
+                                    <label for="contactedcounty">Contacted County:</label>
+                                    <select class="form-control" id="contactedcounty" name="contactedcounty">
                                         <option value="0">No</option>
                                         <option value="1">Yes - On Phone</option>
                                         <option value="2">Yes - On Mail</option>
@@ -210,17 +191,14 @@
                             </div>
                             <div class="form-row">
                                 <div class="col form-group">
-                                    <label for="avlbl-funds">Available Funds:</label>
-                                    <input type="text" class="form-control" id="avlbl-funds" name="avlbl-funds" required>
-                                    <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                    <label for="avlblfunds">Available Funds:</label>
+                                    <input type="text" class="form-control" id="avlblfunds" name="avlblfunds">
+                                    
                                 </div>
-                                <div class="col form-group">
+                                <!--<div class="col form-group">
                                     <label for="contacted-county">Contacted County:</label>
-                                    <input type="text" class="form-control" id="contacted-county" name="contacted-county" required>
-                                    <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div>
-                                </div>
+                                    <input type="text" class="form-control" id="contacted-county" name="contacted-county">
+                                </div>-->
                             </div>
                         </fieldset>
                     </div>
@@ -228,10 +206,79 @@
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="submit" class="btn bg-yellow">Submit</button>
+                <button type="submit" class="btn bg-yellow text-white">Submit</button>
             </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+    //for pagination
+    function page($page_id)
+    {
+        var page =$page_id;
+        //page=page-1;
+        var url = window.location.origin + window.location.pathname;
+        window.location.href=url+"?page="+page+"";
+    }
+
+    //For deletion of owner
+    function  deleteOwner($id)
+    {
+        if(confirm('Are You Sure You want to delete Owner?'))
+        {
+            window.location.href="/deleteOwner?id="+$id+"";
+        }
+    }
+    $('#btnAddOwner').click(function(){
+        $('#frm-owner')[0].reset();
+        
+        $('#recordnumber').val('0');
+        $('#addownerModal').modal('show');
+    })
+    //for clearing fields of form
+    function clear()
+    {
+        alert('in clear');
+        $('#addownerModal').find("input[type=text], textarea").val("");
+        $('#recordnumber').val('0');
+    }
+    //for updation of owner
+    function updateOwner($id)
+    {
+        $('#recordnumber').val($id);
+        $.ajax({
+            type: "GET",
+            url: "/getOwnerData",
+            dataType: "json",
+            cache: false,
+            data: {
+                id: $id
+            },
+            success: function(data) {
+                
+                var obj=JSON.parse(JSON.stringify(data));
+                
+                $('#countyrecno').val(obj[0].county_record_number);
+                $('#countycode').val(obj[0].county_code);
+                $('#firstname').val(obj[0].first_name);
+                $('#middlename').val(obj[0].middle_name);
+                $('#lastname').val(obj[0].last_name);
+                $('#propertyaddress').val(obj[0].property_address);
+                $('#city').val(obj[0].city);
+                $('#state').val(obj[0].state);
+                $('#zip').val(obj[0].zip_code);
+                $('#parcelno').val(obj[0].parcel_number);
+                $('#saledate').val(obj[0].sale_date);
+                $('#overageamount').val(obj[0].overage_amount_collected);
+                $('#overageamountowned').val(obj[0].overage_amount_owned_to_owner);
+                $('#avlblfunds').val(obj[0].available_funds);
+                $('#contactedowner').val(obj[0].contacted_owner);
+                $('#contactedcounty').val(obj[0].contacted_county);
+               
+            }
+        });
+        $('#addownerModal').modal('show');
+    }
+</script>
 @endsection

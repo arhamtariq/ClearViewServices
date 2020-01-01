@@ -142,7 +142,7 @@ class userController extends Controller
   public function create(Request $req)
   {
     $validator=Validator::make($req->all(),[
-        'user-name' => 'required|string|unique:users',
+        'username' => 'required|string|unique:users',
          'email' => 'required|unique:users',
          'first_name' => 'required|string',
          'last_name' => 'required|string',
@@ -168,7 +168,7 @@ class userController extends Controller
     {
       $unique_token=str_random(32);   
           DB::table('users')->insert([
-            'username' => $req->input('user-name'),
+            'username' => $req->input('username'),
             'first_name' => $req->first_name,
             'last_name' => $req->last_name,
             'email' => $req->email,
