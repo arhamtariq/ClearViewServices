@@ -14,7 +14,7 @@ class CreateCompanyTable extends Migration {
 	{
 		Schema::create('company', function(Blueprint $table)
 		{
-			$table->integer('company_code',true)->primary()->comment('This is the unique code for the company');
+			$table->integer('company_code',true)->comment('This is the unique code for the company');
 			$table->string('company_name', 45);
 			$table->string('address', 45)->nullable()->comment('This is the address of the company');
 			$table->string('city', 45)->nullable()->comment('This is the city of the company');

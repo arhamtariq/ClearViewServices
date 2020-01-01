@@ -14,7 +14,7 @@ class CreateTasksTable extends Migration {
 	{
 		Schema::create('tasks', function(Blueprint $table)
 		{
-			$table->integer('task_code',true)->primary();
+			$table->integer('task_code',true);
 			$table->integer('user_code')->comment('This is the user record number of the user who the task is assigned to');
 			$table->integer('task_creator')->comment('the user code o the task creator');
 			$table->string('task_name', 45)->nullable()->comment('then name of the task');
