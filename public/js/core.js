@@ -15,9 +15,41 @@ $(function() {
         todayHighlight: true
     });
 
-    $('#sale-date').datepicker({
+    $('#saledate').datepicker({
         autoclose: true,
-        todayHighlight: true
+        todayHighlight: true,
+        format: 'yyyy-mm-dd'
+    });
+
+    //For state autocomplete
+    var state = [
+        "Albama",
+        "Alaska",
+        "American Samoa",
+        "Arizona",
+        "Arkansas",
+    ];
+    //$('#state').autocomplete({
+    //    source:state
+    //});
+    $('#state').autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: 'autocomplete',
+                data: {
+                    term: request.term
+                },
+                dataType: "json",
+                success: function(data) {
+                    var resp = $.map(data, function(obj) {
+                        //console.log(obj.state_name);
+                        return obj.state_name;
+                    });
+                    response(resp);
+                }
+            });
+        },
+        minLength: 1
     });
 
     // to display the name of the file select
@@ -26,18 +58,7 @@ $(function() {
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 
-    //For state autocomplete
-    var state = [
-        "Albama",
-        "Alaska",
-        " American Samoa",
-        "Arizona",
-        "Arkansas",
-    ];
 
-    $('#state').autocomplete({
-        source: state
-    });
 
     //For county's panels
     $("#btnDoc").click(function() {
@@ -47,24 +68,66 @@ $(function() {
 
 
 
-    //alert('validation');
-    // Disable form submissions if there are invalid fields
     'use strict';
-    window.addEventListener('load', function() {
+    /*-------------------form validations----------------*/
+    $('.form-control').each(function() {
+        //alert('ads');
+        $(this).on('blur', function() {
+            if ($(this).val().trim() != "") {
+                $(this).addClass('has-val');
+            } else {
+                $(this).removeClass('has-val');
+            }
+        })
+    })
 
-        // Get the forms we want to add validation styles to
-        var forms = document.getElementsByClassName('needs-validation');
-        // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function(form) {
-            form.addEventListener('submit', function(event) {
-                if (form.checkValidity() === false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-            }, false);
+    var input = $('.validate-input .form-control');
+
+    $('#frm-owner').on('submit', function() {
+        var check = true;
+        //alert('validations');
+        for (var i = 0; i < input.length; i++) {
+            if (validate(input[i]) == false) {
+                showValidate(input[i]);
+                check = false;
+            }
+        }
+
+        return check;
+    });
+
+
+    $('.validate-form .form-control').each(function() {
+
+        $(this).focus(function() {
+            hideValidate(this);
         });
-    }, false);
+    });
+
+    function validate(input) {
+
+        if ($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
+            if ($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
+                return false;
+            }
+        } else {
+            if ($(input).val().trim() == '') {
+                return false;
+            }
+        }
+    }
+
+    function showValidate(input) {
+        var thisAlert = $(input).parent();
+
+        $(thisAlert).addClass('alert-validate');
+    }
+
+    function hideValidate(input) {
+        var thisAlert = $(input).parent();
+
+        $(thisAlert).removeClass('alert-validate');
+    }
 
 
 

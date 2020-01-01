@@ -34,7 +34,7 @@
         </div>
         <div class="wrapper-login-lower">
             <form class="login-form validate-form needs-validation" action="/dologin" method="post" novalidate>
-                <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>" required>
+                <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
                 <div class="form-input validate-input m-b-26" data-validate="Username is required">
                     <span class="form-label">Username</span>
                     <input class="form-text" type="text" name="username" placeholder="Enter username">
