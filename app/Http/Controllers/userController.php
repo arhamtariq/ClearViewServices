@@ -141,6 +141,7 @@ class userController extends Controller
   }
   public function create(Request $req)
   {
+    //dd($req);
     $validator=Validator::make($req->all(),[
         'username' => 'required|string|unique:users',
          'email' => 'required|unique:users',
@@ -166,10 +167,18 @@ class userController extends Controller
     }
     else
     {
-      $unique_token=str_random(32);   
+      $unique_token=str_random(32);
+     $company_id=DB::table('company')->insertGetId([
+        'company_name' => $req->company_name,
+        'city' =>$req->company_city,
+        'zip_code'=>$req->company_zip,
+        'state'=>$req->state,
+         'time_stamp_for_record_creation'=>\Carbon\Carbon::now(),
+      ]);   
           DB::table('users')->insert([
             'username' => $req->input('username'),
             'first_name' => $req->first_name,
+            'company_code'=>$company_id,
             'last_name' => $req->last_name,
             'email' => $req->email,
             'password' => bcrypt($req->password),
