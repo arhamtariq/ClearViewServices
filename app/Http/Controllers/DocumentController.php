@@ -15,11 +15,81 @@ class DocumentController extends Controller
         return view('document')->with('docs',null);
     }
 
-    public function search()
+    public function searchDocument(Request $req)
     {
-        $docs = DB::table('county_document')->select('county_name','document_type','document_name')->get();
+        if ($req->doctype != "0")
+        {
+            $docs1 = \DB::table('owner_document')
+                    ->select('owner_document.county_code','owner_document.document_type','owner_document.document_name','owner_document.document_link','owner_document.user_code' , 'county_in_us.county_name')
+                    ->join('county_in_us' , 'owner_document.county_code', '=', 'county_in_us.county_code')
+                    ->where('owner_document.document_type','LIKE' ,"%{$req->doctype}%")
+                    ->get();
+
+            $docs2 = \DB::table('county_document')
+                    ->select('county_document.county_code','county_document.document_type','county_document.document_name','county_document.document_link','county_document.user_code' , 'county_in_us.county_name')
+                    ->join('county_in_us' , 'county_document.county_code', '=', 'county_in_us.county_code')
+                    ->where('county_document.document_type','LIKE' ,"%{$req->doctype}%")
+                    //->union($docs1)
+                    ->get();
+
+            $docs3 = \DB::table('state_document')
+                    ->select('county_in_us.county_code','state_document.document_type','state_document.document_name','state_document.document_link','state_document.user_code' , 'county_in_us.county_name')
+                    ->join('county_in_us' , 'state_document.state_code', '=', 'county_in_us.state_code')
+                    ->where('state_document.document_type','LIKE' ,"%{$req->doctype}%")
+                    //->union($docs1)
+                    ->get();
+
+            $docs = $docs1->merge($docs2)->merge($docs3);
+            
+        }
+        else if($req->county != ""){
+            $docs1 = \DB::table('owner_document')
+                    ->select('owner_document.county_code','owner_document.document_type','owner_document.document_name','owner_document.document_link','owner_document.user_code' , 'county_in_us.county_name')
+                    ->join('county_in_us' , 'owner_document.county_code', '=', 'county_in_us.county_code')
+                    ->where('county_in_us.county_name', 'LIKE' , "%{$req->county}%")
+                    ->get();
+
+            $docs2 = \DB::table('county_document')
+                    ->select('county_document.county_code','county_document.document_type','county_document.document_name','county_document.document_link','county_document.user_code' , 'county_in_us.county_name')
+                    ->join('county_in_us' , 'county_document.county_code', '=', 'county_in_us.county_code')
+                    ->where('county_in_us.county_name','LIKE' ,"%{$req->county}%")
+                    //->union($docs1)
+                    ->get();
+
+            $docs3 = \DB::table('state_document')
+                    ->select('county_in_us.county_code','state_document.document_type','state_document.document_name','state_document.document_link','state_document.user_code' , 'county_in_us.county_name')
+                    ->join('county_in_us' , 'state_document.state_code', '=', 'county_in_us.state_code')
+                    ->where('county_in_us.county_name','LIKE' ,"%{$req->county}%")
+                    //->union($docs1)
+                    ->get();
+            $docs = $docs1->merge($docs2)->merge($docs3);
+        }
+        else if($req->state != "")
+        {
+            
+            $docs1 = \DB::table('owner_document')
+                    ->select('owner_document.county_code','owner_document.document_type','owner_document.document_name','owner_document.document_link','owner_document.user_code' , 'county_in_us.county_name')
+                    ->join('county_in_us' , 'owner_document.county_code', '=', 'county_in_us.county_code')
+                    ->where('county_in_us.state_name', 'LIKE' , "%{$req->state}%")
+                    ->get();
+
+            $docs2 = \DB::table('county_document')
+                    ->select('county_document.county_code','county_document.document_type','county_document.document_name','county_document.document_link','county_document.user_code' , 'county_in_us.county_name')
+                    ->join('county_in_us' , 'county_document.county_code', '=', 'county_in_us.county_code')
+                    ->where('county_in_us.state_name','LIKE' ,"%{$req->state}%")
+                    //->union($docs1)
+                    ->get();
+
+            $docs3 = \DB::table('state_document')
+                    ->select('county_in_us.county_code','state_document.document_type','state_document.document_name','state_document.document_link','state_document.user_code' , 'county_in_us.county_name')
+                    ->join('county_in_us' , 'state_document.state_code', '=', 'county_in_us.state_code')
+                    ->where('county_in_us.state_name','LIKE' ,"%{$req->state}%")
+                    //->union($docs1)
+                    ->get();
+            $docs = $docs1->merge($docs2)->merge($docs3);
+        }
+        //$docs = DB::table('county_document')->select('county_name','document_type','document_name')->get();
         return view('document')->with('docs',$docs);
-        //redirect()->back()->with('docs' , $docs);      
-          //return redirect()->to('/task');
+        
     }
 }

@@ -1,5 +1,13 @@
 $(function() {
 
+    //for pagination
+    function page($page_id) {
+        var page = $page_id;
+        //page=page-1;
+        var url = window.location.origin + window.location.pathname;
+        window.location.href = url + "?page=" + page + "";
+    }
+
     $('#createdon').datepicker({
         autoclose: true,
         todayHighlight: true
@@ -20,6 +28,18 @@ $(function() {
         todayHighlight: true,
         format: 'yyyy-mm-dd'
     });
+
+    $('#checksenton').datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        format: 'yyyy-mm-dd'
+    })
+
+    $('#checkreceivedon').datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        format: 'yyyy-mm-dd'
+    })
 
     //For state autocomplete
     var state = [
@@ -65,9 +85,6 @@ $(function() {
         $("#documents").toggle();
     });
 
-
-
-
     'use strict';
     /*-------------------form validations----------------*/
     $('.form-control').each(function() {
@@ -81,11 +98,11 @@ $(function() {
         })
     })
 
-    var input = $('.validate-input .form-control');
-
-    $('#frm-owner').on('submit', function() {
+    $('#frm-owner-track').on('submit', function() {
         var check = true;
         //alert('validations');
+        var input = $('#frm-owner-track .validate-input .form-control');
+
         for (var i = 0; i < input.length; i++) {
             if (validate(input[i]) == false) {
                 showValidate(input[i]);
@@ -96,7 +113,64 @@ $(function() {
         return check;
     });
 
+    $('#frm-owner').on('submit', function() {
+        var check = true;
+        //alert('validations');
+        var input = $('#frm-owner .validate-input .form-control');
 
+        for (var i = 0; i < input.length; i++) {
+            if (validate(input[i]) == false) {
+                showValidate(input[i]);
+                check = false;
+            }
+        }
+
+        return check;
+    });
+
+    $('#frm-owner-cont').on('submit', function() {
+        var check = true;
+        //alert('validations');
+        var input = $('#frm-owner-cont .validate-input .form-control');
+        for (var i = 0; i < input.length; i++) {
+            if (validate(input[i]) == false) {
+                showValidate(input[i]);
+                check = false;
+            }
+        }
+
+        return check;
+    });
+
+    $('#frm-owner-doc').on('submit', function() {
+        var check = true;
+        //alert('validations');
+        var input = $('#frm-owner-doc .validate-input .form-control');
+
+        for (var i = 0; i < input.length; i++) {
+            if (validate(input[i]) == false) {
+                showValidate(input[i]);
+                check = false;
+            }
+        }
+
+        return check;
+    });
+
+    $('#frm-owner-notes').on(submit, function() {
+        var check = true;
+        //alert('validations');
+        var input = $('#frm-owner-notes .validate-input .form-control');
+
+        for (var i = 0; i < input.length; i++) {
+            if (validate(input[i]) == false) {
+                showValidate(input[i]);
+                check = false;
+            }
+        }
+
+        return check;
+    })
     $('.validate-form .form-control').each(function() {
 
         $(this).focus(function() {
@@ -105,7 +179,7 @@ $(function() {
     });
 
     function validate(input) {
-
+        //alert($(input).val().trim());
         if ($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
             if ($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
                 return false;

@@ -75,7 +75,7 @@
                         <a class="nav-link ml-2 text-white" href="{{ url('/county') }}"><b>County</b></a>
                     </li>
                     <li class="nav-item border-right border-secondary" >
-                        <a class="nav-link ml-2 text-white" href="#aboutus"><b>States</b></a>
+                        <a class="nav-link ml-2 text-white" href="{{ url('/state') }}"><b>States</b></a>
                     </li>
                     <li class="nav-item border-right border-secondary" >
                         <a class="nav-link ml-2 text-white" href="{{ url('/document') }}"><b>Documents</b></a>

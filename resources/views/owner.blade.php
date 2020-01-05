@@ -22,19 +22,24 @@
     </div>
     <div class="container bg-white pb-5 mb-4 pt-3">
         <h4 class="float-left">Owners List</h4>
-        <p class="float-right pt-2 pr-5"><button id="btnAddOwner" type="button" class="btn bg-yellow mb-2 text-white"  onclick="clear();">Add Owner&nbsp;<i title="Add Task" class="fa fa-plus "></i></button></p>            
+        <p class="float-right pt-2 pr-5"><button id="btnAddOwner" type="button" class="btn bg-yellow mb-2 text-white">Add Owner&nbsp;<i title="Add Task" class="fa fa-plus "></i></button></p>            
+        <br><br>
+        <p class="float-left">Note: Click on the "County Record Number" to view further details of owner.</p>
+        <div class="table-responsive">
         <table class="table table-striped">
           <thead>
             <tr>
               <th>County Record No.</th>
               <th>Full Name</th>
               <th>Property Address</th>
+              <th>County</th>
               <th>Parcel Number</th>
               <th>Sale Date</th>
-              <th>Overage Amount</th>
-              <th>Available Funds</th>
-              <th>Document</th>
-              <th>Notes</th>
+              <!--<th>O/A Amount</th>
+              <th>O/A Owned</th>-->
+              <th>Avlbl Funds</th>
+              <th>Cont. Owner</th>
+              <th>Cont. County</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -45,21 +50,24 @@
                 @else
                     @foreach($owner as $o)
                     <tr>
-                        <td><a href="{{ url('/ownerdetails') }}">{{ $o->county_record_number}}</a></td>
+                        <td><a href="/ownerdetails?id={{ $o->record_number}}">{{ $o->county_record_number}}</a></td>
                         <td>{{$o->first_name . ' ' . $o->middle_name . ' ' . $o->last_name}}</td>
-                        <td>{{$o->property_address}}</td>
+                        <td>{{$o->property_address . ' ' . $o->city . ' ' . $o->state . ' ' . $o->zip_code}}</td>
+                        <td>{{$o->county_name}}</td>
                         <td>{{$o->parcel_number}}</td>
                         <td>{{$o->sale_date}}</td>
                         <td>{{$o->overage_amount_collected}}</td>
-                        <td>{{$o->available_funds}}</td>
-                        <td><a href="#" type="button" data-toggle="modal" data-target="#adddocModal">0</a></td>
-                        <td><a href="#" type="button" data-toggle="modal" data-target="#addnotesModal">2</a></td>
+                       <!-- <td>{{$o->overage_amount_owned_to_owner}}</td> 
+                        <td>{{$o->available_funds}}</td>-->
+                        <td>{{$o->contacted_owner}}</td>
+                        <td>{{$o->contacted_county}}</td>
                         <td><i title="Edit" class="fa fa-edit" onclick="updateOwner({{$o->record_number}})"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash" onclick="deleteOwner({{$o->record_number}})"></i></td>
                     </tr>
                     @endforeach
                 @endif            
           </tbody>
         </table>
+        </div>
         <ul class="pagination justify-content-end " style="margin:20px 0">
             <li class="page-item"><a class="page-link text-black" href="javascript:void(0)" onclick="previous()"><<</a></li>
             <li class="page-item"><a class="page-link text-black" href="#" onclick="page(1)">1</a></li>
@@ -80,7 +88,7 @@
             <input type="hidden" name="recordnumber" id="recordnumber">
             <!-- Modal Header -->
             <div class="modal-header bg-yellow">
-                <h4 class="modal-title">Add New Owner</h4>
+                <h4 class="modal-title">Owner</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <!-- Modal body -->
@@ -93,12 +101,11 @@
                                 <div class="col-sm-6 form-group validate-input" data-validate = "Please fill out this field.">
                                     <label for="countyrecno">County Record Number:</label>
                                     <input type="text" class="form-control" id="countyrecno" name="countyrecno">
-                                    
                                 </div>
                                 <div class="col-sm-6 form-group validate-input" data-validate = "Please fill out this field.">
                                     <label for="countycode">County:</label>
-                                    <input type="text" class="form-control" id="countycode" name="countycode">
-                                    
+                                    <input type="text" class="form-control typeahead" id="countycode" name="countycode">
+                                    <input type="hidden" id="cc" name="cc">
                                 </div>
                             </div>
                             <div class="form-row">
@@ -212,7 +219,33 @@
         </div>
     </div>
 </div>
-<script>
+<script type="text/javascript">
+    //For county autocomplete
+    var path = "/getCounties";
+    var map;
+    $('input.typeahead').typeahead({
+        source:  function (query, process) {
+            var $this = this;
+            return $.get(path,{ query: query }, function(data){
+                //alert(data)
+                var options = [];
+                $this["map"]={};
+                $.each(data,function(i,val){
+                    //console.log(val.name);
+                    options.push(val.name);
+                    $this.map[val.name] = val.id;
+                });
+               // alert(process(options))
+                return process(options);
+            });
+        },
+        updater: function(item){
+            //$('#countycode').val(item);
+            $('#cc').val(this.map[item],item);
+            return item;
+        }
+    });
+
     //for pagination
     function page($page_id)
     {
@@ -236,13 +269,7 @@
         $('#recordnumber').val('0');
         $('#addownerModal').modal('show');
     })
-    //for clearing fields of form
-    function clear()
-    {
-        alert('in clear');
-        $('#addownerModal').find("input[type=text], textarea").val("");
-        $('#recordnumber').val('0');
-    }
+    
     //for updation of owner
     function updateOwner($id)
     {
@@ -260,7 +287,8 @@
                 var obj=JSON.parse(JSON.stringify(data));
                 
                 $('#countyrecno').val(obj[0].county_record_number);
-                $('#countycode').val(obj[0].county_code);
+                $('#countycode').val(obj[0].county_name);
+                $('#cc').val(obj[0].county_code);
                 $('#firstname').val(obj[0].first_name);
                 $('#middlename').val(obj[0].middle_name);
                 $('#lastname').val(obj[0].last_name);

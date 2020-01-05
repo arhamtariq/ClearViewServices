@@ -62,11 +62,49 @@ Route::post('/createowner' , 'OwnerController@createowner');
 Route::get('/getOwnerData' , 'OwnerController@getOwnerData');
 Route::get('/deleteOwner','OwnerController@deleteOwner');//->middleware('auth');
 Route::post('/searchOwner', 'OwnerController@searchOwner');
+Route::get('/getCounties' , 'OwnerController@getCounties');
+Route::post('/createOwnerContact','OwnerController@createOwnerContact');
+Route::get('/deleteOwnerContact', 'OwnerController@deleteOwnerContact');
+Route::get('/getOwnerContactData' , 'OwnerController@getOwnerContactData');
 
-Route::get('/county', 'CountyController@index')->middleware('auth');
+Route::post('/createOwnerDoc' , 'OwnerDocController@createOwnerDoc');
+Route::get('viewfile','OwnerDocController@viewfile');
+Route::get('/getOwnerDocData' , 'OwnerDocController@getOwnerDocData');
+Route::get('/deleteOwnerDoc' , 'OwnerDocController@deleteOwnerDoc');
+
+Route::post('/createOwnerNotes', 'OwnerNotesController@createOwnerNotes');
+Route::get('/getOwnerNotesData' , 'OwnerNotesController@getOwnerNotesData');
+Route::get('/deleteOwnerNotes' , 'OwnerNotesController@deleteOwnerNotes');
+
+Route::post('/createOwnerTrack' , 'OwnerTrackController@createOwnerTrack');
+Route::get('/deleteOwnerTrack' , 'OwnerTrackController@deleteOwnerTrack');
+Route::get('/getOwnerTrackData' , 'OwnerTrackController@getOwnerTrackData');
+
+Route::get('/county', 'CountyController@index');//->middleware('auth');
+Route::post('/searchCounty' , 'CountyController@searchCounty');
+Route::get('/getCountyDetails' , 'CountyController@getCountyDetails');
+Route::post('/createCountyContact' , 'CountyController@createCountyContact');
+Route::get('/getCountyContactData','CountyController@getCountyContactData');
+Route::get('/deleteCountyContact' , 'CountyController@deleteCountyContact');
+Route::post('/createCountyNotes', 'CountyController@createCountyNotes');
+Route::get('/getCountyNotesData', 'CountyController@getCountyNotesData');
+Route::get('/deleteCountyNotes','CountyController@deleteCountyNotes');
+Route::post('/createCountyDoc', 'CountyController@createCountyDoc');
+Route::get('/getCountyDocData','CountyController@getCountyDocData');
+Route::get('/deleteCountyDoc','CountyController@deleteCountyDoc');
+
+Route::get('/state', 'StateController@index');//->middleware('auth');
+Route::post('/searchState' , 'StateController@searchState');
+Route::get('/getStateDetails' , 'StateController@getStateDetails');
+Route::post('/createStateNotes', 'StateController@createStateNotes');
+Route::get('/getStateNotesData', 'StateController@getStateNotesData');
+Route::get('/deleteStateNotes','StateController@deleteStateNotes');
+Route::post('/createStateDoc', 'StateController@createStateDoc');
+Route::get('/getStateDocData','StateController@getStateDocData');
+Route::get('/deleteStateDoc','StateController@deleteStateDoc');
 
 Route::get('/document' , 'DocumentController@index');//->middleware('auth');
-Route::post('/document_search' , 'DocumentController@search');
+Route::post('/searchDocument' , 'DocumentController@searchDocument');
 
 Route::get('/admin' , 'AdminController@index')->middleware('auth');
 Route::post('/create_sub_user' , 'AdminController@create_sub_user')->middleware('auth');
