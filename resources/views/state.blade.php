@@ -16,19 +16,24 @@
             <thead>
                 <tr>
                     <th>State Name</th>
-                    <th>View Details</th>
-                    
+                    <th>Notes/ Documents</th>
+                    <th>Workables</th>
                 </tr>
             </thead>
             <tbody>
                 @if ($state == null OR count($state) == 0)
-                    <tr><td colspan="2" class="text-center">No Record Exists.</td></tr>
+                    <tr><td colspan="3" class="text-center">No Record Exists.</td></tr>
                 @else
                     
                 @foreach ($state as $s)
                 <tr>
                     <td>{{ $s->state_name}}</td>
                     <td><a href="/getStateDetails?id={{$s->state_code}}">Click here to view details.</a></td>
+                    @if (($s->timeframe_before_finders_fee == '') AND ($s->where_list_is_located == ''))
+                        <td>Not Available</td>
+                    @else
+                        <td><a href="#" onclick="openWorkableDetails('{{$s->state_code}}')">Click here to view workables.</a></td>
+                    @endif
                 </tr>
                 @endforeach
                 @endif
@@ -43,4 +48,60 @@
         </ul>
     </div>
 </div>
+
+<!--  workable modal ---->
+<div class="modal" id="workableModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header bg-yellow">
+                <h4 class="modal-title">Workables</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="col-sm-12 form-group">
+                        <h5>Timeframe before finders fee:</h5>
+                        <p id="timeframe"></p>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-12 form-group validate-input" data-validate = "Please fill out this field.">
+                        <h5>List located at:</h5>
+                        <p id="listlocation"></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function openWorkableDetails($id){
+        $('#timeframe').text('');
+        $('#listlocation').text('');
+        $.ajax({
+            type: "GET",
+            url: "/getWorkableDetails",
+            dataType: "json",
+            cache: false,
+            data: {
+                id: $id
+            },
+            success: function(data) {
+                
+                var obj=JSON.parse(JSON.stringify(data));
+                $('#timeframe').text(obj[0].timeframe_before_finders_fee);
+                $('#listlocation').text(obj[0].where_list_is_located);                    
+            }
+        });
+        $('#workableModal').modal('show');
+    }
+</script>
+
 @endsection

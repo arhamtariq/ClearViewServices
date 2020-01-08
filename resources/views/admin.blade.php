@@ -156,14 +156,13 @@
                         <label for="role">Role:</label>
                         <select class="form-control" id="role" name="role">
                             <option value="0">Please Select role:</option>
-                            <option value="admin">Administrator</option>
-                            <option value="manager">Manager</option>
-                            <option value="full_access">Full Access</option>
-                            <option value="skip_trace">Skip Trace</option>
-                            <option value="county_contact_list">Company Contact List</option>
-                            <option value="owner_contact_list">Owner Contact List</option>
-                            <option value="owner_contact">Owner Contact</option>
-                            <option value="county_form_submission">County Form Submistion</option>
+                            <option value="Administrator">Administrator</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Full Access VA">Full Access VA</option>
+                            <option value="Skip Trace">Skip Trace</option>
+                            <option value="County Contact List">County Contact List</option>
+                            <option value="Owner Contact VA">Owner Contact VA</option>
+                            <option value="County Form Submission">County Form Submistion</option>
                         </select>
                         <div class="valid-feedback">Valid.</div>
                         <div class="invalid-feedback">Please fill out this field.</div>

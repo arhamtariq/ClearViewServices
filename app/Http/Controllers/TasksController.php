@@ -42,10 +42,7 @@ class TasksController extends Controller
             'createdby' => 'required',
             'createdon' => 'required',
             'duedate' => 'required',
-            'status' => 'required',
-            'esculate_task' => 'required',
-            'esculate_stask' => 'required',
-            'tasksnotes'=>'required',   
+            
         ]);
         if ($validator->fails()) {
             $errors = $validator->errors();

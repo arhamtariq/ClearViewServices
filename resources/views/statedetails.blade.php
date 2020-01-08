@@ -18,7 +18,7 @@
         @endif
     </div>
     
-    <!-- County's Notes List -->
+    <!-- State's Notes List -->
    
     <div class="container bg-white">
         <div class="row pt-5 pb-2">
@@ -30,21 +30,17 @@
                 <tr>
                     <th>Note Type</th>
                     <th>Details</th>
-                    <th>Added By</th>
-                    <th>Added On</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @if ($state_notes == null OR count($state_notes) == 0 OR $state_notes[0]->note_number == null)
-                    <tr><td colspan="5" class="text-center">No Record Exists.</td></tr>
+                    <tr><td colspan="3" class="text-center">No Record Exists.</td></tr>
                 @else
                     @foreach($state_notes as $sn)
                     <tr>
                         <td>{{$sn->note_type}}</td>
                         <td>{{$sn->note_details}}</td>
-                        <td>{{$sn->user_code}}</td>
-                        <td>{{$sn->time_stamp_for_record_creation}}</td>
                         <td><i title="Edit" class="fa fa-edit" onclick="updateStateNotes({{$sn->note_number}})"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash" onclick="deleteStateNotes({{$sn->note_number}})"></i></td>
                     </tr>
                     @endforeach
@@ -176,8 +172,8 @@
                 </div>
                 <div class="form-row">
                     <div class="col-sm-12 form-group validate-input" data-validate = "Please fill out this field.">
-                        <label for="countynotes">Notes:</label>
-                        <textarea class="form-control rounded-1" id="countynotes" name="countynotes" rows="3"></textarea>
+                        <label for="statenotes">Notes:</label>
+                        <textarea class="form-control rounded-1" id="statenotes" name="statenotes" rows="3"></textarea>
                     </div>
                 </div>
             </div>
@@ -189,10 +185,11 @@
         </div>
     </div>
 </div>
+
 <script>
     
     //for notes form reset
-    $('#btnaddCountyNotes').click(function(){
+    $('#btnaddStateNotes').click(function(){
         
         $('#frm-state-notes')[0].reset();
         $('#notesc').val($('#statecode').val());
@@ -200,7 +197,7 @@
         $('#addnotesModal').modal('show');
     })
     //for document form reset
-    $('#btnAddCountyDoc').click(function(){
+    $('#btnAddStateDoc').click(function(){
         $('#frm-state-doc')[0].reset();
         $('#docsc').val($('#statecode').val());
         $('#documentnumber').val('0');
@@ -208,7 +205,7 @@
     })
     
     
-    //For deletion of county notes
+    //For deletion of state notes
     function  deleteStateNotes($id)
     {
         if(confirm('Are You Sure You want to delete State Notes?'))
@@ -244,7 +241,7 @@
             success: function(data) {
                 var obj=JSON.parse(JSON.stringify(data));
                 $('#notestype').val(obj[0].note_type);
-                $('#countynotes').text(obj[0].note_details);               
+                $('#statenotes').text(obj[0].note_details);               
             }
         });
         $('#addnotesModal').modal('show');
@@ -252,7 +249,7 @@
     //for update state document
     function updateStateDoc($id){
         $('#docsc').val($('#statecode').val());
-        $('#documentnumber').val($id);
+        $('#docid').val($id);
 
         $.ajax({
             type: "GET",

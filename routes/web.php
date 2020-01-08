@@ -32,6 +32,7 @@ Route::post('paypal', array('as' => 'addmoney.paypal','uses' => 'AddMoneyControl
 Route::get('paypal', array('as' => 'payment.status','uses' => 'AddMoneyController@getPaymentStatus'));
 
 Route::post('dologin','userController@dologin');
+Route::get('logout','userController@logout');
 Route::get('forgotPasswordRequest','userController@forgotPasswordRequest');
 Route::post('resetPasswordRequest','userController@resetPasswordRequest');
 Route::get('resetPasswordLink','userController@resetPasswordLink');
@@ -56,60 +57,61 @@ Route::get('/getTrailStatus','userController@getTrailStatus')->middleware('auth'
 
 //Route::get('/owner', 'OwnerController@index')->middleware('auth');
 //Route::get('/ownerdetails', 'OwnerController@showDetails')->middleware('auth');
-Route::get('/owner', 'OwnerController@index');
-Route::get('/ownerdetails', 'OwnerController@showDetails');
-Route::post('/createowner' , 'OwnerController@createowner');
-Route::get('/getOwnerData' , 'OwnerController@getOwnerData');
-Route::get('/deleteOwner','OwnerController@deleteOwner');//->middleware('auth');
-Route::post('/searchOwner', 'OwnerController@searchOwner');
-Route::get('/getCounties' , 'OwnerController@getCounties');
-Route::post('/createOwnerContact','OwnerController@createOwnerContact');
-Route::get('/deleteOwnerContact', 'OwnerController@deleteOwnerContact');
-Route::get('/getOwnerContactData' , 'OwnerController@getOwnerContactData');
+Route::get('/owner', 'OwnerController@index')->middleware('auth');
+Route::get('/ownerdetails', 'OwnerController@showDetails')->middleware('auth');
+Route::post('/createowner' , 'OwnerController@createowner')->middleware('auth');
+Route::get('/getOwnerData' , 'OwnerController@getOwnerData')->middleware('auth');
+Route::get('/deleteOwner','OwnerController@deleteOwner')->middleware('auth');
+Route::post('/searchOwner', 'OwnerController@searchOwner')->middleware('auth');
+Route::get('/getCounties' , 'OwnerController@getCounties')->middleware('auth');
+Route::post('/createOwnerContact','OwnerController@createOwnerContact')->middleware('auth');
+Route::get('/deleteOwnerContact', 'OwnerController@deleteOwnerContact')->middleware('auth');
+Route::get('/getOwnerContactData' , 'OwnerController@getOwnerContactData')->middleware('auth');
 
-Route::post('/createOwnerDoc' , 'OwnerDocController@createOwnerDoc');
-Route::get('viewfile','OwnerDocController@viewfile');
-Route::get('/getOwnerDocData' , 'OwnerDocController@getOwnerDocData');
-Route::get('/deleteOwnerDoc' , 'OwnerDocController@deleteOwnerDoc');
+Route::post('/createOwnerDoc' , 'OwnerDocController@createOwnerDoc')->middleware('auth');
+Route::get('viewfile','OwnerDocController@viewfile')->middleware('auth');
+Route::get('/getOwnerDocData' , 'OwnerDocController@getOwnerDocData')->middleware('auth');
+Route::get('/deleteOwnerDoc' , 'OwnerDocController@deleteOwnerDoc')->middleware('auth');
 
-Route::post('/createOwnerNotes', 'OwnerNotesController@createOwnerNotes');
-Route::get('/getOwnerNotesData' , 'OwnerNotesController@getOwnerNotesData');
-Route::get('/deleteOwnerNotes' , 'OwnerNotesController@deleteOwnerNotes');
+Route::post('/createOwnerNotes', 'OwnerNotesController@createOwnerNotes')->middleware('auth');
+Route::get('/getOwnerNotesData' , 'OwnerNotesController@getOwnerNotesData')->middleware('auth');
+Route::get('/deleteOwnerNotes' , 'OwnerNotesController@deleteOwnerNotes')->middleware('auth');
 
-Route::post('/createOwnerTrack' , 'OwnerTrackController@createOwnerTrack');
-Route::get('/deleteOwnerTrack' , 'OwnerTrackController@deleteOwnerTrack');
-Route::get('/getOwnerTrackData' , 'OwnerTrackController@getOwnerTrackData');
+Route::post('/createOwnerTrack' , 'OwnerTrackController@createOwnerTrack')->middleware('auth');
+Route::get('/deleteOwnerTrack' , 'OwnerTrackController@deleteOwnerTrack')->middleware('auth');
+Route::get('/getOwnerTrackData' , 'OwnerTrackController@getOwnerTrackData')->middleware('auth');
 
-Route::get('/county', 'CountyController@index');//->middleware('auth');
-Route::post('/searchCounty' , 'CountyController@searchCounty');
-Route::get('/getCountyDetails' , 'CountyController@getCountyDetails');
-Route::post('/createCountyContact' , 'CountyController@createCountyContact');
-Route::get('/getCountyContactData','CountyController@getCountyContactData');
-Route::get('/deleteCountyContact' , 'CountyController@deleteCountyContact');
-Route::post('/createCountyNotes', 'CountyController@createCountyNotes');
-Route::get('/getCountyNotesData', 'CountyController@getCountyNotesData');
-Route::get('/deleteCountyNotes','CountyController@deleteCountyNotes');
-Route::post('/createCountyDoc', 'CountyController@createCountyDoc');
-Route::get('/getCountyDocData','CountyController@getCountyDocData');
-Route::get('/deleteCountyDoc','CountyController@deleteCountyDoc');
+Route::get('/county', 'CountyController@index')->middleware('auth');
+Route::post('/searchCounty' , 'CountyController@searchCounty')->middleware('auth');
+Route::get('/getCountyDetails' , 'CountyController@getCountyDetails')->middleware('auth');
+Route::post('/createCountyContact' , 'CountyController@createCountyContact')->middleware('auth');
+Route::get('/getCountyContactData','CountyController@getCountyContactData')->middleware('auth');
+Route::get('/deleteCountyContact' , 'CountyController@deleteCountyContact')->middleware('auth');
+Route::post('/createCountyNotes', 'CountyController@createCountyNotes')->middleware('auth');
+Route::get('/getCountyNotesData', 'CountyController@getCountyNotesData')->middleware('auth');
+Route::get('/deleteCountyNotes','CountyController@deleteCountyNotes')->middleware('auth');
+Route::post('/createCountyDoc', 'CountyController@createCountyDoc')->middleware('auth');
+Route::get('/getCountyDocData','CountyController@getCountyDocData')->middleware('auth');
+Route::get('/deleteCountyDoc','CountyController@deleteCountyDoc')->middleware('auth');
 
-Route::get('/state', 'StateController@index');//->middleware('auth');
-Route::post('/searchState' , 'StateController@searchState');
-Route::get('/getStateDetails' , 'StateController@getStateDetails');
-Route::post('/createStateNotes', 'StateController@createStateNotes');
-Route::get('/getStateNotesData', 'StateController@getStateNotesData');
-Route::get('/deleteStateNotes','StateController@deleteStateNotes');
-Route::post('/createStateDoc', 'StateController@createStateDoc');
-Route::get('/getStateDocData','StateController@getStateDocData');
-Route::get('/deleteStateDoc','StateController@deleteStateDoc');
+Route::get('/state', 'StateController@index')->middleware('auth');
+Route::post('/searchState' , 'StateController@searchState')->middleware('auth');
+Route::get('/getStateDetails' , 'StateController@getStateDetails')->middleware('auth');
+Route::post('/createStateNotes', 'StateController@createStateNotes')->middleware('auth');
+Route::get('/getStateNotesData', 'StateController@getStateNotesData')->middleware('auth');
+Route::get('/deleteStateNotes','StateController@deleteStateNotes')->middleware('auth');
+Route::post('/createStateDoc', 'StateController@createStateDoc')->middleware('auth');
+Route::get('/getStateDocData','StateController@getStateDocData')->middleware('auth');
+Route::get('/deleteStateDoc','StateController@deleteStateDoc')->middleware('auth');
+Route::get('/getWorkableDetails' , 'StateController@getWorkableDetails')->middleware('auth');
 
-Route::get('/document' , 'DocumentController@index');//->middleware('auth');
-Route::post('/searchDocument' , 'DocumentController@searchDocument');
+Route::get('/document' , 'DocumentController@index')->middleware('auth');
+Route::post('/searchDocument' , 'DocumentController@searchDocument')->middleware('auth');
 
-Route::get('/admin' , 'AdminController@index')->middleware('auth');
-Route::post('/create_sub_user' , 'AdminController@create_sub_user')->middleware('auth');
+Route::get('/admin' , 'AdminController@index')->middleware('auth')->middleware('auth');
+Route::post('/create_sub_user' , 'AdminController@create_sub_user')->middleware('auth')->middleware('auth');
 
-Route::get('autocomplete', 'AutocompleteController@states');
+Route::get('autocomplete', 'AutocompleteController@states')->middleware('auth');
 
 
 

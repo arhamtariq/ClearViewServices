@@ -13,8 +13,10 @@ class StateController extends Controller
     //
     public function index()
     {
-        $state = \DB::table('county_in_us')->select('state_code','state_name')
-                            ->distinct()->get(['state_name']);
+        $state = \DB::table('county_in_us')
+                    ->select('county_in_us.state_code','county_in_us.state_name','timeframe_before_finders_fee','where_list_is_located')
+                    ->join('workable_state','county_in_us.state_code' , '=', 'workable_state.state_code','left outer')
+                    ->distinct()->get(['county_in_us.state_name']);
         return view('state')->with('state',$state);
     }
 
@@ -32,18 +34,25 @@ class StateController extends Controller
     }
     public function getStateDetails(Request $req)
     {
-        $state_notes = \DB::table('state_notes')->select('state_notes.*','county_in_us.county_name','county_in_us.county_code')
+        $state_notes = \DB::table('state_notes')->select('state_notes.*','county_in_us.state_name','county_in_us.state_code')
                         ->join('county_in_us', 'state_notes.state_code', '=', 'county_in_us.state_code' , 'right outer')                    
                         ->where('county_in_us.state_code',$req->id)
-                        ->get();
+                        ->distinct()->get(['note_number']);
 
-        $state_document = \DB::table('state_document')->select('state_document.*','county_in_us.county_name','county_in_us.county_code')
+        $state_document = \DB::table('state_document')->select('state_document.*','county_in_us.state_name','county_in_us.state_code')
                             ->join('county_in_us', 'state_document.state_code', '=', 'county_in_us.state_code' , 'right outer')                    
                             ->where('county_in_us.state_code',$req->id)
-                            ->get();
+                            ->distinct()->get(['document_number']);
         return view('statedetails')->with('state_notes' , $state_notes)->with('state_document' , $state_document);
     }
-    
+    public function getWorkableDetails(Request $req)
+    {
+        $workable = \DB::table('workable_state')->select('*')
+                    ->where('state_code' , $req->id)
+                    ->get();
+
+        echo json_encode($workable);
+    }
     //To add state document
     public function createStateDoc(Request $req)
     {
@@ -74,7 +83,7 @@ class StateController extends Controller
             }
             else
             {
-                \DB::table('county_document')->insert([
+                \DB::table('state_document')->insert([
                     'state_code' =>$req->docsc,
                     'document_type' => $req->doctype,
                     'document_name' => $req->docname,
@@ -86,7 +95,7 @@ class StateController extends Controller
         }
     }
     
-    //To pull data of county document to modify it
+    //To pull data of state document to modify it
     public function getStateDocData(Request $req)
     {
         $doc = \DB::table('state_document')->select('*')
@@ -135,7 +144,7 @@ class StateController extends Controller
             {
                 \DB::table('state_notes')->where('note_number',$req->notenumber)->update([
                     'note_type' =>$req->notestype,// ,
-                    'note_details'=> $req->countynotes,	
+                    'note_details'=> $req->statenotes,	
                 ]);
                 return redirect()->back()->withSuccess('State Notes Updated Successfully');
 
@@ -145,7 +154,7 @@ class StateController extends Controller
                 \DB::table('state_notes')->insert([
                     'state_code' =>$req->notesc,
                     'note_type' =>$req->notestype,// ,
-                    'note_details'=> $req->countynotes,
+                    'note_details'=> $req->statenotes,
                     'user_code'=>1	
                 ]);
                 return redirect()->back()->withSuccess('State Notes Created Successfully');

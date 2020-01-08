@@ -59,14 +59,14 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-xl bg-grey navbar-static-top navbar-light sticky-top "  >
         <div class="container pl-0">
-            <button type="button" class="navbar-toggler bg-danger" id="navbtn" data-toggle="collapse" data-target="#nav" style="margin-right:80px;">
+            <button type="button" class="navbar-toggler bg-yellow" id="navbtn" data-toggle="collapse" data-target="#nav" style="margin-left:auto;margin-right:0px;">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!-- Links -->
             <div class="collapse navbar-collapse justify-content-left w-75" id="nav">
                 <ul class="navbar-nav navbar-brand nav" style="font-size:18px;height:100%;">
                     <li class="nav-item border-right border-secondary">
-                        <a class="nav-link ml-0 text-white" href="{{ url('/tasks') }}"><b>Task</b></a>
+                        <a class="nav-link ml-0 text-white" href="{{ url('/task') }}"><b>Task</b></a>
                     </li>
                     <li class="nav-item border-right border-secondary" >
                         <a class="nav-link ml-2 text-white" href="{{ url('/owner') }}"><b>Owners</b></a>
