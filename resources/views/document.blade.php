@@ -81,6 +81,85 @@ var path = "/getCounties";
             return item;
         }
     });
+
+     function page($page_id)
+   {
+    //alert($page_id);
+
+    var page =$page_id;
+    //page=page-1;
+    var url = window.location.origin + window.location.pathname;
+    window.location.href=url+"?page="+page+"";
+   }
+   
+  
+  
+  function previous()
+  {
+    var page=getUrlVars();
+
+
+    if(page['page'])
+    {
+        page=page['page'];
+    }
+    else
+    {
+        page = 1;
+    }
+    if(page==1)
+    {
+
+    }
+    else{
+        page=--page;
+        var url = window.location.origin + window.location.pathname;
+        var queryString=getUrlVars();
+                                       
+                        
+    window.location.href=url+"?page="+page+"";
+    /*window.location.href=url+"?page="+page+"&box_type="+box_type+"";*/
+    }
+    //                                              window.location.href=url+"?page="+page+"&box_type="+box_type+"";
+    }
+    function Next()
+    {
+        var existing_page=4;
+    //alert(existing_page);
+    //return false;
+    var page=getUrlVars();
+    
+    if(page['page'])
+    {
+        page=page['page'];
+    }
+    else
+    {
+        page = 0;
+    }
+
+    page=++page;
+    if(page==existing_page)
+    {
+
+        return false;
+    }
+
+    var url = window.location.origin + window.location.pathname;
+    
+    window.location.href=url+"?page="+page+"";
+
+}
+    function getUrlVars() {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for (var i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+    }
 </script>
 
 @endsection

@@ -12,6 +12,14 @@ class DocumentController extends Controller
     //
     public function index()
     {
+         if(isset($req->page)) 
+        {
+            $offset=5*($req->page-1);
+        }   
+        else
+        {
+            $offset=0;
+        }
         return view('document')->with('docs',null);
     }
 

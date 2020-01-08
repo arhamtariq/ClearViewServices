@@ -13,8 +13,17 @@ class StateController extends Controller
     //
     public function index()
     {
+         if(isset($req->page)) 
+        {
+            $offset=5*($req->page-1);
+        }   
+        else
+        {
+            $offset=0;
+        }
         $state = \DB::table('county_in_us')->select('state_code','state_name')
-                            ->distinct()->get(['state_name']);
+                            ->distinct()->offset($offset)
+            ->limit(5)->get(['state_name']);
         return view('state')->with('state',$state);
     }
 

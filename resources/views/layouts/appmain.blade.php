@@ -48,7 +48,7 @@
             
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item text-white"><a class="nav-link text-white " href="#"><b>Hello! Patrick Jean Paul</b></a></li>
+                <li class="nav-item text-white"><a class="nav-link text-white " href="#"><b>{{auth()->user()->username}}</b></a></li>
                 <li class="nav-item"><a title="Profile" class="nav-link text-white " href="{{ url('/profile') }}"><i class="fa fa-user"></i></a></li>
                 <li class="nav-item"><a title="Logoff" class="nav-link text-white" href="{{ url('/logout') }}"><i class="fa fa-sign-out"></i></a></li>
                 <li class="nav-item"><a title="Help" class="nav-link text-white" href="{{ url('/help') }}"><i class="fa fa-question"></i></a></li>
