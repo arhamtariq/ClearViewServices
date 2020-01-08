@@ -28,23 +28,24 @@
     <script src="{{ asset('js/core.js') }}"></script>
 </head>
 <body id="app-layout">
-    <nav class="navbar navbar-expand-sm navbar-dark bg-grey navbar-static-top mb-0">
-        <div class="container pl-0">
-            <div class="collapse navbar-collapse ml-0  w-100 " id="app-navbar-collapse">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-grey navbar-static-top mb-0 pr-0 ">
+          
+            <div class="navbar-collapse ml-0  w-100 mr-0" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav w-75 ml-0 mr-5 pr-5">
+                
+                <ul id="navleft" class="navbar-nav w-75 ml-0">
                     <li class="nav-item text-white mr-5"><div class="fa fa-envelope"></div>&nbsp;info@clearviewservices.com</a></li>
                     <li class="nav-item text-white mr-5"><div class="fa fa-phone"></div>&nbsp;+1 888 999 7777 </li>
                 </ul>
                 
                 <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right pl-5">
+                <ul id="navright" class="nav navbar-nav navbar-expand navbar-right" style="margin-right:0;margin-left:auto;">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                        <li class="nav-item pl-5"><a class="nav-link text-white pl-5" href="{{ url('/login') }}"><i class="fa fa-user"></i></a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="{{ url('/register') }}"><i class="fa fa-user-plus"></i></a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="{{ url('/login') }}"><i class="fa fa-user"></i></a></li>
+                        <li class="nav-item pl-2 pr-2"><a class="nav-link text-white" href="{{ url('/register') }}"><i class="fa fa-user-plus"></i></a></li>
                     @else
-                        <li class="nav-item dropdown">
+                        <li class="nav-item">
                             <a class="nav-item" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
@@ -60,21 +61,21 @@
     </nav>
     
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-xl bg-yellow navbar-static-top navbar-light sticky-top "  >
+    <nav class="navbar navbar-expand-md bg-yellow navbar-static-top navbar-light sticky-top "  >
         <!-- Brand -->
-        <a class="navbar-brand d-flex justify-content-between w-75" href="#" style="margin-left:80px;">
+        <a class="navbar-brand w-75" href="#" >
             <img src="images/logo-white.png"  alt="Property Investment" width="150" height="25" class="img-fluid"/>
         </a>
-        <button type="button" class="navbar-toggler bg-danger" id="navbtn" data-toggle="collapse" onclick="changetheme();" data-target="#nav" style="margin-right:80px;">
+        <button type="button" class="navbar-toggler" id="navbtn" data-toggle="collapse" data-target="#nav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Links -->
-        <div class="collapse navbar-collapse justify-content-around w-75 ml-5" id="nav">
-            <ul class="navbar-nav navbar-brand nav" style="font-size:18px;height:100%;">
+        <div class="collapse navbar-collapse" id="nav" style="margin-right:0;margin-left:auto;">
+            <ul class="navbar-nav" style="font-size:16px;height:100%;">
                 <li class="nav-item border-right border-secondary">
-                    <a class="nav-link ml-5" href="{{ url('/') }}"><b>Home</b></a>
+                    <a class="nav-link ml-2" href="{{ url('/') }}"><b>Home</b></a>
                 </li>
-                <li class="nav-item dropdown border-right border-secondary" >
+                <li class="nav-item border-right border-secondary" >
                     <a class="nav-link ml-2" href="#aboutus"><b>About Us</b></a>
                 </li>
                 <li class="nav-item">
@@ -82,22 +83,18 @@
                 </li>
             </ul>
         </div>
+
+        
     </nav>
     <!-- Navigation Bar Ends here -->
     <!-- Header Bar Ends -->
     
 
     @yield('content')
-
-    <nav class="navbar navbar-expand-sm navbar-dark bg-grey navbar-static-top mb-0">
-        <div class="container">
-            <div class="collapse navbar-collapse w-100 text-center">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav w-25">
-                    <li class="nav-item text-white mr-5"><div class="fa fa-copyright"></div>&nbsp;2020</a></li>
-                </ul>
-            </div>
+    <div class="bg-grey">
+        <div class="w-100 text-center text-white">
+            All rights reserved <i class="fa fa-copyright"></i>&nbsp;2020</a>
         </div>
-    </nav>
+    </div>
 </body>
 </html>

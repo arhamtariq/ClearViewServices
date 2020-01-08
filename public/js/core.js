@@ -1,5 +1,14 @@
 $(function() {
 
+    //for smooth scrolling
+    $('#nav li a').click(function(e) {
+
+        var targetHref = $(this).attr('href');
+
+        $('html, body').animate({
+            scrollTop: $(targetHref).offset().top - 100
+        }, 1000);
+    });
     //for pagination
     function page($page_id) {
         var page = $page_id;

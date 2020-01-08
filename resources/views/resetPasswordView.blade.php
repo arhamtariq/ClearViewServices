@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="wrapper-login-lower">
-            <form class="login-form validate-form" action="/resetPasswordRequest" method="post">
+            <form class="login-form validate-form" action="{{ url('/resetPasswordRequest') }}" method="post">
                 <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
                 <div class="form-input validate-input m-b-26" data-validate="Username is required">
                     <span class="form-label">Email</span>

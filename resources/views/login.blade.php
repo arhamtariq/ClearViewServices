@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="wrapper-login-lower">
-            <form class="login-form validate-form needs-validation" action="/dologin" method="post" novalidate>
+            <form class="login-form validate-form needs-validation" action="{{ url('/dologin') }}" method="post" novalidate>
                 <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
                 <div class="form-input validate-input m-b-26" data-validate="Username is required">
                     <span class="form-label">Username</span>
@@ -47,7 +47,7 @@
                     <span class="focus-input"></span>
                 </div>
                    <div class="flex-sb-m w-full p-b-30 mt-2">
-                    <a href="/forgotPasswordRequest">Forgot Password</a>
+                    <a href="{{ url('/forgotPasswordRequest') }}">Forgot Password</a>
                 </div>
                 <div class="flex-sb-m w-full p-b-30 mt-2">
                     <a href="{{ url('/terms') }}">Click here to Register</a>
