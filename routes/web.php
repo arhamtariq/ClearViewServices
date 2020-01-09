@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/login', function () {
-	dump('ok');
-	die();
+	//dump('ok');
+//	die();
     return view('login');
  
 })->name('login');
