@@ -12,16 +12,28 @@ use DB;
 class AdminController extends Controller
 {
     //
-    public function index()
+    public function index(Request $req)
     {
-    	///dump(auth()->users());
+     //dump(auth()->user());
     	//die();
+        if(isset($req->page)) 
+        {
+            $offset=5*($req->page-1);
+        }   
+        else
+        {
+            $offset=0;
+        }
+        //dump($offset);
+        //die(); 
     	$userObj = new User();
     	//dump($userObj->getSubUsers());
     	//die();
     	$users=DB::table('users')
             ->join('administartion_users', 'administartion_users.user_code', '=', 'users.id')->where('administartion_users.created_by_code',auth()->user()->id)
             ->select('users.*')
+            ->offset($offset)
+            ->limit(5)
             ->get();
          //dump($users);
          //exit(); 
@@ -30,12 +42,11 @@ class AdminController extends Controller
     }
     public function create_sub_user(Request $req)
     {
-    	//dump($req);
-    	//die();
+    	
      $userObj = new User();
      if($userObj->getSubUsers() == 0)
      {
-     	return redirect()->withError('New users cannot be added .update your plan');
+     	return redirect()->back()->withError('New users cannot be added .update your plan');
      } 
     $validator=Validator::make($req->all(),[
         'username' => 'required|string|unique:users',

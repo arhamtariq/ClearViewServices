@@ -59,11 +59,11 @@
             </tbody>
         </table>
         <ul class="pagination justify-content-end " style="margin:20px 0">
-            <li class="page-item"><a class="page-link text-black" href="#"><<</a></li>
-            <li class="page-item"><a class="page-link text-black" href="#">1</a></li>
-            <li class="page-item"><a class="page-link text-black" href="#">2</a></li>
-            <li class="page-item"><a class="page-link text-black" href="#">3</a></li>
-            <li class="page-item"><a class="page-link text-black" href="#">>></a></li>
+                 <li class="page-item"><a class="page-link text-black" href="javascript:void(0)" onclick="previous()"><<</a></li>
+            <li class="page-item"><a class="page-link text-black" href="#" onclick="page(1)">1</a></li>
+            <li class="page-item"><a class="page-link text-black" href="#" onclick="page(2)">2</a></li>
+            <li class="page-item"><a class="page-link text-black" href="#" onclick="page(3)">3</a></li>
+            <li class="page-item"><a class="page-link text-black" href="javascript:void(0)" onclick="Next()">>></a></li>
         </ul>
     </div>
 </div>
@@ -187,7 +187,91 @@ function payForUsers()
   $('#amount').val(9.99);
   $('#payment-form').submit();
 
-}    
-    //amount
+}   
+  function page($page_id)
+   {
+    //alert($page_id);
+
+    var page =$page_id;
+    //page=page-1;
+    var url = window.location.origin + window.location.pathname;
+    window.location.href=url+"?page="+page+"";
+   }
+   function  deleteTask($id)
+   {
+    if(confirm('Are You Sure You want to delete Task?'))
+    {
+        window.location.href="/deleteTask?id="+$id+"";
+    }
+   }
+  
+  
+  function previous()
+  {
+    var page=getUrlVars();
+
+
+    if(page['page'])
+    {
+        page=page['page'];
+    }
+    else
+    {
+        page = 1;
+    }
+    if(page==1)
+    {
+
+    }
+    else{
+        page=--page;
+        var url = window.location.origin + window.location.pathname;
+        var queryString=getUrlVars();
+                                       
+                        
+    window.location.href=url+"?page="+page+"";
+    /*window.location.href=url+"?page="+page+"&box_type="+box_type+"";*/
+    }
+    //                                              window.location.href=url+"?page="+page+"&box_type="+box_type+"";
+    }
+    function Next()
+    {
+        var existing_page=4;
+    //alert(existing_page);
+    //return false;
+    var page=getUrlVars();
+    
+    if(page['page'])
+    {
+        page=page['page'];
+    }
+    else
+    {
+        page = 0;
+    }
+
+    page=++page;
+    if(page==existing_page)
+    {
+
+        return false;
+    }
+
+    var url = window.location.origin + window.location.pathname;
+    
+    window.location.href=url+"?page="+page+"";
+
+}
+    function getUrlVars() {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for (var i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+    }
+
 </script>
 @endsection

@@ -13,10 +13,17 @@ class StateController extends Controller
     //
     public function index()
     {
-        $state = \DB::table('county_in_us')
-                    ->select('county_in_us.state_code','county_in_us.state_name','timeframe_before_finders_fee','where_list_is_located')
-                    ->join('workable_state','county_in_us.state_code' , '=', 'workable_state.state_code','left outer')
-                    ->distinct()->get(['county_in_us.state_name']);
+         //if(isset($req->page)) 
+        {
+        //    $offset=5*($req->page-1);
+        }   
+        //else
+        {
+            $offset=0;
+        }
+        $state = \DB::table('county_in_us')->select('state_code','state_name')
+                            ->distinct()->offset($offset)
+            ->limit(5)->get(['state_name']);
         return view('state')->with('state',$state);
     }
 
