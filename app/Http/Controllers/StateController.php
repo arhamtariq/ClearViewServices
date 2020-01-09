@@ -21,10 +21,12 @@ class StateController extends Controller
         {
             $offset=0;
         }
-        $state = \DB::table('county_in_us')->select('state_code','state_name')
-                            ->distinct()->offset($offset)
-            ->limit(5)->get(['state_name']);
+        $state = \DB::table('county_in_us')
+                    ->select('county_in_us.state_code','county_in_us.state_name','timeframe_before_finders_fee','where_list_is_located')
+                    ->join('workable_state','county_in_us.state_code' , '=', 'workable_state.state_code','left outer')
+                    ->distinct()->get(['county_in_us.state_name']);
         return view('state')->with('state',$state);
+
     }
 
     public function searchState(Request $req)
