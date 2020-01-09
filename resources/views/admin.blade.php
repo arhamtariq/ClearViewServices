@@ -45,7 +45,7 @@
                     <td>{{$user->username}}</td>
                     <td>{{$user->phone_number}}</td>
                     <td>{{$user->role}}</td>
-                    <td><i title="Edit" class="fa fa-edit"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash"></i></td>
+                    <td><i title="Edit" class="fa fa-edit" onclick="updateModal({{$user->id}})"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash" onclick="confirmDelete({{$user->id}})"></i></td>
                 </tr>
              @endforeach   
             <!--     <tr>
@@ -181,6 +181,123 @@
         </div>
     </div>
 </div>
+<!-- update modal  -->
+<!--  User modal ---->
+<div class="modal " id="updateModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/update_sub_user" class="needs-validation" novalidate method="post">
+            <input type="hidden" name="user_id" id="user_id">
+            <!-- Modal Header -->
+            <div class="modal-header bg-yellow">
+                <h4 class="modal-title">New User</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+           
+            @csrf 
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="col-sm-6 form-group">
+                        <label for="fname">First Name:</label>
+                        <input type="text" class="form-control" id="fnameU" name="fnameU" required>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label for="lname">Last Name:</label>
+                        <input type="text" class="form-control" id="lnameU" name="lnameU" required>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-6 form-group">
+                        <label for="uname">User Name:</label>
+                        <input type="text" class="form-control" id="usernameU" name="usernameU" required>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label for="email">Email:</label>
+                        <input type="text" class="form-control" id="emailU" name="emailU" required>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-6 form-group">
+                        <label for="password">Password:</label>
+                        <input type="text" class="form-control" id="passwordU" name="passwordU" required readonly>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label for="phone">Phone:</label>
+                        <input type="text" class="form-control" name="phoneU" id="phoneU" required>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-12 form-group">
+                        <label for="address">Address:</label>
+                        <input type="text" class="form-control" id="addressU" name="addressU" required>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-4 form-group">
+                        <label for="city">City:</label>
+                        <input type="text" class="form-control" id="cityU" name="cityU" required>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="state">State:</label>
+                        <input type="text" class="form-control" id="stateU" name="stateU" required>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="zip">ZIP:</label>
+                        <input type="text" class="form-control" id="zipU" name="zipU" required>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-6 form-group">
+                        <label for="role">Role:</label>
+                        <select class="form-control" id="roleU" name="roleU">
+                            <option value="0">Please Select role:</option>
+                            <option value="Administrator">Administrator</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Full Access VA">Full Access VA</option>
+                            <option value="Skip Trace">Skip Trace</option>
+                            <option value="County Contact List">County Contact List</option>
+                            <option value="Owner Contact VA">Owner Contact VA</option>
+                            <option value="County Form Submission">County Form Submistion</option>
+                        </select>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label for="mname">Mother Madian Name</label>
+                        <input type="text" class="form-control" id="mnameU" name="mnameU">
+                    </div>
+                </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="submit" class="btn bg-yellow">Submit</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- modal -->
 <script type="text/javascript">
 function payForUsers()
 {
@@ -272,6 +389,59 @@ function payForUsers()
     }
     return vars;
     }
+ function confirmDelete($id)
+ {
+   var status= confirm('Are you want to remove user');
+   if(status)
+   {
+    window.location.href="/removeUser?id="+$id+"";
+   // alert($id);
+   }
+   else
+   {
 
+   }
+ }
+ function updateModal($id)
+ {
+    $('#user_id').val($id);
+    //alert($id);
+     $.ajax({
+            type: "GET",
+            url: "/adminUsers",
+            dataType: "json",
+            cache: false,
+            data: {
+                id: $id
+            },
+            success: function(data) {
+                //console.log(data);
+                var obj=JSON.parse(JSON.stringify(data));
+               console.log(obj);
+               $('#emailU').val(obj[0].email);
+               $('#fnameU').val(obj[0].first_name);
+               $('#lnameU').val(obj[0].last_name);
+               $('#usernameU').val(obj[0].username);
+                $('#phoneU').val(obj[0].phone_number);
+                   $('#addressU').val(obj[0].address);
+                 $('#cityU').val(obj[0].city);
+                  $('#stateU').val(obj[0].state);
+                  $('#zipU').val(obj[0].zip_code);
+                  $('#roleU').val(obj[0].role).trigger("chosen:updated");
+                $('#updateModal').modal('show');                    
+            }
+        });
+ }
+ /*  'username' => 'required|string|unique:users',
+         'email' => 'required|unique:users',
+         'fname' => 'required|string',
+         'lname' => 'required|string',
+         'role' => 'required|string',
+         'phone' =>'required',
+         'address'=> 'required|string',
+         'city'=> 'required|string',
+         'state' => 'required|string',
+         'zip' => 'required|integer',
+         'password' => 'required|string',*/
 </script>
 @endsection

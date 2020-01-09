@@ -13,8 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/login', function () {
-	//dump('ok');
-//	die();
+	
     return view('login');
  
 })->name('login');
@@ -114,6 +113,12 @@ Route::get('/admin' , 'AdminController@index')->middleware('auth')->middleware('
 Route::post('/create_sub_user' , 'AdminController@create_sub_user')->middleware('auth')->middleware('auth');
 
 Route::get('autocomplete', 'AutocompleteController@states')->middleware('auth');
+
+Route::get('removeUser', 'AdminController@removeUser')->middleware('auth');
+Route::get('adminUsers', 'AdminController@adminUsers')->middleware('auth');
+Route::post('update_sub_user', 'AdminController@update_sub_user')->middleware('auth');
+
+
 
 
 

@@ -146,7 +146,13 @@ class userController extends Controller
   }
   public function create(Request $req)
   {
-    //dd($req);
+//    dd($req);
+    if(DB::table('company')->where('company_name',$req->company_name)->count() >=3)
+    {
+     return redirect()->back()->withError('Three users of this company are already registered');
+    }
+    //die();
+
     $validator=Validator::make($req->all(),[
         'username' => 'required|string|unique:users',
          'email' => 'required|unique:users',

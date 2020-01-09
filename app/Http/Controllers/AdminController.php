@@ -82,12 +82,51 @@ class AdminController extends Controller
             'email_verification_token'=>$unique_token,
             'role'=>$req->role,
             'email_verified'=>1,
+            'company_code'=>auth()->user()->company_code,
         ]);
-       $id;
+    
        DB::table('administartion_users')->where('created_by_code',auth()->user()->id)->where('user_code','=',null)->limit(1)->update([
             'user_code' => $id,
         ]);
         return redirect()->back()->withSuccess('User Created Successfully');
       }
     }
+   public function removeUser(Request $req)
+   {
+   
+    DB::table('administartion_users')->where('created_by_code',auth()->user()->id)->where('user_code',$req->id)->delete();
+      return redirect()->back()->withSuccess('User deleted Successfully');
+
+   }
+ public function update_sub_user(Request $req)
+  {
+    $unique_token=1;
+       $id=DB::table('users')->update([
+            'username' => $req->input('usernameU'),
+            'first_name' => $req->fnameU,
+            'last_name' => $req->lnameU,
+            'email' => $req->emailU,
+            'phone_number'=>$req->phoneU,
+            'address'=>$req->addressU,
+            'city'=>$req->cityU,
+            'zip_code'=>$req->zipU,
+            'email_verification_token'=>$unique_token,
+            'role'=>$req->roleU,
+            'email_verified'=>1,
+            'company_code'=>auth()->user()->company_code,
+        ]);
+       return redirect()->back()->withSuccess('User updated Successfully');
+  }
+   public function adminUsers(Request $req)
+   {
+   /* $users=DB::table()->where()->where()->get();*/
+    $users = DB::table('users')
+            ->join('administartion_users', 'users.id', '=', 'administartion_users.created_by_code')->join('administartion_users as a_u', 'users.id', '=','a_u.user_code')
+            ->where('administartion_users.created_by_code',auth()->user()->id)
+            ->where('administartion_users.user_code',$req->id)
+            ->select('users.*')
+            ->get();
+           
+    echo json_encode($users);
+   }
 }
