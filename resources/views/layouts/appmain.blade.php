@@ -40,17 +40,18 @@
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-expand-sm navbar-dark bg-yellow navbar-static-top mb-0 ">
-        <!-- Brand -->
-        <a class="navbar-brand" href="#">
-            <img src="images/logo-white.png"  alt="Clear View Services" width="150" height="25" class="img-fluid"/>
-        </a>
-        <div class="collapse navbar-collapse w-100" id="app-navbar-collapse">
+        <div class="navbar-collapse ml-0  w-100 mr-0" id="app-navbar-collapse">
+            <!-- Brand -->
+            <a id="navleft" class="navbar-brand" href="#">
+                <img src="images/logo-white.png"  alt="Clear View Services" width="150" height="25" class="img-fluid"/>
+            </a>
+        
             
             <!-- Right Side Of Navbar -->
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item text-white"><a class="nav-link text-white " href="#"><b>{{auth()->user()->username}}</b></a></li>
-                <li class="nav-item"><a title="Profile" class="nav-link text-white " href="{{ url('/profile') }}"><i class="fa fa-user"></i></a></li>
-                <li class="nav-item"><a title="Logoff" class="nav-link text-white" href="{{ url('/logout') }}"><i class="fa fa-sign-out"></i></a></li>
+            <ul id="navright" class="nav navbar-nav navbar-expand navbar-right" style="margin-right:0;margin-left:auto;">
+                <li class="nav-item text-white pr-1"><a class="nav-link text-white" href="#"><b>Hello! {{auth()->user()->username}}</b></a></li>
+                <li class="nav-item pr-1"><a title="Profile" class="nav-link text-white " href="{{ url('/profile') }}"><i class="fa fa-user"></i></a></li>
+                <li class="nav-item pr-1"><a title="Logoff" class="nav-link text-white" href="{{ url('/logout') }}"><i class="fa fa-sign-out"></i></a></li>
                 <li class="nav-item"><a title="Help" class="nav-link text-white" href="{{ url('/help') }}"><i class="fa fa-question"></i></a></li>
             </ul>
         </div>
@@ -93,16 +94,11 @@
 
     @yield('content')
 
-    <nav class="navbar navbar-expand-sm navbar-dark bg-grey navbar-static-top mb-0">
-        <div class="container">
-            <div class="collapse navbar-collapse w-100 text-center">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav w-25">
-                    <li class="nav-item text-white mr-5"><div class="fa fa-copyright"></div>&nbsp;2020</a></li>
-                </ul>
-            </div>
+    <div class="bg-grey" style="height:100px;">
+        <div class="w-100 text-center text-white pt-5 mt-5">
+            All rights reserved <i class="fa fa-copyright"></i>&nbsp;2020</a>
         </div>
-    </nav>
+    </div>
     <!-- Modal -->
 
 <div class="modal" id="trailModal">

@@ -1,7 +1,7 @@
 @extends('layouts.appmain')
 
 @section('content')
-<div class="jumbotron jumbotron-fluid p-0 pt-3 pb-2">
+<div class="jumbotron jumbotron-fluid p-0 pt-3 pb-0">
     <div class="container pl-0">
         @if(session()->has('success'))
         <div class="alert alert-success">
@@ -76,7 +76,7 @@
             <li class="page-item"><a class="page-link text-black" href="javascript:void(0)" onclick="Next()">>></a></li>
         </ul>
       </div>
-    </div>
+    
 </div>
 
 <!-- Add owner -->

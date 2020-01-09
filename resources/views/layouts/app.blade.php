@@ -41,20 +41,10 @@
                 <!-- Right Side Of Navbar -->
                 <ul id="navright" class="nav navbar-nav navbar-expand navbar-right" style="margin-right:0;margin-left:auto;">
                     <!-- Authentication Links -->
-                    @if (Auth::guest())
-                        <li class="nav-item"><a class="nav-link text-white" href="{{ url('/login') }}"><i class="fa fa-user"></i></a></li>
-                        <li class="nav-item pl-2 pr-2"><a class="nav-link text-white" href="{{ url('/register') }}"><i class="fa fa-user-plus"></i></a></li>
-                    @else
-                        <li class="nav-item">
-                            <a class="nav-item" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li class="nav-item"><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                            </ul>
-                        </li>
-                    @endif
+                    <li class="nav-item"><a class="nav-link text-white" href="{{ url('/login') }}"><i class="fa fa-user"></i></a></li>
+                    <li class="nav-item pl-2 pr-2"><a class="nav-link text-white" href="{{ url('/register') }}"><i class="fa fa-user-plus"></i></a></li>
+                    
+                    
                 </ul>
             </div>
         </div>
@@ -91,8 +81,8 @@
     
 
     @yield('content')
-    <div class="bg-grey">
-        <div class="w-100 text-center text-white">
+    <div class="bg-grey" style="height:100px;">
+        <div class="w-100 text-center text-white pt-5 mt-5">
             All rights reserved <i class="fa fa-copyright"></i>&nbsp;2020</a>
         </div>
     </div>

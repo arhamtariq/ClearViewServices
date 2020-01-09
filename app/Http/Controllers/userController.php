@@ -8,6 +8,7 @@ use Validator;
 use Mail;
 use DB;
 use Carbon\Carbon;
+use Str;
 
 class userController extends Controller
 {
@@ -81,7 +82,7 @@ class userController extends Controller
             ->withError($validator->errors()->first())
             ->withInput();
       }
-      $unique_token=str_random(32);  
+      $unique_token=Str::random(32);//str_random(32);  
       \DB::table('password_resets')->insert([
             'email' =>$req->email,
             'token' => $unique_token,
@@ -178,7 +179,7 @@ class userController extends Controller
     }
     else
     {
-      $unique_token=str_random(32);
+      $unique_token=Str::random(32);
      $company_id=DB::table('company')->insertGetId([
         'company_name' => $req->company_name,
         'city' =>$req->company_city,
