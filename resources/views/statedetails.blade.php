@@ -76,7 +76,7 @@
                     @foreach($state_document as $sd)
                         <tr>
                             <td>{{ $sd->document_type }}</td>
-                            <td><a href="/viewfile?path={{ $sd->document_link}}" target="_blank">{{ $sd->document_name }}</a></td>
+                            <td><a href="{{ url('/viewfile') }}?path={{ $sd->document_link}}" target="_blank">{{ $sd->document_name }}</a></td>
                             <td><i title="Edit" class="fa fa-edit" onclick="updateStateDoc({{$sd->document_number}})"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash" onclick="deleteStateDoc({{$sd->document_number}})"></i></td>
                         </tr>
                     @endforeach
@@ -98,7 +98,7 @@
 <div class="modal " id="adddocModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="frm-state-doc" class="validate-form" action="/createStateDoc" method="post" enctype="multipart/form-data">
+            <form id="frm-state-doc" class="validate-form" action="{{ url('/createStateDoc') }}" method="post" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="docid" id="docid">
             <input type="hidden" name="docsc" id="docsc">
@@ -146,7 +146,7 @@
 <div class="modal" id="addnotesModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="frm-state-notes" action="/createStateNotes" class="validate-form" method="post">
+            <form id="frm-state-notes" action="{{ url('/createStateNotes') }}" class="validate-form" method="post">
             @csrf
             <input type="hidden" name="notenumber" id="notenumber">
             <input type="hidden" name="notesc" id="notesc">
@@ -210,7 +210,7 @@
     {
         if(confirm('Are You Sure You want to delete State Notes?'))
         {
-            window.location.href="/deleteStateNotes?id="+$id+"";
+            window.location.href="{{ url('/deleteStateNotes') }}?id="+$id+"";
         }
     }
     
@@ -219,7 +219,7 @@
     {
         if(confirm('Are You Sure You want to delete State Document?'))
         {
-            window.location.href="/deleteStateDoc?id="+$id+"";
+            window.location.href="{{ url('/deleteStateDoc') }}?id="+$id+"";
         }
     }
     
@@ -232,7 +232,7 @@
 
         $.ajax({
             type: "GET",
-            url: "/getStateNotesData",
+            url: "{{ url('/getStateNotesData') }}",
             dataType: "json",
             cache: false,
             data: {
@@ -253,7 +253,7 @@
 
         $.ajax({
             type: "GET",
-            url: "/getStateDocData",
+            url: "{{ url('/getStateDocData') }}",
             dataType: "json",
             cache: false,
             data: {

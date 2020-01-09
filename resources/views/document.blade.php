@@ -3,7 +3,7 @@
 @section('content')
 <div class="jumbotron jumbotron-fluid p-0 pt-3 pb-2">
     <div class="container pl-0">
-        <form class="form-inline" method="post" action="/searchDocument">
+        <form class="form-inline" method="post" action="{{ url('/searchDocument') }}">
             @csrf
             <input type="hidden" value="searchForm" name="searchForm">
             <input type="search" class="form-control mb-2 mr-sm-2" id="state" name="state" placeholder="State Name">
@@ -39,7 +39,7 @@
                 <tr>
                     <td>{{ $d->county_name }}</td>
                     <td>{{ $d->document_type }}</td>
-                    <td><a href="/viewfile?path={{ $d->document_link}}" target="_blank">{{ $d->document_name }}</a></td>
+                    <td><a href="{{ url('/viewfile') }}?path={{ $d->document_link}}" target="_blank">{{ $d->document_name }}</a></td>
                     <td><i title="Delete" class="fa fa-eye"></i>&nbsp;&nbsp;<i title="Edit" class="fa fa-edit"></i></td>
                 </tr>
                 @endforeach

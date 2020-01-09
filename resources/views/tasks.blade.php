@@ -12,7 +12,7 @@
             {{session()->get('error')}}
         </div>
         @endif 
-        <form class="form-inline" method="post" action="/task">
+        <form class="form-inline" method="post" action="{{ url('/task') }}">
             @csrf
             <input type="hidden" value="searchForm" name="searchForm">
             <input type="text" class="form-control mb-2 mr-sm-2" id="task-name" name="task-name" placeholder="Task Name">
@@ -65,7 +65,7 @@
     <div class="modal" id="addtaskModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="/createTask" class="needs-validation" novalidate method="post">
+                <form action="{{ url('/createTask') }}" class="needs-validation" novalidate method="post">
                 @csrf
                 <!-- Modal Header -->
                 <div class="modal-header bg-yellow">
@@ -150,7 +150,7 @@
 <div class="modal" id="updatetaskModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="/updateTask" class="needs-validation" novalidate method="post">
+                <form action="{{ url('/updateTask') }}" class="needs-validation" novalidate method="post">
                 @csrf
                 <input type="hidden" name="task_id" id="task_id">
                 <!-- Modal Header -->
@@ -234,7 +234,7 @@
 </div>
 <!-- end here -->
 <script type="text/javascript">
-    var path = "/getUsersForAssigning";
+    var path = "{{ url('/getUsersForAssigning') }}";
     $('input.typeahead').typeahead({
         source:  function (query, process) {
         return $.get(path, { query: query }, function (data) {
@@ -258,7 +258,7 @@
    {
     if(confirm('Are You Sure You want to delete Task?'))
     {
-        window.location.href="/deleteTask?id="+$id+"";
+        window.location.href="{{ url('/deleteTask') }}?id="+$id+"";
     }
    }
    function updateTask($id)
@@ -266,7 +266,7 @@
     $('#task_id').val($id);
      $.ajax({
         type: "GET",
-        url: "getTaskData",
+        url: "{{ url('getTaskData') }}",
         dataType: "json",
         cache: false,
         data: {
@@ -308,7 +308,7 @@ function convert(dateTime)
     //var name;
     $.ajax({
         type: "GET",
-        url: "getAssigneeName",
+        url: "{{ url('getAssigneeName') }}",
         dataType: "json",
         cache: false,
         data: {

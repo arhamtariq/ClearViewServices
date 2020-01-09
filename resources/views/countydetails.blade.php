@@ -130,7 +130,7 @@
                     @foreach($county_document as $cd)
                         <tr>
                             <td>{{ $cd->document_type }}</td>
-                            <td><a href="/viewfile?path={{ $cd->document_link}}" target="_blank">{{ $cd->document_name }}</a></td>
+                            <td><a href="{{ url('/viewfile') }}?path={{ $cd->document_link}}" target="_blank">{{ $cd->document_name }}</a></td>
                             <td><i title="Edit" class="fa fa-edit" onclick="updateCountyDoc({{$cd->document_number}})"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash" onclick="deleteCountyDoc({{$cd->document_number}})"></i></td>
                         </tr>
                     @endforeach
@@ -151,7 +151,7 @@
 <div class="modal " id="addcontactModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="frm-county-cont" action="/createCountyContact" class="validate-form" method="post">
+            <form id="frm-county-cont" action="{{ url('/createCountyContact') }}" class="validate-form" method="post">
             @csrf
             <input type="hidden" name="contactid" id="contactid">
             <input type="hidden" name="contactcc" id="contactcc">
@@ -227,7 +227,7 @@
 <div class="modal " id="adddocModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="frm-county-doc" class="validate-form" action="/createCountyDoc" method="post" enctype="multipart/form-data">
+            <form id="frm-county-doc" class="validate-form" action="{{ url('/createCountyDoc') }}" method="post" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="docid" id="docid">
             <input type="hidden" name="doccc" id="doccc">
@@ -275,7 +275,7 @@
 <div class="modal" id="addnotesModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="frm-county-notes" action="/createCountyNotes" class="validate-form" method="post">
+            <form id="frm-county-notes" action="{{ url('/createCountyNotes') }}" class="validate-form" method="post">
             @csrf
             <input type="hidden" name="notenumber" id="notenumber">
             <input type="hidden" name="notecc" id="notecc">
@@ -318,7 +318,7 @@
     
     //for notes form reset
     $('#btnaddCountyNotes').click(function(){
-        alert('sfdsf');
+        //alert('sfdsf');
         $('#frm-county-notes')[0].reset();
         $('#notecc').val($('#countycode').val());
         $('#notenumber').val('0');
@@ -344,7 +344,7 @@
     {
         if(confirm('Are You Sure You want to delete County Notes?'))
         {
-            window.location.href="/deleteCountyNotes?id="+$id+"";
+            window.location.href="{{ url('/deleteCountyNotes') }}?id="+$id+"";
         }
     }
     //For deletion of county contact
@@ -352,7 +352,7 @@
     {
         if(confirm('Are You Sure You want to delete County Contact?'))
         {
-            window.location.href="/deleteCountyContact?id="+$id+"";
+            window.location.href="{{ url('/deleteCountyContact') }}?id="+$id+"";
         }
     }
     //For deletion of county documents
@@ -360,7 +360,7 @@
     {
         if(confirm('Are You Sure You want to delete County Document?'))
         {
-            window.location.href="/deleteCountyDoc?id="+$id+"";
+            window.location.href="{{ url('/deleteCountyDoc') }}?id="+$id+"";
         }
     }
     
@@ -373,14 +373,14 @@
 
         $.ajax({
             type: "GET",
-            url: "/getCountyNotesData",
+            url: "{{ url('/getCountyNotesData') }}",
             dataType: "json",
             cache: false,
             data: {
                 id: $id
             },
             success: function(data) {
-                alert('dfdsf');
+                //alert('dfdsf');
                 var obj=JSON.parse(JSON.stringify(data));
                 $('#notestype').val(obj[0].note_type);
                 $('#countynotes').text(obj[0].note_details);               
@@ -395,7 +395,7 @@
 
         $.ajax({
             type: "GET",
-            url: "/getCountyDocData",
+            url: "{{ url('/getCountyDocData') }}",
             dataType: "json",
             cache: false,
             data: {
@@ -420,7 +420,7 @@
         $('#contactid').val($id);
         $.ajax({
             type: "GET",
-            url: "/getCountyContactData",
+            url: "{{ url('/getCountyContactData') }}",
             dataType: "json",
             cache: false,
             data: {

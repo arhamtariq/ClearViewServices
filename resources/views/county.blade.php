@@ -3,7 +3,7 @@
 @section('content')
 <div class="jumbotron jumbotron-fluid p-0 pt-3 pb-2">
     <div class="container pl-0 pt-1 pb-3">
-        <form class="form-inline" method="post" action="/searchCounty">
+        <form class="form-inline" method="post" action="{{ url('/searchCounty') }}">
             @csrf
             <input type="hidden" value="searchForm" name="searchForm">
             <input type="search" class="form-control mdb-autocomplete mb-2 mr-sm-2 " id="state" name="state" placeholder="State Name">           
@@ -28,7 +28,7 @@
                 @foreach ($county as $c)
                 <tr>
                     <td>{{ $c->county_name}}</td>
-                    <td><a href="/getCountyDetails?id={{$c->county_code}}">Click here to view details.</a></td>
+                    <td><a href="{{ url('/getCountyDetails') }}?id={{$c->county_code}}">Click here to view details.</a></td>
                 </tr>
                 @endforeach
                 @endif

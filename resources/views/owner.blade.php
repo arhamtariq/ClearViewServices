@@ -12,7 +12,7 @@
             {{session()->get('error')}}
         </div>
         @endif 
-        <form class="form-inline" method="post" action="/searchOwner">
+        <form class="form-inline" method="post" action="{{ url('/searchOwner') }}">
             @csrf
             <input type="hidden" value="searchForm" name="searchForm">
             <input type="text" class="form-control mb-2 mr-sm-2" id="countyrecordsrch" name="countyrecordsrch" placeholder="County Record Number">
@@ -50,7 +50,7 @@
                 @else
                     @foreach($owner as $o)
                     <tr>
-                        <td><a href="/ownerdetails?id={{ $o->record_number}}">{{ $o->county_record_number}}</a></td>
+                        <td><a href="{{ url('/ownerdetails') }}?id={{ $o->record_number}}">{{ $o->county_record_number}}</a></td>
                         <td>{{$o->first_name . ' ' . $o->middle_name . ' ' . $o->last_name}}</td>
                         <td>{{$o->property_address . ' ' . $o->city . ' ' . $o->state . ' ' . $o->zip_code}}</td>
                         <td>{{$o->county_name}}</td>
@@ -83,7 +83,7 @@
 <div class="modal " id="addownerModal">
     <div class="modal-dialog mw-100 w-75">
         <div class="modal-content">
-            <form id="frm-owner" class="validate-form" action="/createowner" method="post">
+            <form id="frm-owner" class="validate-form" action="{{ url('/createowner') }}" method="post">
             @csrf
             <input type="hidden" name="recordnumber" id="recordnumber">
             <!-- Modal Header -->
@@ -221,7 +221,7 @@
 </div>
 <script type="text/javascript">
     //For county autocomplete
-    var path = "/getCounties";
+    var path = "{{ url('/getCounties') }}";
     var map;
     $('input.typeahead').typeahead({
         source:  function (query, process) {
@@ -260,7 +260,7 @@
     {
         if(confirm('Are You Sure You want to delete Owner?'))
         {
-            window.location.href="/deleteOwner?id="+$id+"";
+            window.location.href="{{ url('/deleteOwner') }}?id="+$id+"";
         }
     }
     $('#btnAddOwner').click(function(){
@@ -276,7 +276,7 @@
         $('#recordnumber').val($id);
         $.ajax({
             type: "GET",
-            url: "/getOwnerData",
+            url: "{{ url('/getOwnerData') }}",
             dataType: "json",
             cache: false,
             data: {

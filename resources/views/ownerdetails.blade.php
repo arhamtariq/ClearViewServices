@@ -131,7 +131,7 @@
                         <tr>
                             <td>{{ $od->county_name }}</td>
                             <td>{{ $od->document_type }}</td>
-                            <td><a href="/viewfile?path={{ $od->document_link}}" target="_blank">{{ $od->document_name }}</a></td>
+                            <td><a href="{{ url('/viewfile') }}?path={{ $od->document_link}}" target="_blank">{{ $od->document_name }}</a></td>
                             <td><i title="Edit" class="fa fa-edit" onclick="updateOwnerDoc({{$od->document_record_number}})"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash" onclick="deleteOwnerDoc({{$od->document_record_number}})"></i></td>
                         </tr>
                     @endforeach
@@ -203,7 +203,7 @@
 <div class="modal " id="addcontactModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="frm-owner-cont" action="/createOwnerContact" class="validate-form" method="post">
+            <form id="frm-owner-cont" action="{{ url('/createOwnerContact') }}" class="validate-form" method="post">
             @csrf
             <input type="hidden" name="contactrecordnumber" id="contactrecordnumber">
             <input type="hidden" name="recno" id="recno">
@@ -312,7 +312,7 @@
 <div class="modal " id="adddocModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="frm-owner-doc" class="validate-form" action="/createOwnerDoc" method="post" enctype="multipart/form-data">
+            <form id="frm-owner-doc" class="validate-form" action="{{ url('/createOwnerDoc') }}" method="post" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="documentrecordnumber" id="documentrecordnumber">
             <input type="hidden" name="recno1" id="recno1">
@@ -364,7 +364,7 @@
 <div class="modal " id="addtrackModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="frm-owner-track" class="validate-form" action="/createOwnerTrack" method="post">
+            <form id="frm-owner-track" class="validate-form" action="{{ url('/createOwnerTrack') }}" method="post">
             @csrf
             <input type="hidden" name="trackingrecordnumber" id="trackingrecordnumber">
             <input type="hidden" name="recno3" id="recno3">
@@ -452,7 +452,7 @@
 <div class="modal" id="addnotesModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="frm-owner-notes" action="/createOwnerNotes" class="validate-form" method="post">
+            <form id="frm-owner-notes" action="{{ url('/createOwnerNotes') }}" class="validate-form" method="post">
             @csrf
             <input type="hidden" name="notesrecordnumber" id="notesrecordnumber">
             <input type="hidden" name="recno2" id="recno2">
@@ -500,7 +500,7 @@
 </div>
 <script>
     //For county autocomplete
-    var path = "/getCounties";
+    var path = "{{ url('/getCounties') }}";
     var map;
     $('input.typeahead').typeahead({
         source:  function (query, process) {
@@ -557,7 +557,7 @@
     function deleteOwnerTrack($id){
         if(confirm('Are You Sure You want to delete Overage Request Tracking?'))
         {
-            window.location.href="/deleteOwnerTrack?id="+$id+"";
+            window.location.href="{{ url('/deleteOwnerTrack') }}?id="+$id+"";
         }
     }
     //For deletion of owner notes
@@ -565,7 +565,7 @@
     {
         if(confirm('Are You Sure You want to delete Owner Notes?'))
         {
-            window.location.href="/deleteOwnerNotes?id="+$id+"";
+            window.location.href="{{ url('/deleteOwnerNotes') }}?id="+$id+"";
         }
     }
     //For deletion of owner contact
@@ -573,7 +573,7 @@
     {
         if(confirm('Are You Sure You want to delete Owner Contact?'))
         {
-            window.location.href="/deleteOwnerContact?id="+$id+"";
+            window.location.href="{{ url('/deleteOwnerContact') }}?id="+$id+"";
         }
     }
     //For deletion of owner documents
@@ -581,7 +581,7 @@
     {
         if(confirm('Are You Sure You want to delete Owner Document?'))
         {
-            window.location.href="/deleteOwnerDoc?id="+$id+"";
+            window.location.href="{{ url('/deleteOwnerDoc') }}?id="+$id+"";
         }
     }
     function updateOwnerTrack($id){
@@ -590,7 +590,7 @@
 
         $.ajax({
             type: "GET",
-            url: "/getOwnerTrackData",
+            url: "{{ url('/getOwnerTrackData') }}",
             dataType: "json",
             cache: false,
             data: {
@@ -619,7 +619,7 @@
 
         $.ajax({
             type: "GET",
-            url: "/getOwnerNotesData",
+            url: "{{ url('/getOwnerNotesData') }}",
             dataType: "json",
             cache: false,
             data: {
@@ -642,7 +642,7 @@
 
         $.ajax({
             type: "GET",
-            url: "/getOwnerDocData",
+            url: "{{ url('/getOwnerDocData') }}",
             dataType: "json",
             cache: false,
             data: {
@@ -669,7 +669,7 @@
         $('#contactrecordnumber').val($id);
         $.ajax({
             type: "GET",
-            url: "/getOwnerContactData",
+            url: "{{ url('/getOwnerContactData') }}",
             dataType: "json",
             cache: false,
             data: {

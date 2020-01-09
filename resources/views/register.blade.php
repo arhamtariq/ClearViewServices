@@ -21,7 +21,7 @@
 
     <div class="container-form">
         <div class="wrapper-form">
-            <form id="rform" class="register-form validate-form" action="/create" method="post"  id="register-form"  >
+            <form id="rform" class="register-form validate-form" action="{{ url('/create') }}" method="post"  id="register-form"  >
             @csrf
                 <div id="overall-form">
                     <!-- SECTION 1 -->

@@ -3,7 +3,7 @@
 @section('content')
 <div class="jumbotron jumbotron-fluid p-0 pt-3 pb-2">
     <div class="container pl-0 pt-1 pb-3">
-        <form class="form-inline" method="post" action="/searchState">
+        <form class="form-inline" method="post" action="{{ url('/searchState') }}">
             @csrf
             <input type="hidden" value="searchForm" name="searchForm">
             <input type="search" class="form-control mdb-autocomplete mb-2 mr-sm-2 " id="state" name="state" placeholder="State Name">           
@@ -28,7 +28,7 @@
                 @foreach ($state as $s)
                 <tr>
                     <td>{{ $s->state_name}}</td>
-                    <td><a href="/getStateDetails?id={{$s->state_code}}">Click here to view details.</a></td>
+                    <td><a href="{{ url('/getStateDetails') }}?id={{$s->state_code}}">Click here to view details.</a></td>
                     @if (($s->timeframe_before_finders_fee == '') AND ($s->where_list_is_located == ''))
                         <td>Not Available</td>
                     @else
@@ -87,7 +87,7 @@
         $('#listlocation').text('');
         $.ajax({
             type: "GET",
-            url: "/getWorkableDetails",
+            url: "{{ url('/getWorkableDetails') }}",
             dataType: "json",
             cache: false,
             data: {
