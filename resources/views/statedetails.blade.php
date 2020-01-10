@@ -163,10 +163,10 @@
                         <select class="form-control" id="notestype" name="notestype">
                             <option value="Contacted Owner">Contacted Owner</option>
                             <option value="Contacted Other">Contacted Other</option>
-                            <!--<option value="Contacted Other">additional information needed</option>
-                            <option value="Remote Notary">Remote Notary</option>-->
                             <option value="Follow up">Follow up</option>
-                            <!--<option value="Document Submission">Document Submission</option>-->
+                            <option value="State Note">State Note</option>
+                            <option value="County Note">County Note</option>
+                            <option value="Other">Other</option>
                         </select>
                     </div>
                 </div>

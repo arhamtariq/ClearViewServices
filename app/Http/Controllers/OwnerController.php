@@ -224,7 +224,7 @@ class OwnerController extends Controller
                     'available_funds'=>$req->avlblfunds,	
                     'contacted_owner'=>$req->contactedowner,	
                     'contacted_county'=>$req->contactedcounty,	
-                    'user_code'=>1//auth()->user()->id,	
+                    'user_code'=>auth()->user()->id,	
                 ]);
                 return redirect()->back()->withSuccess('Owner Created Successfully');
             }
@@ -253,11 +253,7 @@ class OwnerController extends Controller
         else
         {
             //$assigned_id=\DB::table('users')->where('username',$req->assignedto)->first();
-            if ($req->has('isskip'))
-                $skipped = 1;
-            else
-                $skipped = 0;
-
+            
             if ($req->contactrecordnumber > 0)
             {
                 \DB::table('owner_contact_list')->where('contact_record_number',$req->contactrecordnumber)->update([
@@ -273,7 +269,7 @@ class OwnerController extends Controller
                     'home_phone'=>$req->hphone,	
                     'contact_status'=>$req->status,	
                     'contact_detail_status'=>$req->detailstatus,
-                    'skip_tracing_source'=>$skipped
+                    'skip_tracing_source'=>$req->isskip
                 ]);
                 return redirect()->back()->withSuccess('Owner Contact Updated Successfully');
 
@@ -299,8 +295,8 @@ class OwnerController extends Controller
                     'home_phone'=>$req->hphone,	
                     'contact_status'=>$req->status,	
                     'contact_detail_status'=>$req->detailstatus,
-                    'skip_tracing_source'=>$skipped,	
-                    'user_code'=>1//auth()->user()->id,	
+                    'skip_tracing_source'=>$req->isskip,	
+                    'user_code'=>auth()->user()->id,	
                 ]);
                 return redirect()->back()->withSuccess('Owner Contact Created Successfully');
             }

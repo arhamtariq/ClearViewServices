@@ -51,16 +51,16 @@
                     @foreach($owner as $o)
                     <tr>
                         <td><a href="{{ url('/ownerdetails') }}?id={{ $o->record_number}}">{{ $o->county_record_number}}</a></td>
-                        <td>{{$o->first_name . ' ' . $o->middle_name . ' ' . $o->last_name}}</td>
-                        <td>{{$o->property_address . ' ' . $o->city . ' ' . $o->state . ' ' . $o->zip_code}}</td>
-                        <td>{{$o->county_name}}</td>
-                        <td>{{$o->parcel_number}}</td>
-                        <td>{{$o->sale_date}}</td>
-                        <td>{{$o->overage_amount_collected}}</td>
+                        <td><a href="{{ url('/ownerdetails') }}?id={{ $o->record_number}}">{{$o->first_name . ' ' . $o->middle_name . ' ' . $o->last_name}}</a></td>
+                        <td><a href="{{ url('/ownerdetails') }}?id={{ $o->record_number}}">{{$o->property_address . ' ' . $o->city . ' ' . $o->state . ' ' . $o->zip_code}}</a></td>
+                        <td><a href="{{ url('/ownerdetails') }}?id={{ $o->record_number}}">{{$o->county_name}}</a></td>
+                        <td><a href="{{ url('/ownerdetails') }}?id={{ $o->record_number}}">{{$o->parcel_number}}</a></td>
+                        <td><a href="{{ url('/ownerdetails') }}?id={{ $o->record_number}}">{{$o->sale_date}}</a></td>
+                        <td><a href="{{ url('/ownerdetails') }}?id={{ $o->record_number}}">{{$o->overage_amount_collected}}</a></td>
                        <!-- <td>{{$o->overage_amount_owned_to_owner}}</td> 
                         <td>{{$o->available_funds}}</td>-->
-                        <td>{{$o->contacted_owner}}</td>
-                        <td>{{$o->contacted_county}}</td>
+                        <td><a href="{{ url('/ownerdetails') }}?id={{ $o->record_number}}">{{$o->contacted_owner}}</a></td>
+                        <td><a href="{{ url('/ownerdetails') }}?id={{ $o->record_number}}">{{$o->contacted_county}}</a></td>
                         <td><i title="Edit" class="fa fa-edit" onclick="updateOwner({{$o->record_number}})"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash" onclick="deleteOwner({{$o->record_number}})"></i></td>
                     </tr>
                     @endforeach
