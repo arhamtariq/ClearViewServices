@@ -204,13 +204,14 @@
                     </div>
                     <div class="form-row form-group">
                         <div class="col">
-                            <label for="assignedto">Esculate STask:</label>
-                            <input type="text" class="form-control" id="esculate_staskUpdate" name="esculate_staskUpdate" required>
-                            <div class="valid-feedback">Valid.</div>
-                            <div class="invalid-feedback">Please fill out this field.</div>
+                            <label for="assignedto">Esculate Task:</label>
+                            <select class="form-control" id="esculate_staskUpdate" name="esculate_staskUpdate">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
                         </div>
                         <div class="col form-group">
-                            <label for="status">Esculate_Task:</label>
+                            <label for="status">Esculate Task:</label>
                             <input type="text" class="form-control" id="esculate_taskUpdate" name="esculate_taskUpdate" >
                             <div class="valid-feedback">Valid.</div>
                             <div class="invalid-feedback">Please fill out this field.</div>
