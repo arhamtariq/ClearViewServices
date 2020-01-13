@@ -1,6 +1,6 @@
     body {
         height: 100%;
-        font-family: Poppins-Regular, sans-serif;
+        font-family: 'Roboto', sans-serif;
         background-color: #696969;
         color: #999999;
     }
@@ -107,7 +107,7 @@
     }
     
     .form-text {
-        /*font-family: Poppins-Regular;
+        /*
         font-size: 15px;
         color: #555555;
         display: block;
@@ -127,7 +127,6 @@
     }
     
     a {
-        font-family: Poppins-Regular;
         font-size: 15px;
         line-height: 2;
         color: #f5ae32;
@@ -136,6 +135,10 @@
         -webkit-transition: all 0.4s;
         -o-transition: all 0.4s;
         -moz-transition: all 0.4s;
+        text-decoration: none;
+    }
+    
+    a:hover {
         text-decoration: underline;
     }
     
@@ -172,7 +175,6 @@
         height: 50px;
         background-color: #f5ae32;
         border-radius: 0px;
-        font-family: Poppins-Regular;
         font-size: 16px;
         color: #fff;
         line-height: 1.2;
@@ -297,7 +299,6 @@
         transform: translateY(-50%);
         right: 2px;
         pointer-events: none;
-        font-family: Poppins-Medium;
         color: #c80000;
         font-size: 13px;
         line-height: 1.4;
@@ -312,7 +313,6 @@
     
     .alert-validate::after {
         content: "\f06a";
-        font-family: FontAwesome;
         display: block;
         position: absolute;
         color: #c80000;
