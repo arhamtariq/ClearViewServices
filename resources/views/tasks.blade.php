@@ -44,8 +44,8 @@
             <tr>
                <td>{{$task->task_name}}</td>
                 <td>{{$Obj::getTaskCreaterName($task->task_creator)}}</td>
-                <td>{{\Carbon\Carbon::parse($task->time_stamp_for_record_creation)->diffForHumans()}}</td>
-                <td>{{\Carbon\Carbon::parse($task->due_date)->diffForHumans()}}</td>
+                <td>{{$task->time_stamp_for_record_creation}}</td>
+                <td>{{$task->due_date}}</td>
                 <td>{{$Obj::getTaskAssigneeName($task->user_code)}}</td>
                 <td>{{$task->task_status}}</td>
                 <td><i title="Edit" class="fa fa-edit" onclick="updateTask({{$task->task_code}})"></i>&nbsp;&nbsp;<i title="Cancel" class="fa fa-ban"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash" onclick="deleteTask({{$task->task_code}})"></i></td>  
@@ -118,13 +118,14 @@
                     </div>
                     <div class="form-row form-group">
                         <div class="col">
-                            <label for="assignedto">Esculate STask:</label>
-                            <input type="text" class="form-control" id="esculate_stask" name="esculate_stask" required>
-                            <div class="valid-feedback">Valid.</div>
-                            <div class="invalid-feedback">Please fill out this field.</div>
+                            <label for="assignedto">Esculate Task:</label>
+                            <select class="form-control" id="esculate_staskUpdate" name="esculate_staskUpdate">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
                         </div>
                         <div class="col form-group">
-                            <label for="status">Esculate_Task:</label>
+                            <label for="status">Esculate Task:</label>
                             <input type="text" class="form-control" id="esculate_task" name="esculate_task" required>
                             <div class="valid-feedback">Valid.</div>
                             <div class="invalid-feedback">Please fill out this field.</div>
@@ -247,149 +248,156 @@
         }
     });
     function page($page_id)
-   {
-    //alert($page_id);
-
-    var page =$page_id;
-    //page=page-1;
-    var url = window.location.origin + window.location.pathname;
-    window.location.href=url+"?page="+page+"";
-   }
-   function  deleteTask($id)
-   {
-    if(confirm('Are You Sure You want to delete Task?'))
     {
-        window.location.href="{{ url('/deleteTask') }}?id="+$id+"";
-    }
-   }
-   function updateTask($id)
-   {
-    $('#task_id').val($id);
-     $.ajax({
-        type: "GET",
-        url: "{{ url('getTaskData') }}",
-        dataType: "json",
-        cache: false,
-        data: {
-            id: $id
-        },
-        success: function(data) {
-          var obj=JSON.parse(JSON.stringify(data));
-          
-          $('#tasknameUpdate').val(obj[0].task_name);
-          var con=obj[0].time_stamp_for_record_creation;
-          var date =convert(con);  
-          $('#createdonUpdate').val(date);
-          var date = obj[0].due_date;
-          var newdate = convert(date);
-        
-          getAssigneeName(obj[0].user_code);
-         
-          $('#duedateUpdate').val(newdate);
-          $('#statusUpdate').val(obj[0].task_status);
-          $('#esculate_staskUpdate').val(obj[0].esculate_stask);
-          $('#esculate_taskUpdate').val(obj[0].esculate_task);
-         
-          $('#tasksnotesUpdate').val(obj[0].task_notes);
-    
-        }
-    });
-    $('#updatetaskModal').modal('show');
-   }
-function convert(dateTime)
-        {
-            
-            var dateArr = dateTime.split("/");
-            var date1= dateArr[2] + "-" + dateArr[0] + "-" + dateArr[1];
-            return date1;
-        
-        }
-   function getAssigneeName($id)
-   {
-    //var name;
-    $.ajax({
-        type: "GET",
-        url: "{{ url('getAssigneeName') }}",
-        dataType: "json",
-        cache: false,
-        data: {
-            id: $id
-        },
-        success: function(data) {
-             $('#assignedtoUpdate').val(data);
-          //alert(data);
-         // name=data;
-      }
-      });
-//alert(name);
-      //return name;
-     
-  }
-  function previous()
-  {
-    var page=getUrlVars();
+        //alert($page_id);
 
-
-    if(page['page'])
-    {
-        page=page['page'];
-    }
-    else
-    {
-        page = 1;
-    }
-    if(page==1)
-    {
-
-    }
-    else{
-        page=--page;
+        var page =$page_id;
+        //page=page-1;
         var url = window.location.origin + window.location.pathname;
-        var queryString=getUrlVars();
-                                       
-                        
-    window.location.href=url+"?page="+page+"";
-    /*window.location.href=url+"?page="+page+"&box_type="+box_type+"";*/
+        window.location.href=url+"?page="+page+"";
     }
+
+    function  deleteTask($id)
+    {
+        if(confirm('Are You Sure You want to delete Task?'))
+        {
+            window.location.href="{{ url('/deleteTask') }}?id="+$id+"";
+        }
+    }
+
+    function updateTask($id)
+    {
+        $('#task_id').val($id);
+            $.ajax({
+                type: "GET",
+                url: "{{ url('getTaskData') }}",
+                dataType: "json",
+                cache: false,
+                data: {
+                    id: $id
+                },
+                success: function(data) {
+                    var obj=JSON.parse(JSON.stringify(data));
+          
+                    $('#tasknameUpdate').val(obj[0].task_name);
+                    var con=obj[0].time_stamp_for_record_creation;
+                    var date =convert(con);  
+                    $('#createdonUpdate').val(obj[0].time_stamp_for_record_creation);
+                    var date = obj[0].due_date;
+                    var newdate = convert(date);
+        
+                    getAssigneeName(obj[0].user_code);
+         
+                    $('#duedateUpdate').val(obj[0].due_date);
+                    $('#statusUpdate').val(obj[0].task_status);
+                    $('#esculate_staskUpdate').val(obj[0].esculate_stask);
+                    $('#esculate_taskUpdate').val(obj[0].esculate_task);
+                    
+                    $('#tasksnotesUpdate').val(obj[0].task_notes);
+    
+                }
+            });
+        $('#updatetaskModal').modal('show');
+    }
+
+    function convert(dateTime)
+    {
+            
+        var dateArr = dateTime.split("/");
+        var date1= dateArr[2] + "-" + dateArr[0] + "-" + dateArr[1];
+        return date1;
+        
+    }
+
+    function getAssigneeName($id)
+    {
+        //var name;
+        $.ajax({
+            type: "GET",
+            url: "{{ url('getAssigneeName') }}",
+            dataType: "json",
+            cache: false,
+            data: {
+                id: $id
+            },
+            success: function(data) {
+                $('#assignedtoUpdate').val(data);
+                //alert(data);
+                // name=data;
+            }
+        });
+        //alert(name);
+        //return name;
+     
+    }
+
+    function previous()
+    {
+        var page=getUrlVars();
+
+
+        if(page['page'])
+        {
+            page=page['page'];
+        }
+        else
+        {
+            page = 1;
+        }
+        if(page==1)
+        {
+
+        }
+        else{
+            page=--page;
+            var url = window.location.origin + window.location.pathname;
+            var queryString=getUrlVars();
+                                        
+                            
+            window.location.href=url+"?page="+page+"";
+            /*window.location.href=url+"?page="+page+"&box_type="+box_type+"";*/
+        }
     //                                              window.location.href=url+"?page="+page+"&box_type="+box_type+"";
     }
+
     function Next()
     {
         var existing_page=4;
-    //alert(existing_page);
-    //return false;
-    var page=getUrlVars();
+        //alert(existing_page);
+        //return false;
+        var page=getUrlVars();
     
-    if(page['page'])
-    {
-        page=page['page'];
+        if(page['page'])
+        {
+            page=page['page'];
+        }
+        else
+        {
+            page = 0;
+        }
+
+        page=++page;
+        if(page==existing_page)
+        {
+
+            return false;
+        }
+
+        var url = window.location.origin + window.location.pathname;
+        
+        window.location.href=url+"?page="+page+"";
+
     }
-    else
-    {
-        page = 0;
-    }
 
-    page=++page;
-    if(page==existing_page)
-    {
-
-        return false;
-    }
-
-    var url = window.location.origin + window.location.pathname;
-    
-    window.location.href=url+"?page="+page+"";
-
-}
     function getUrlVars() {
-    var vars = [], hash;
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    for (var i = 0; i < hashes.length; i++) {
-        hash = hashes[i].split('=');
-        vars.push(hash[0]);
-        vars[hash[0]] = hash[1];
-    }
-    return vars;
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < hashes.length; i++) {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
     }
 
 </script>

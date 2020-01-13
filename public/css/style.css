@@ -24,7 +24,7 @@
     }
     
     .wrapper-login {
-        width: 670px;
+        width: 51%;
         background: #fff;
         /*#f5ae32;*/
         border-radius: 0px;
@@ -36,7 +36,7 @@
     }
     
     .wrapper-login-lower {
-        width: 670px;
+        width: 51%;
         background: #fff;
         border-radius: 0px;
         /* 10px;
@@ -216,6 +216,15 @@
         -ms-user-select: none;
         user-select: none;
     }
+    /* Hide the browser's default checkbox */
+    
+    .container_2 input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
     /* Create a custom checkbox */
     
     .checkmark {
@@ -245,7 +254,7 @@
     }
     /* Style the checkmark/indicator */
     
-    .container_2 .checkmark:after {
+    .container_list .checkmark:after {
         left: 9px;
         top: 5px;
         width: 5px;
@@ -255,6 +264,38 @@
         -webkit-transform: rotate(45deg);
         -ms-transform: rotate(45deg);
         transform: rotate(45deg);
+    }
+    
+    .container_list ol {
+        list-style-type: none;
+        counter-reset: item;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .container_list ol>li {
+        display: table;
+        counter-increment: item;
+        margin-bottom: 0.6em;
+    }
+    
+    .container_list ol>li:before {
+        content: counters(item, ".") ". ";
+        display: table-cell;
+        padding-right: 0.6em;
+    }
+    
+    .container_list li ol>li {
+        margin: 0;
+    }
+    
+    .container_list li ol>li:before {
+        content: counters(item, ".") " ";
+    }
+    /*----read more functionality --*/
+    
+    #more {
+        display: none;
     }
     /*-------------Style for responsiveness---------------------------*/
     

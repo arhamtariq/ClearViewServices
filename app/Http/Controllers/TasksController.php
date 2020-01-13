@@ -93,28 +93,28 @@ public function getAssigneeName(Request $req)
 }
 public function updateTask(Request $req)
 {
-    $dueDate = $req->duedateUpdate;
-  $arr = explode('-', $dueDate);
-  $newDueDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
-  $createdon=$req->createdonUpdate;
-  $arr = explode('-', $createdon);
-  $newCreateDate =$arr[1].'/'.$arr[2].'/'.$arr[0];
+    //$dueDate = $req->duedateUpdate;
+    //$arr = explode('-', $dueDate);
+    //$newDueDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
+    //$createdon=$req->createdonUpdate;
+    //$arr = explode('-', $createdon);
+    //$newCreateDate =$arr[1].'/'.$arr[2].'/'.$arr[0];
 
-  $assigned_id=\DB::table('users')->where('username',$req->assignedtoUpdate)->first();
+    $assigned_id=\DB::table('users')->where('username',$req->assignedtoUpdate)->first();
             \DB::table('tasks')->where('task_code',$req->task_id)->update([
             'user_code' =>$assigned_id->id,
             'task_creator' =>auth()->user()->id ,
             'task_name'=> $req->tasknameUpdate,
             'task_discription'=>$req->asksnotesUpdate,
-            'due_date'=>$newDueDate,
+            'due_date'=>$req->duedateUpdate,
             'task_status'=>$req->statusUpdate,
             'esculate_task'=>$req->esculate_taskUpdate,
             'esculate_stask'=>$req->esculate_staskUpdate,
             'task_notes'=>$req->tasksnotesUpdate,
-            'time_stamp_for_record_creation'=>$newCreateDate,
-            ]);
-            return redirect()->back()->withSuccess('Task Updated Successfully');
+            'time_stamp_for_record_creation'=>$req->createdonUpdate,
+        ]);
+        return redirect()->back()->withSuccess('Task Updated Successfully');
 
-}
+    }
 
 }
