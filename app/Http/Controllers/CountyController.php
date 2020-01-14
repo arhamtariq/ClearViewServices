@@ -71,7 +71,8 @@ class CountyController extends Controller
             $file = $req->file('docFile');
             $path = $file->storeAs('uploads',$file->getClientOriginalName());
             $destinationPath = 'uploads';
-            //$assigned_id=\DB::table('users')->where('username',$req->assignedto)->first();
+            $file->move($destinationPath,$file->getClientOriginalName());
+            
             if ($req->docid > 0)
             {
                 \DB::table('county_document')->where('document_number',$req->docid)->update([
@@ -240,5 +241,21 @@ class CountyController extends Controller
                 return redirect()->back()->withSuccess('County Notes Created Successfully');
             }
         }
+    }
+
+    public function viewfile(Request $req)
+    {
+        $file = public_path($req->path);
+
+        if (!File::exists($file)) {
+            abort(404);
+        }
+
+        return Response::make(file_get_contents($file), 200, array(
+            'Content-Type' => File::mimeType($file),
+            'Content-Disposition' => 'inline; filename="' . $req->path . '"',
+        ));
+        
+        
     }
 }

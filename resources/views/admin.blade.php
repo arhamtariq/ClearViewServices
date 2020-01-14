@@ -71,7 +71,7 @@
 <div class="modal " id="adduserModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="/create_sub_user" class="needs-validation" novalidate method="post">
+            <form action="{{ url('/create_sub_user') }}" class="needs-validation" novalidate method="post">
             <!-- Modal Header -->
             <div class="modal-header bg-yellow">
                 <h4 class="modal-title">New User</h4>

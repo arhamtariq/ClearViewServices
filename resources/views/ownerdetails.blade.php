@@ -132,6 +132,7 @@
                             <td>{{ $od->county_name }}</td>
                             <td>{{ $od->document_type }}</td>
                             <td><a href="{{ url('/viewfile') }}?path={{ $od->document_link}}" target="_blank">{{ $od->document_name }}</a></td>
+                            
                             <td><i title="Edit" class="fa fa-edit" onclick="updateOwnerDoc({{$od->document_record_number}})"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash" onclick="deleteOwnerDoc({{$od->document_record_number}})"></i></td>
                         </tr>
                     @endforeach
@@ -471,10 +472,10 @@
                         <select class="form-control" id="notestype" name="notestype">
                             <option value="Contacted Owner">Contacted Owner</option>
                             <option value="Contacted Other">Contacted Other</option>
-                            <!--<option value="Contacted Other">additional information needed</option>
-                            <option value="Remote Notary">Remote Notary</option>-->
                             <option value="Follow up">Follow up</option>
-                            <!--<option value="Document Submission">Document Submission</option>-->
+                            <option value="State Note">State Note</option>
+                            <option value="County Note">County Note</option>
+                            <option value="Other">Other</option>
                         </select>
                     </div>
                     <div class="col-sm-6 form-group">
@@ -709,3 +710,4 @@
     }
 </script>
 @endsection
+
