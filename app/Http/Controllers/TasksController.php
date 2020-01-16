@@ -101,7 +101,7 @@ public function updateTask(Request $req)
     //$newCreateDate =$arr[1].'/'.$arr[2].'/'.$arr[0];
 
     $assigned_id=\DB::table('users')->where('username',$req->assignedtoUpdate)->first();
-            \DB::table('tasks')->where('task_code',$req->task_id)->update([
+    \DB::table('tasks')->where('task_code',$req->task_id)->update([
             'user_code' =>$assigned_id->id,
             'task_creator' =>auth()->user()->id ,
             'task_name'=> $req->tasknameUpdate,
@@ -112,9 +112,9 @@ public function updateTask(Request $req)
             'esculate_stask'=>$req->esculate_staskUpdate,
             'task_notes'=>$req->tasksnotesUpdate,
             'time_stamp_for_record_creation'=>$req->createdonUpdate,
-        ]);
-        return redirect()->back()->withSuccess('Task Updated Successfully');
+    ]);
+    return redirect()->back()->withSuccess('Task Updated Successfully');
 
-    }
+}
 
 }

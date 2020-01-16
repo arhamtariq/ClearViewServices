@@ -12,7 +12,7 @@
             {{session()->get('error')}}
         </div>
         @endif 
-        <h4>{{auth()->user()->username}},</h4><h6> ({{auth()->user()->role}} of Company XYZ)</h6>
+        <h4>{{auth()->user()->username}},</h4><h6> ({{ucfirst(auth()->user()->role)}} of Company <b>{{strtoupper($cmp[0]->company_name)}}</b>)</h6>
         <br>
         <h6>
             Your subscription for this month has been started on <b>{{\Carbon\Carbon::parse(auth()->user()->time_stamp_for_record_creation)->format('Y/m/d')}}</b>. It will be expired on <b>{{\Carbon\Carbon::parse(auth()->user()->time_stamp_for_record_creation)->addDays(30)->format('Y/m/d')}}</b>.

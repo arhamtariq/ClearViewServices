@@ -42,8 +42,12 @@ class userController extends Controller
         //know check email is verified or not
         if(Auth::attempt($credentials_with_email_verification))
         {
-          $user=DB::table('users')->where('username',$req['username'])->first();
-          //dd($user);
+          $user=DB::table('users')
+              //->join('company' , 'company.company_code','=','users.company_code')
+              ->where('username',$req['username'])
+              ->select('users.*')
+              ->first();
+
           Auth::loginUsingId($user->id);
           
           return redirect()->to('/task');
@@ -89,7 +93,7 @@ class userController extends Controller
       ]);       
    	  Mail::send([], [], function ($message) use($req,$unique_token) {
   		  $message->to($req->email)
-  		  ->subject('Rest Password')
+  		  ->subject('Reset Password')
   		  ->setBody('<h1>Reset Password Request</h1><br>
   			<p>You are receiving this email because we received a password reset request for your account</p><br>
         <p>Click on the link if you want to reset your password:<a href="http://localhost:8000/resetPasswordLink?token='.$unique_token.'">Click Here</a></p> ', 'text/html'); // for HTML rich messages
@@ -150,7 +154,7 @@ class userController extends Controller
 //    dd($req);
     if(DB::table('company')->where('company_name',$req->company_name)->count() >=3)
     {
-     return redirect()->back()->withError('Three users of this company are already registered');
+      return redirect()->back()->withError('Three users of this company are already registered');
     }
     //die();
 
