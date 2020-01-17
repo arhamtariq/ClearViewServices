@@ -118,8 +118,9 @@ Route::get('removeUser', 'AdminController@removeUser')->middleware('auth');
 Route::get('adminUsers', 'AdminController@adminUsers')->middleware('auth');
 Route::post('update_sub_user', 'AdminController@update_sub_user')->middleware('auth');
 
-
-
+Route::get('/profile' , 'ProfileController@index')->middleware('auth');
+Route::post('/updateuserdetails', 'ProfileController@updateuserdetails')->middleware('auth');
+Route::post('changePassword' , 'ProfileController@changePassword')->middleware('auth');
 
 
 

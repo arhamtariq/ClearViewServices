@@ -197,7 +197,7 @@
                             <div class="invalid-feedback">Please fill out this field.</div>
                         </div>
                         <div class="col form-group">
-                            <label for="status">Status:</label>
+                            <label for="statusUpdate">Status:</label>
                             <input type="text" class="form-control" id="statusUpdate" name="statusUpdate" required>
                             <div class="valid-feedback">Valid.</div>
                             <div class="invalid-feedback">Please fill out this field.</div>
@@ -205,14 +205,14 @@
                     </div>
                     <div class="form-row form-group">
                         <div class="col">
-                            <label for="assignedto">Escalate Task:</label>
+                            <label for="esculate_staskUpdate">Escalate Task:</label>
                             <select class="form-control" id="esculate_staskUpdate" name="esculate_staskUpdate">
                                 <option value="No">No</option>
                                 <option value="Yes">Yes</option>
                             </select>
                         </div>
                         <div class="col form-group">
-                            <label for="status">Escalate Task:</label>
+                            <label for="esculate_taskUpdate">Escalate Task:</label>
                             <input type="text" class="form-control" id="esculate_taskUpdate" name="esculate_taskUpdate" >
                             <div class="valid-feedback">Valid.</div>
                             <div class="invalid-feedback">Please fill out this field.</div>

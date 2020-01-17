@@ -7,6 +7,7 @@
             @csrf
             <input type="hidden" value="searchForm" name="searchForm">
             <input type="search" class="form-control mdb-autocomplete mb-2 mr-sm-2 " id="state" name="state" placeholder="State Name">           
+            <input type="search" class="form-control mdb-autocomplete mb-2 mr-sm-2 typeahead" id="county" name="county" placeholder="County Name">
             <button type="submit" class="btn bg-yellow mb-2 mr-sm-2 text-white">Search&nbsp;<i class="fa fa-search text-white"></i></button>
         </form>
     </div>
@@ -15,6 +16,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>State Name</th>
                     <th>County Name</th>
                     <th>View Details</th>
                     
@@ -22,11 +24,12 @@
             </thead>
             <tbody>
                 @if ($county == null OR count($county) == 0)
-                    <tr><td colspan="2" class="text-center">No Record Exists.</td></tr>
+                    <tr><td colspan="3" class="text-center">No Record Exists.</td></tr>
                 @else
                     
                 @foreach ($county as $c)
                 <tr>
+                    <td>{{ $c->state_name}}</td>
                     <td>{{ $c->county_name}}</td>
                     <td><a href="{{ url('/getCountyDetails') }}?id={{$c->county_code}}">Click here to view details.</a></td>
                 </tr>
@@ -43,4 +46,31 @@
         </ul>
     </div>
 </div>
+<script>
+    //For county autocomplete
+    var path = "/getCounties";
+    var map;
+    $('input.typeahead').typeahead({
+        source:  function (query, process) {
+            var $this = this;
+            return $.get(path,{ query: query }, function(data){
+                //alert(data)
+                var options = [];
+                $this["map"]={};
+                $.each(data,function(i,val){
+                    //console.log(val.name);
+                    options.push(val.name);
+                    $this.map[val.name] = val.id;
+                });
+               // alert(process(options))
+                return process(options);
+            });
+        },
+        updater: function(item){
+            //$('#countycode').val(item);
+            //$('#cc').val(this.map[item],item);
+            return item;
+        }
+    });
+</script>
 @endsection
