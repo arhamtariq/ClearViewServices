@@ -66,24 +66,37 @@
             <!-- Links -->
             <div class="collapse navbar-collapse justify-content-left w-75" id="nav">
                 <ul class="navbar-nav navbar-brand nav" style="font-size:18px;height:100%;">
+                    @if ((auth()->user()->role == 'superuser') || (auth()->user()->role == 'manager') OR (auth()->user()->role != 'Skip Trace'))
                     <li class="nav-item border-right border-secondary">
                         <a class="nav-link ml-0 text-white" href="{{ url('/task') }}"><b>Task</b></a>
                     </li>
+                    @endif
+                    @if (auth()->user()->role == 'superuser' OR auth()->user()->role == 'manager' OR auth()->user()->role != 'Skip Trace' OR auth()->user()->role == ' Owner Contact VA' OR auth()->user()->role == 'County_Form_Submission')
                     <li class="nav-item border-right border-secondary" >
                         <a class="nav-link ml-2 text-white" href="{{ url('/owner') }}"><b>Owners</b></a>
                     </li>
+                    @endif
+                    @if (auth()->user()->role == 'superuser' OR auth()->user()->role == 'manager' OR auth()->user()->role == 'County Contact List')
                     <li class="nav-item border-right border-secondary">
                         <a class="nav-link ml-2 text-white" href="{{ url('/county') }}"><b>County</b></a>
                     </li>
+                    @endif
+                    @if (auth()->user()->role == 'superuser' OR auth()->user()->role == 'manager' OR auth()->user()->role == 'County Contact List')
                     <li class="nav-item border-right border-secondary" >
                         <a class="nav-link ml-2 text-white" href="{{ url('/state') }}"><b>States</b></a>
                     </li>
+                    @endif
+                    @if (auth()->user()->role == 'superuser' OR auth()->user()->role == 'manager')
                     <li class="nav-item border-right border-secondary" >
                         <a class="nav-link ml-2 text-white" href="{{ url('/document') }}"><b>Documents</b></a>
                     </li>
+                    @endif
+                   
+                    @if(auth()->user()->role == 'superuser' OR auth()->user()->role == 'manager')
                     <li class="nav-item" >
                         <a class="nav-link ml-2 text-white" href="{{ url('/admin') }}"><b>Administration</b></a>
                     </li>
+                    @endif
                 </ul>
             </div>
         </div>

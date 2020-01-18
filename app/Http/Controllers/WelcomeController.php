@@ -26,38 +26,41 @@ class WelcomeController extends Controller
      */
     public function index(Request $req)
     {
-    if(isset($req->page)) 
-    {
-        $offset=5*($req->page-1);
-    }   
-    else
-    {
-        $offset=0;
-    }
-    if(isset($req->searchForm))
-    {
-       
-        $tasks=DB::table('tasks')->where('task_creator',auth()->user()->id)->where('task_name',$req->input('task-name'))->where('time_stamp_for_record_creation',$req->input('created-on'))->orderBy('time_stamp_for_record_creation','desc')->offset($offset)->limit(5)->get();
-    }
-   else{
-    $tasks=DB::table('tasks')->where('task_creator',auth()->user()->id)->orderBy('time_stamp_for_record_creation','desc')->offset($offset)
+        if(isset($req->page)) 
+        {
+            $offset=5*($req->page-1);
+        }   
+        else
+        {
+            $offset=0;
+        }
+        if(isset($req->searchForm))
+        {
+        
+            $tasks=DB::table('tasks')->where('task_creator',auth()->user()->id)->where('task_name',$req->input('task-name'))->where('time_stamp_for_record_creation',$req->input('created-on'))->orderBy('time_stamp_for_record_creation','desc')->offset($offset)->limit(5)->get();
+        }
+        else{
+            $tasks=DB::table('tasks')->where('task_creator',auth()->user()->id)->orderBy('time_stamp_for_record_creation','desc')->offset($offset)
                 ->limit(5)->get();
-     }           
+        }           
         return view('tasks',compact('tasks'));
     }
+
     public static function getTaskCreaterName($id)
     {
         $name=DB::table('users')->where('id',$id)->first();
         return $name->username;
     }
+
     public static function getTaskAssigneeName($id)
     {
-     $name=DB::table('users')->where('id',$id)->first();
+        $name=DB::table('users')->where('id',$id)->first();
         return $name->username;
     }
+
    public function getUsersForAssigning(Request $request)
    {
-     $data = \DB::table('users')->select("username as name")
+        $data = \DB::table('users')->select("username as name")
                 ->where('company_code',auth()->user()->company_code)
                 ->where("username","LIKE","%{$request->input('query')}%")
                 ->get();
