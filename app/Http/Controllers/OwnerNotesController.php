@@ -9,6 +9,12 @@ use DB;
 
 class OwnerNotesController extends Controller
 {
+    public function __construct()
+    {
+        //$this->middleware('auth');
+    $this->middleware('check_package_status');
+    }
+
     //
     //To delete an owner record document
     public function deleteOwnerNotes(Request $req)

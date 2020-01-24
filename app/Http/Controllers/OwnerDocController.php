@@ -18,10 +18,12 @@ class OwnerDocController extends Controller
      *
      * @return void
      */
-    public function __construct()
+   public function __construct()
     {
         //$this->middleware('auth');
+      $this->middleware('check_package_status');
     }
+
 
     /**
      * Show the application dashboard.

@@ -16,6 +16,9 @@ class WelcomeController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('check_package_status', ['except' => [
+            'index'
+        ]]);
         //$this->middleware('auth');
     }
 

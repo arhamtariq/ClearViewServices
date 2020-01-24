@@ -12,6 +12,11 @@ use DB;
 class AdminController extends Controller
 {
     //
+     public function __construct() {
+        $this->middleware('check_package_status', ['except' => [
+            'index'
+        ]]);
+    }
     public function index(Request $req)
     {
      //dump(auth()->user());

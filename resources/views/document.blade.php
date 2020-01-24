@@ -19,6 +19,9 @@
             <button type="submit" class="btn bg-yellow mb-2 mr-sm-2 text-white">Search&nbsp;<i title="Search Task" class="fa fa-search text-white"></i></button>
         </form>
     </div>
+    <?php
+    var_dump('ok'); 
+    ?>
     <div class="container bg-white pb-5 mb-4">
         <h2 class="float-left">Document List</h2>
         <table class="table table-striped">

@@ -23,6 +23,7 @@ use PayPal\Api\PaymentExecution;
 use PayPal\Api\Transaction;
 use Carbon\Carbon;
 use DB;
+use App\User;
 /*use Illuminate\Support\Facades\Input;
 */
 class AddMoneyController extends HomeController
@@ -163,9 +164,17 @@ class AddMoneyController extends HomeController
 
          $extended_time=$start->addDays(30);
          DB::table('users')->where('id',auth()->user()->id)->update(['time_stamp_for_record_creation'=>$extended_time]);
+         $userObj = new User();
+         if($userObj->getSubUsers() == 0)
+         {
+             DB::table('administartion_users')->insert(['created_by_code'=>auth()->user()->id,'user_code'=>auth()->user()->id]);
+            DB::table('administartion_users')->insert(['created_by_code'=>auth()->user()->id]);
+            DB::table('administartion_users')->insert(['created_by_code'=>auth()->user()->id]);
+         }
          DB::table('users')
             ->join('administartion_users', 'users.id', '=', 'administartion_users.user_code')
             ->where('administartion_users.created_by_code',auth()->user()->id)->update(['users.time_stamp_for_record_creation'=>$extended_time]);
+
          session()->flash('success','Payment Successfully done');
             return redirect('/task');
         }
@@ -173,7 +182,7 @@ class AddMoneyController extends HomeController
         {
             $user_data= DB::table('users')->where('id',auth()->user()->id)->first(); 
          DB::table('administartion_users')->insert(['created_by_code'=>auth()->user()->id]);
-         DB::table('administartion_users')->insert(['created_by_code'=>auth()->user()->id]);
+        /* DB::table('administartion_users')->insert(['created_by_code'=>auth()->user()->id]);*/
          session()->flash('success','Payment Successfully done');
             return redirect('/admin');
          

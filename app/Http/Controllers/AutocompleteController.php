@@ -8,6 +8,12 @@ use DB;
 class AutocompleteController extends Controller
 {
     //
+    public function __construct()
+    {
+        //$this->middleware('auth');
+     $this->middleware('check_package_status');
+    }
+
     public function states(Request $request)
     {
         $search = $request->get('term');
