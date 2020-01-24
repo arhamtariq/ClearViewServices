@@ -20,7 +20,7 @@ use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\ExecutePayment;
 use PayPal\Api\PaymentExecution;
-use PayPal\Api\Transaction;
+use PayPal\Api\Transaction; 
 use Carbon\Carbon;
 use DB;
 /*use Illuminate\Support\Facades\Input;
@@ -40,6 +40,7 @@ class AddMoneyController extends HomeController
         /** setup PayPal api context **/
         $paypal_conf = \Config::get('paypal');
         $this->_api_context = new ApiContext(new OAuthTokenCredential($paypal_conf['client_id'], $paypal_conf['secret']));
+        //$this->_api_context = PayPal::ApiContext(new OAuthTokenCredential($paypal_conf['client_id'], $paypal_conf['secret']));
         $this->_api_context->setConfig($paypal_conf['settings']);
     }
     /**
@@ -172,15 +173,15 @@ class AddMoneyController extends HomeController
         else 
         {
             $user_data= DB::table('users')->where('id',auth()->user()->id)->first(); 
-         DB::table('administartion_users')->insert(['created_by_code'=>auth()->user()->id]);
-         DB::table('administartion_users')->insert(['created_by_code'=>auth()->user()->id]);
-         session()->flash('success','Payment Successfully done');
+            DB::table('administartion_users')->insert(['created_by_code'=>auth()->user()->id]);
+            DB::table('administartion_users')->insert(['created_by_code'=>auth()->user()->id]);
+            session()->flash('success','Payment Successfully done');
             return redirect('/admin');
          
         } 
           //  return Redirect::route('addmoney.paywithpaypal');
         }
-      dd('paymnet false');
+        dd('paymnet false');
         return Redirect::route('addmoney.paywithpaypal');
     }
-  }
+}
