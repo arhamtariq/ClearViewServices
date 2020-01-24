@@ -132,6 +132,7 @@
                             <td>{{ $od->county_name }}</td>
                             <td>{{ $od->document_type }}</td>
                             <td><a href="{{ url('/viewfile') }}?path={{ $od->document_link}}" target="_blank">{{ $od->document_name }}</a></td>
+                            
                             <td><i title="Edit" class="fa fa-edit" onclick="updateOwnerDoc({{$od->document_record_number}})"></i>&nbsp;&nbsp;<i title="Delete" class="fa fa-trash" onclick="deleteOwnerDoc({{$od->document_record_number}})"></i></td>
                         </tr>
                     @endforeach
@@ -294,9 +295,8 @@
                 </div>
                 <div class="form-row">
                     <div class="col-sm-6 form-group form-check">
-                        <label class="form-check-label">Skip Tracing Source: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="checkbox" class="form-check-input" id="isskip" name="isskip">
-                        </label>
+                        <label for="detailstatus">Skip Tracing Source:</label>
+                        <input type="text" class="form-control" id="isskip" name="isskip">
                     </div>
                 </div>
             </div>
@@ -403,7 +403,10 @@
                 <div class="form-row">
                     <div class="col-sm-6 form-group">
                         <label for="checkreceived">Check Recieved From County:</label>
-                        <input type="text" class="form-control" id="checkreceived" name="checkreceived">
+                        <select class="form-control" id="checkreceived" name="checkreceived">
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
                     </div>
                     <div class="col-sm-6 form-group">
                         <label for="checkreceivedon">Check Recieved On:</label>
@@ -469,10 +472,10 @@
                         <select class="form-control" id="notestype" name="notestype">
                             <option value="Contacted Owner">Contacted Owner</option>
                             <option value="Contacted Other">Contacted Other</option>
-                            <!--<option value="Contacted Other">additional information needed</option>
-                            <option value="Remote Notary">Remote Notary</option>-->
                             <option value="Follow up">Follow up</option>
-                            <!--<option value="Document Submission">Document Submission</option>-->
+                            <option value="State Note">State Note</option>
+                            <option value="County Note">County Note</option>
+                            <option value="Other">Other</option>
                         </select>
                     </div>
                     <div class="col-sm-6 form-group">
@@ -597,8 +600,9 @@
                 id: $id
             },
             success: function(data) {
-                
+               
                 var obj=JSON.parse(JSON.stringify(data));
+                
                 $('#documentsent').val(obj[0].county_document_sent);
                 $('#documentreceived').val(obj[0].county_receive_document);
                 $('#documentstatus').val(obj[0].document_accept_reject);  
@@ -691,11 +695,7 @@
                 $('#hphone').val(obj[0].home_phone);
                 $('#status').val(obj[0].contact_status);
                 $('#detailstatus').val(obj[0].contact_detail_status);
-                if (obj[0].skip_tracing_source == '1')
-                    $('#isskip').attr('checked', true);
-                else
-                    $('#isskip').removeAttr('checked');
-                    
+                $('#isskip').val(obj[0].skip_tracing_source);
             }
         });
         $('#addcontactModal').modal('show');
@@ -710,3 +710,4 @@
     }
 </script>
 @endsection
+

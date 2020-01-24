@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Response;
 use Validator;
 use DateTime;
 use DB;
@@ -70,6 +71,7 @@ class OwnerDocController extends Controller
                 $file = $req->file('docFile');
                 $path = $file->storeAs('uploads',$file->getClientOriginalName());
                 $destinationPath = 'uploads';
+                $file->move($destinationPath,$file->getClientOriginalName());
 
                 \DB::table('owner_document')->where('document_record_number',$req->documentrecordnumber)->update([
                     'county_code' =>$req->cc,// ,
@@ -85,7 +87,7 @@ class OwnerDocController extends Controller
                 $file = $req->file('docFile');
                 $path = $file->storeAs('uploads',$file->getClientOriginalName());
                 $destinationPath = 'uploads';
-                //$file->move($destinationPath,$file->getClientOriginalName());
+                $file->move($destinationPath,$file->getClientOriginalName());
 
                 \DB::table('owner_document')->insert([
                     'record_number' =>$req->recno1,
@@ -93,7 +95,7 @@ class OwnerDocController extends Controller
                     'document_type'=> $req->doctype,
                     'document_name'=>$req->docname,	
                     'document_link'=>$path,//$destinationPath . '/' . $req->docFile->getClientOriginalName() . '.' . $req->docFile->getClientOriginalExtension(),
-                    'user_code'=>1//auth()->user()->id,	
+                    'user_code'=>auth()->user()->id,	
                 ]);
 
                 return redirect()->back()->withSuccess('Owner Document Created Successfully');
@@ -115,10 +117,19 @@ class OwnerDocController extends Controller
     } 
     public function viewfile(Request $req)
     {
-        //if (!File::exists('../storage/app' . $req->path)) {
+        //$file = public_path($req->path);
+        $file = $req->path;
+        if (!File::exists($file)) {
             abort(404);
+        }
+        return Response::make(file_get_contents($file), 200, array(
+            'Content-Type' => File::mimeType($file),
+            'Content-Disposition' => 'inline; filename="' . $req->path . '"',
+        ));
+        //if (!File::exists('../../../' . $req->path)) {
+        //    abort(404);
         //}
-        //return response()->file('../storage/app/' . $req->path);
+        //return response()->file('../../../' . $req->path);
         
         //return response()->file('../storage/app/' . $req->path, [
         //    'Content-Type' => 'application/octet-stream'

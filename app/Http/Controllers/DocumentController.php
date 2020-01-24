@@ -31,6 +31,8 @@ class DocumentController extends Controller
 
     public function searchDocument(Request $req)
     {
+        
+        $docs = null;
         if ($req->doctype != "0")
         {
             $docs1 = \DB::table('owner_document')
@@ -101,7 +103,10 @@ class DocumentController extends Controller
             $docs = $docs1->merge($docs2)->merge($docs3);
         }
         //$docs = DB::table('county_document')->select('county_name','document_type','document_name')->get();
-        return view('document')->with('docs',$docs);
+        if ($docs == null)
+                return back()->with("status", "Enter search term or select document type!");
+        else
+                return view('document')->with('docs',$docs);
         
     }
 }

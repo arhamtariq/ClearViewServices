@@ -7,6 +7,9 @@
     
     <title>Clearview Services</title>
 
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('images/favicon.png')}}" type="image/gif" sizes="16x16">
+
     <!-- Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
@@ -32,8 +35,8 @@
    </div>
     <div class="container-login">
         <div class="wrapper-login p-2">
-            <div class="login-form-title">
-                <img class="img-fluid" src="/images/logo-white.png">
+            <div class="login-form-title pt-3">
+                <img class="img-fluid" width="600" src="/images/logo.png">
             </div>
         </div>
         <div class="wrapper-login-lower">

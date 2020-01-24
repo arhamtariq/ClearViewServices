@@ -8,9 +8,12 @@
     
     <title>Clearview Services</title>
 
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('images/favicon.png')}}" type="image/gif" sizes="16x16">
+
     <!-- Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans|Oswald|Roboto&display=swap">
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -28,23 +31,22 @@
    </div>
     <div class="container-login">
         <div class="wrapper-login p-2">
-            <div class="login-form-title">
-                <img class="img-fluid" src="/images/logo-white.png">
+            <div class="login-form-title pt-3">
+                <img class="img-fluid" width="600" src="/images/logo.png">
             </div>
         </div>
         <div class="wrapper-login-lower">
             <form class="login-form validate-form needs-validation" action="{{ url('/dologin') }}" method="post" novalidate>
                 <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
-                <div class="form-input validate-input m-b-26" data-validate="Username is required">
-                    <span class="form-label">Username</span>
-                    <input class="form-text" type="text" name="username" placeholder="Enter username">
-                    <span class="focus-input"></span>
+                <div class="form-input validate-input input-container " data-validate="Username is required">
+                    <i class="fa fa-user icon"></i>
+                    <input class="form-text" type="text" name="username" placeholder="Enter username"> 
                 </div>
-
+                
                 <div class="form-input validate-input m-b-18" data-validate = "Password is required">
-                    <span class="form-label">Password</span>
+                    <i class="fa fa-lock icon"></i>
                     <input class="form-text" type="password" name="password" placeholder="Enter password" required>
-                    <span class="focus-input"></span>
+                    
                 </div>
                    <div class="flex-sb-m w-full p-b-30 mt-2">
                     <a href="{{ url('/forgotPasswordRequest') }}">Forgot Password</a>
@@ -54,7 +56,7 @@
                 </div>
 
                 <div class="container-btn mt-4">
-                    <button class="form-btn"><i class = "fa fa-arrow-right" style="color:white;"> </i></button>
+                    <button class="form-btn">Login</button>
                 </div>
             </form>
         </div>

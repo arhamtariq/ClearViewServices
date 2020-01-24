@@ -12,7 +12,7 @@
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans|Oswald|Roboto&display=swap"">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans|Oswald|Roboto&display=swap">
 
     <!-- Styles -->
     <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
@@ -66,24 +66,37 @@
             <!-- Links -->
             <div class="collapse navbar-collapse justify-content-left w-75" id="nav">
                 <ul class="navbar-nav navbar-brand nav" style="font-size:18px;height:100%;">
+                    @if ((auth()->user()->role == 'superuser') || (auth()->user()->role == 'manager') OR (auth()->user()->role != 'Skip Trace'))
                     <li class="nav-item border-right border-secondary">
                         <a class="nav-link ml-0 text-white" href="{{ url('/task') }}"><b>Task</b></a>
                     </li>
+                    @endif
+                    @if (auth()->user()->role == 'superuser' OR auth()->user()->role == 'manager' OR auth()->user()->role != 'Skip Trace' OR auth()->user()->role == ' Owner Contact VA' OR auth()->user()->role == 'County_Form_Submission')
                     <li class="nav-item border-right border-secondary" >
                         <a class="nav-link ml-2 text-white" href="{{ url('/owner') }}"><b>Owners</b></a>
                     </li>
+                    @endif
+                    @if (auth()->user()->role == 'superuser' OR auth()->user()->role == 'manager' OR auth()->user()->role == 'County Contact List')
                     <li class="nav-item border-right border-secondary">
                         <a class="nav-link ml-2 text-white" href="{{ url('/county') }}"><b>County</b></a>
                     </li>
+                    @endif
+                    @if (auth()->user()->role == 'superuser' OR auth()->user()->role == 'manager' OR auth()->user()->role == 'County Contact List')
                     <li class="nav-item border-right border-secondary" >
                         <a class="nav-link ml-2 text-white" href="{{ url('/state') }}"><b>States</b></a>
                     </li>
+                    @endif
+                    @if (auth()->user()->role == 'superuser' OR auth()->user()->role == 'manager')
                     <li class="nav-item border-right border-secondary" >
                         <a class="nav-link ml-2 text-white" href="{{ url('/document') }}"><b>Documents</b></a>
                     </li>
+                    @endif
+                   
+                    @if(auth()->user()->role == 'superuser' OR auth()->user()->role == 'manager')
                     <li class="nav-item" >
                         <a class="nav-link ml-2 text-white" href="{{ url('/admin') }}"><b>Administration</b></a>
                     </li>
+                    @endif
                 </ul>
             </div>
         </div>

@@ -19,17 +19,20 @@ $(function() {
 
     $('#createdon').datepicker({
         autoclose: true,
-        todayHighlight: true
+        todayHighlight: true,
+        format: 'yyyy-mm-dd'
     });
     //alert('hello');
     $('#created-on').datepicker({
         autoclose: true,
-        todayHighlight: true
+        todayHighlight: true,
+        format: 'yyyy-mm-dd'
     });
 
     $('#duedate').datepicker({
         autoclose: true,
-        todayHighlight: true
+        todayHighlight: true,
+        format: 'yyyy-mm-dd'
     });
 
     $('#saledate').datepicker({

@@ -25,7 +25,7 @@ class CountyController extends Controller
     public function searchCounty(Request $req)
     {
         $county = null;
-        if($req->state != "")
+        if($req->state != "" AND $req->county == "")
         {
             //$county = \DB::table('county_in_us')->select('county_in_us.*' , DB::raw('count(county_notes.county_code) as notes'))
             //        ->join('county_notes' , 'county_in_us.county_code', '=', 'county_notes.county_code','left outer')
@@ -36,6 +36,21 @@ class CountyController extends Controller
                             ->where("state_name", "LIKE" , "%{$req->state}%")
                             ->get();
         }
+        elseif ($req->state == "" AND $req->county != "")
+        {
+            $county = \DB::table('county_in_us')->select('*')
+                            ->where("county_name", "LIKE" , "%{$req->county}%")
+                            ->get();
+        }
+        elseif ($req->state != "" AND $req->county != "")
+        {
+            $county = \DB::table('county_in_us')->select('*')
+                            ->where("state_name", "LIKE" , "%{$req->state}%")
+                            ->where("county_name", "LIKE" , "%{$req->county}%")
+                            ->get();
+        }
+
+
         //$docs = DB::table('county_document')->select('county_name','document_type','document_name')->get();
         return view('county')->with('county',$county);
     }
@@ -77,7 +92,8 @@ class CountyController extends Controller
             $file = $req->file('docFile');
             $path = $file->storeAs('uploads',$file->getClientOriginalName());
             $destinationPath = 'uploads';
-            //$assigned_id=\DB::table('users')->where('username',$req->assignedto)->first();
+            $file->move($destinationPath,$file->getClientOriginalName());
+            
             if ($req->docid > 0)
             {
                 \DB::table('county_document')->where('document_number',$req->docid)->update([
@@ -246,5 +262,21 @@ class CountyController extends Controller
                 return redirect()->back()->withSuccess('County Notes Created Successfully');
             }
         }
+    }
+
+    public function viewfile(Request $req)
+    {
+        $file = public_path($req->path);
+
+        if (!File::exists($file)) {
+            abort(404);
+        }
+
+        return Response::make(file_get_contents($file), 200, array(
+            'Content-Type' => File::mimeType($file),
+            'Content-Disposition' => 'inline; filename="' . $req->path . '"',
+        ));
+        
+        
     }
 }

@@ -3,6 +3,11 @@
 @section('content')
 <div class="jumbotron jumbotron-fluid p-0 pt-3 pb-2">
     <div class="container pl-0">
+        @if (session('status'))
+            <div class="alert alert-danger">
+                {{ session('status') }}
+            </div>
+        @endif
         <form class="form-inline" method="post" action="{{ url('/searchDocument') }}">
             @csrf
             <input type="hidden" value="searchForm" name="searchForm">

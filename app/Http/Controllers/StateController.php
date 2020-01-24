@@ -86,7 +86,7 @@ class StateController extends Controller
             $file = $req->file('docFile');
             $path = $file->storeAs('uploads',$file->getClientOriginalName());
             $destinationPath = 'uploads';
-            //$assigned_id=\DB::table('users')->where('username',$req->assignedto)->first();
+            $file->move($destinationPath,$file->getClientOriginalName());
             if ($req->docid > 0)
             {
                 \DB::table('state_document')->where('document_number',$req->docid)->update([
