@@ -17,6 +17,7 @@ class CreateAdministartionUsersTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_code')->comment('The code associated with the user')->nullable();
             $table->integer('created_by_code')->comment('The code associated with the user who created it');
+            $table->boolean('package_status')->default(true)->comment('This Field will tell package is subscribed or not');
             $table->timestamps();
         });
     }

@@ -11,6 +11,12 @@ use Validator;
 class CountyController extends Controller
 {
     //
+    public function __construct()
+    {
+        //$this->middleware('auth');
+    $this->middleware('check_package_status');
+    }
+
     public function index()
     {
         return view('county')->with('county',null);

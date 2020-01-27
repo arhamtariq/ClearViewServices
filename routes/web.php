@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/login', function () {
-	
+
+Route::get('/login', function () {	
     return view('login');
  
 })->name('login');
@@ -26,13 +26,11 @@ Route::get('/register', function () {
     return view('register');
 })->name('register_page');
 
-//Route::get('/register' , 'RegisterController@index');
-
 Route::get('paywithpaypal', array('as' => 'addmoney.paywithpaypal','uses' => 'AddMoneyController@payWithPaypal',));
 Route::post('paypal', array('as' => 'addmoney.paypal','uses' => 'AddMoneyController@postPaymentWithpaypal',));
 Route::get('paypal', array('as' => 'payment.status','uses' => 'AddMoneyController@getPaymentStatus'));
 
-Route::post('dologin','userController@dologin');
+Route::post('dologin','userController@dologin')->middleware('unsubribePackageCheck');
 Route::get('logout','userController@logout');
 Route::get('forgotPasswordRequest','userController@forgotPasswordRequest');
 Route::post('resetPasswordRequest','userController@resetPasswordRequest');
@@ -117,6 +115,8 @@ Route::get('autocomplete', 'AutocompleteController@states')->middleware('auth');
 Route::get('removeUser', 'AdminController@removeUser')->middleware('auth');
 Route::get('adminUsers', 'AdminController@adminUsers')->middleware('auth');
 Route::post('update_sub_user', 'AdminController@update_sub_user')->middleware('auth');
+Route::get('profile', 'userController@profile')->middleware('auth');
+Route::post('updatePackageStatus', 'userController@updatePackageStatus')->middleware('auth');
 
 Route::get('/profile' , 'ProfileController@index')->middleware('auth');
 Route::post('/updateuserdetails', 'ProfileController@updateuserdetails')->middleware('auth');

@@ -12,8 +12,47 @@ use Str;
 
 class userController extends Controller
 {
+   public function __construct()
+    {
+      
+      /*  $this->middleware('check_package_status', ['except' => [
+            'dologin','profile','updatePackageStatus'
+        ]]);*/
+      // dologin
+    }
+
+  public function profile(Request $req)
+  {
+   if(isset($req->page)) 
+   {
+    $offset=5*($req->page-1);
+   }   
+   else
+   {
+    $offset=0;
+   }
+    $users = DB::table('users')
+            ->join('administartion_users', 'users.id', '=', 'administartion_users.user_code')
+            ->where('administartion_users.user_code',auth()->user()->id)
+            ->select('users.*','administartion_users.*')
+            ->offset($offset)->limit(5)
+            ->get();
+            
+    return view('profile',compact('users'));
+  }
+  public static function getNameById($id)
+  {
+    $user=DB::table('users')->where('id',$id)->first();
+    return $user->username;
+  }
+ public function updatePackageStatus(Request $req)
+{
+  DB::table('administartion_users')->where('user_code',auth()->user()->id)->where('id',$req->package_id)->update(['package_status'=>$req->P_Status]);
+  return redirect()->back()->withSuccess('Operation held successfully');
+}
   public function dologin(Request $req)
   {
+    $this->checkPackageStatus($req);
   	  $validator=Validator::make($req->all(),[
         'username' => 'required|string',
         'password' => 'required|string',   
@@ -30,24 +69,26 @@ class userController extends Controller
         'password' => $req['password'],
           
       ];
-
+     
   	  $credentials_with_email_verification = [
         'username' => $req['username'],
         'password' => $req['password'],
         'email_verified'=>1,
       ];
-
+    $this->checkPackageStatus($req);
       if(Auth::attempt($credentials)) {
         //password verified
         //know check email is verified or not
         if(Auth::attempt($credentials_with_email_verification))
         {
+
+          $user=DB::table('users')->where('username',$req['username'])->first();
+          
           $user=DB::table('users')
               //->join('company' , 'company.company_code','=','users.company_code')
               ->where('username',$req['username'])
               ->select('users.*')
               ->first();
-
           Auth::loginUsingId($user->id);
           
           return redirect()->to('/task');
@@ -63,7 +104,11 @@ class userController extends Controller
    	    return redirect()->back()->withError('Username or password does not match');
       }
   }
-
+  public function checkPackageStatus($req)
+  {
+    
+  
+  }
   public function logout(Request $request) {
     Auth::logout();
     return redirect('/login');
@@ -235,6 +280,7 @@ class userController extends Controller
       $created = new Carbon($creation_time->time_stamp_for_record_creation);
       $now = Carbon::now();
       $difference = $created->diff($now)->days;
+      //dd($difference);
       if($difference > 8 and $difference < 10)
       {
         echo json_encode($difference);

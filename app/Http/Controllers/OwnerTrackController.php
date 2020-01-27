@@ -10,6 +10,12 @@ use DateTime;
 class OwnerTrackController extends Controller
 {
     //
+    public function __construct()
+    {
+        //$this->middleware('auth');
+      $this->middleware('check_package_status');
+    }
+
     public function deleteOwnerTrack(Request $req)
     {
         if(\DB::table('overage_request_tracking')->where('tracking_record_number',$req->id)->delete()) //->where('task_creator',auth()->user()->id)->delete())
