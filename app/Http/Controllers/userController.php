@@ -52,7 +52,7 @@ class userController extends Controller
 }
   public function dologin(Request $req)
   {
-    $this->checkPackageStatus($req);
+      $this->checkPackageStatus($req);
   	  $validator=Validator::make($req->all(),[
         'username' => 'required|string',
         'password' => 'required|string',   
