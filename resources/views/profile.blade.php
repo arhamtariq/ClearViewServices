@@ -166,7 +166,7 @@
         @endif
     </div>
 </div>
-<!-- Add owner -->
+<!-- Change password-->
 <div class="modal " id="changepasswordModal">
     <div class="modal-dialog">
         <div class="modal-content">

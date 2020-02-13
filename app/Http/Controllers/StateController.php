@@ -52,11 +52,13 @@ class StateController extends Controller
         $state_notes = \DB::table('state_notes')->select('state_notes.*','county_in_us.state_name','county_in_us.state_code')
                         ->join('county_in_us', 'state_notes.state_code', '=', 'county_in_us.state_code' , 'right outer')                    
                         ->where('county_in_us.state_code',$req->id)
+                        ->where('user_code' , auth()->user()->id)
                         ->distinct()->get(['note_number']);
 
         $state_document = \DB::table('state_document')->select('state_document.*','county_in_us.state_name','county_in_us.state_code')
                             ->join('county_in_us', 'state_document.state_code', '=', 'county_in_us.state_code' , 'right outer')                    
                             ->where('county_in_us.state_code',$req->id)
+                            ->where('user_code' , auth()->user()->id)
                             ->distinct()->get(['document_number']);
         return view('statedetails')->with('state_notes' , $state_notes)->with('state_document' , $state_document);
     }
@@ -103,7 +105,8 @@ class StateController extends Controller
                     'document_type' => $req->doctype,
                     'document_name' => $req->docname,
                     'document_link' => $path,
-                    'user_code' => 1
+                    'user_code' => auth()->user()->id,
+                    'company_code' => auth()->user()->company_code
                 ]);
                 return redirect()->back()->withSuccess('State Document Saved Successfully');
             }
@@ -170,7 +173,8 @@ class StateController extends Controller
                     'state_code' =>$req->notesc,
                     'note_type' =>$req->notestype,// ,
                     'note_details'=> $req->statenotes,
-                    'user_code'=>1	
+                    'user_code' => auth()->user()->id,
+                    'company_code' => auth()->user()->company_code
                 ]);
                 return redirect()->back()->withSuccess('State Notes Created Successfully');
             }

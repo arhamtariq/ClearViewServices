@@ -16,10 +16,10 @@ class OwnerController extends Controller
      *
      * @return void
      */
-  public function __construct()
+    public function __construct()
     {
         //$this->middleware('auth');
-    $this->middleware('check_package_status');
+        $this->middleware('check_package_status');
     }
 
 
@@ -33,6 +33,7 @@ class OwnerController extends Controller
     {
         $owner = DB::table('owner_list')->select('owner_list.*' , 'county_in_us.county_name')
                     ->join('county_in_us' , 'owner_list.county_code', '=', 'county_in_us.county_code')
+                    ->where('user_code' , auth()->user()->id)
                     ->get();
         return view('owner')->with('owner',$owner);
 
@@ -48,6 +49,7 @@ class OwnerController extends Controller
                 ->join('county_in_us' , 'owner_list.county_code', '=', 'county_in_us.county_code')
                 ->where('county_record_number',$req->countyrecordsrch)
                 ->where("first_name" , "LIKE", "%{$req->ownername}%")
+                ->where('user_code' , auth()->user()->id)
                 ->get();
         }
         if ($req->countyrecordsrch != '' && $req->ownername == '')
@@ -55,6 +57,7 @@ class OwnerController extends Controller
             $owner = DB::table('owner_list')->select('owner_list.*' , 'county_in_us.county_name')
                 ->join('county_in_us' , 'owner_list.county_code', '=', 'county_in_us.county_code')
                 ->where('county_record_number',$req->countyrecordsrch)
+                ->where('user_code' , auth()->user()->id)
                 ->get();
         }
         else if($req->ownername != '' && $req->countyrecordsrch == '')
@@ -62,12 +65,14 @@ class OwnerController extends Controller
             $owner = DB::table('owner_list')->select('owner_list.*' , 'county_in_us.county_name')
                 ->join('county_in_us' , 'owner_list.county_code', '=', 'county_in_us.county_code')
                 ->where("first_name" , "LIKE", "%{$req->ownername}%")
+                ->where('user_code' , auth()->user()->id)
                 ->get();
         }
         else
         {
             $owner = DB::table('owner_list')->select('owner_list.*' , 'county_in_us.county_name')
                 ->join('county_in_us' , 'owner_list.county_code', '=', 'county_in_us.county_code')
+                ->where('user_code' , auth()->user()->id)
                 ->get();
         
         }

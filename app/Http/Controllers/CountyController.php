@@ -60,16 +60,19 @@ class CountyController extends Controller
         $county_contact = \DB::table('county_contact')->select('county_contact.*','county_in_us.county_name','county_in_us.county_code')
                             ->join('county_in_us', 'county_contact.county_code', '=', 'county_in_us.county_code' , 'right outer')                    
                             ->where('county_in_us.county_code',$req->id)
+                            ->where('user_code' , auth()->user()->id)
                             ->get();
 
         $county_notes = \DB::table('county_notes')->select('county_notes.*','county_in_us.county_name','county_in_us.county_code')
                         ->join('county_in_us', 'county_notes.county_code', '=', 'county_in_us.county_code' , 'right outer')                    
                         ->where('county_in_us.county_code',$req->id)
+                        ->where('user_code' , auth()->user()->id)
                         ->get();
 
         $county_document = \DB::table('county_document')->select('county_document.*','county_in_us.county_name','county_in_us.county_code')
                             ->join('county_in_us', 'county_document.county_code', '=', 'county_in_us.county_code' , 'right outer')                    
                             ->where('county_in_us.county_code',$req->id)
+                            ->where('user_code' , auth()->user()->id)
                             ->get();
         return view('countydetails')->with('county_contact' , $county_contact)->with('county_notes' , $county_notes)->with('county_document' , $county_document);
     }
@@ -110,7 +113,8 @@ class CountyController extends Controller
                     'document_type' => $req->doctype,
                     'document_name' => $req->docname,
                     'document_link' => $path,
-                    'user_code' => 1
+                    'user_code' => auth()->user()->id,
+                    'company_code' => auth()->user()->company_code
                 ]);
                 return redirect()->back()->withSuccess('County Document Saved Successfully');
             }
@@ -170,7 +174,9 @@ class CountyController extends Controller
                     'phone_1'=>$req->phone1,
                     'phone_extention_1'=>$req->ext1,	
                     'phone_2'=>$req->phone2,	
-                    'phone_extention_2'=>$req->ext2,	
+                    'phone_extention_2'=>$req->ext2,
+                    'user_code'=>auth()->user()->id,
+                    'company_code'=>auth()->user()->company_code
                 ]);
                 return redirect()->back()->withSuccess('County Contact Created Successfully');
             }
@@ -257,7 +263,8 @@ class CountyController extends Controller
                     'county_code' =>$req->notecc,
                     'note_type' =>$req->notestype,// ,
                     'note_details'=> $req->countynotes,
-                    'user_code'=>1	
+                    'user_code' => auth()->user()->id,
+                    'company_code' => auth()->user()->company_code
                 ]);
                 return redirect()->back()->withSuccess('County Notes Created Successfully');
             }

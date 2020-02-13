@@ -12,25 +12,25 @@ use Str;
 
 class userController extends Controller
 {
-   public function __construct()
-    {
+  public function __construct()
+  {
       
       /*  $this->middleware('check_package_status', ['except' => [
             'dologin','profile','updatePackageStatus'
         ]]);*/
       // dologin
-    }
+  }
 
   public function profile(Request $req)
   {
-   if(isset($req->page)) 
-   {
-    $offset=5*($req->page-1);
-   }   
-   else
-   {
-    $offset=0;
-   }
+    if(isset($req->page)) 
+    {
+      $offset=5*($req->page-1);
+    }   
+    else
+    {
+      $offset=0;
+    }
     $users = DB::table('users')
             ->join('administration_users', 'users.id', '=', 'administration_users.user_code')
             ->where('administration_users.user_code',auth()->user()->id)
@@ -40,16 +40,17 @@ class userController extends Controller
             
     return view('profile',compact('users'));
   }
+
   public static function getNameById($id)
   {
     $user=DB::table('users')->where('id',$id)->first();
     return $user->username;
   }
- public function updatePackageStatus(Request $req)
-{
-  DB::table('administration_users')->where('user_code',auth()->user()->id)->where('id',$req->package_id)->update(['package_status'=>$req->P_Status]);
-  return redirect()->back()->withSuccess('Operation held successfully');
-}
+  public function updatePackageStatus(Request $req)
+  {
+    DB::table('administration_users')->where('user_code',auth()->user()->id)->where('id',$req->package_id)->update(['package_status'=>$req->P_Status]);
+    return redirect()->back()->withSuccess('Operation held successfully');
+  }
   public function dologin(Request $req)
   {
       $this->checkPackageStatus($req);
