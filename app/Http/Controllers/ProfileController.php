@@ -18,23 +18,16 @@ class ProfileController extends Controller
                     ->join('company' , 'users.company_code', '=', 'company.company_code')
                     ->where('id' , auth()->user()->id)
                     ->get();
-    if(isset($req->page)) 
-   {
-    $offset=5*($req->page-1);
-   }   
-   else
-   {
-    $offset=0;
-   }
-   $users = DB::table('users')
-            ->join('administration_users', 'users.id', '=', 'administration_users.user_code')
-            ->where('administration_users.user_code',auth()->user()->id)
-            ->select('users.*','administration_users.*')
-            ->offset($offset)->limit(5)
+        
+        $users = DB::table('users')->select('users.*','administration_users.*')
+                ->join('administration_users', 'users.id', '=', 'administration_users.user_code')
+                ->where('administration_users.user_code',auth()->user()->id)
+            
+            //->offset($offset)->limit(5)
             ->get();        
         return view('profile',compact('users'))->with('userinfo',$userinfo);                
         
-    /*    return view('profile')->with('userinfo',$userinfo);*/
+        /*    return view('profile')->with('userinfo',$userinfo);*/
     }
 
     public function updateuserdetails(Request $req)

@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function getSubUsers()
     {
-      //$count=\DB::table('administartion_users')->where('created_by_code',auth()->user()->id)->where('user_code','<>',null)->count();
+      //$count=\DB::table('administration_users')->where('created_by_code',auth()->user()->id)->where('user_code','<>',null)->count();
         $count=\DB::table('users')->where('company_code',auth()->user()->id)->where('id','<>',null)->count();  
         return $count;
     }

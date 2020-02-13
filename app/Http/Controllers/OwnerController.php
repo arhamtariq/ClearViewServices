@@ -178,7 +178,11 @@ class OwnerController extends Controller
         else
         {
             //$assigned_id=\DB::table('users')->where('username',$req->assignedto)->first();
-
+            $county_id=\DB::table('county_in_us')->where('county_code',$req->cc)->first();
+            if ($county_id == null)
+            {
+                return redirect()->back()->withError('County is not valid. Please select it from the list.');
+            }
             if ($req->recordnumber > 0)
             {
                 \DB::table('owner_list')->where('record_number',$req->recordnumber)->update([

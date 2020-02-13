@@ -168,13 +168,13 @@ class AddMoneyController extends HomeController
          $userObj = new User();
          if($userObj->getSubUsers() == 0)
          {
-             DB::table('administartion_users')->insert(['created_by_code'=>auth()->user()->id,'user_code'=>auth()->user()->id]);
-            DB::table('administartion_users')->insert(['created_by_code'=>auth()->user()->id]);
-            DB::table('administartion_users')->insert(['created_by_code'=>auth()->user()->id]);
+             DB::table('administration_users')->insert(['created_by_code'=>auth()->user()->id,'user_code'=>auth()->user()->id]);
+            DB::table('administration_users')->insert(['created_by_code'=>auth()->user()->id]);
+            DB::table('administration_users')->insert(['created_by_code'=>auth()->user()->id]);
          }
          DB::table('users')
-            ->join('administartion_users', 'users.id', '=', 'administartion_users.user_code')
-            ->where('administartion_users.created_by_code',auth()->user()->id)->update(['users.time_stamp_for_record_creation'=>$extended_time]);
+            ->join('administration_users', 'users.id', '=', 'administration_users.user_code')
+            ->where('administration_users.created_by_code',auth()->user()->id)->update(['users.time_stamp_for_record_creation'=>$extended_time]);
 
          session()->flash('success','Payment Successfully done');
             return redirect('/task');
@@ -182,8 +182,8 @@ class AddMoneyController extends HomeController
         else 
         {
             $user_data= DB::table('users')->where('id',auth()->user()->id)->first(); 
-         DB::table('administartion_users')->insert(['created_by_code'=>auth()->user()->id]);
-        /* DB::table('administartion_users')->insert(['created_by_code'=>auth()->user()->id]);*/
+         DB::table('administration_users')->insert(['created_by_code'=>auth()->user()->id]);
+        /* DB::table('administration_users')->insert(['created_by_code'=>auth()->user()->id]);*/
          session()->flash('success','Payment Successfully done');
             return redirect('/admin');
          

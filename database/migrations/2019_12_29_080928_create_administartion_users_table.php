@@ -13,7 +13,7 @@ class CreateAdministartionUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('administartion_users', function (Blueprint $table) {
+        Schema::create('administration_users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_code')->comment('The code associated with the user')->nullable();
             $table->integer('created_by_code')->comment('The code associated with the user who created it');
@@ -29,6 +29,6 @@ class CreateAdministartionUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('administartion_users');
+        Schema::dropIfExists('administration_users');
     }
 }

@@ -10,40 +10,52 @@
                 <img class="img img-fluid" src="images/slider1.jpg" alt="..." />
                 
                 <div class="carousel-caption jumbotron-fluid text-left">
-                    <h3>PRIME <b>UK</b></h3>
-                    <h1><B>PROPERTY</B></h1>
-                    <p>INVESTMENTS</p>
+                    <h3>TAX OVERAGE</h3>
+                    <h1><B>MANAGEMENT</B></h1>
+                    <p>SOFTWARE</p>
                 </div>
             
             </div>
             <div class="carousel-item">
                 <img class="d-block img-fluid" src="images/slider2.jpg" alt="..."/>
                 <div class="carousel-caption jumbotron-fluid text-left">
-                    <h3>FOR SUITABLY</h3>
-                    <h1><B>QUALLIFIED INVESTORS</B></h1>
+                    <h3>SAY GOODBYE TO PAPERWORK</h3>
+                    <h1><B>DESIGNED TO MANAGE</B></h1>
+                    <P>TAX OVERAGE BUSINESS</P>
                 </div>
             </div>
         </div>
         
     </div>
     <!--	Banner Ends -->
-    <section class="bg-white pt-5 pb-5" id="home">
+    <section class="bg-white pt-5 pb-3" id="home">
 	    <div class="container">
             <h1 class="text-left">Introduction</h1>
-            <p class="pt-3">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            <p class="pt-3">Clearview Services LLC has developed an application that is specifically designed to manage your tax overage business.
+                The application was design by an independent tax overage collector, who wanted an easier way to track the overage
+                process from end-2-end. This is version 1.0 of the application, which has been designed to manage all aspects of tracking
+                your tax overage business.</p>
 		</div>
     </section>
 
-    <section class="bg-white pt-5 pb-5" id="aboutus">
+    <section class="bg-white pt-5 pb-3" id="aboutus">
 	    <div id="section1" class="container">
             <div class="row text-left">
                 
                 <div class="col-lg-6 text-left" style="margin-bottom:10px;">
                     <h2 class="text-left">About Us</h2>
                     
-                    <p class="text-sm-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.</p>
+                    <p class="text-sm-justify">Clearview Services LLC is a startup tax overage collection company. The founder has over 25 years of IT experience and
+                        grew frustrated with tracking the paperwork, and the management tools that were not designed for tax overage
+                        collection. Having built many applications for fortune 100 banks, to reduce complexity and paperwork, he embarked on
+                        developing an application to manage his tax overage business.</p>
         
-                    <p class="text-left">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.</p>
+                    <p class="text-left">After using the software, Mr. Jean-Paul decided to revamp the software to create an online subscription-based
+                        application, which can be used by other tax overage seekers to manage their business. Clearview Services recognize
+                        there may be scenarios that we may have not accounted for, and are dedicated to supporting and improving the
+                        application, which is why we call this version 1.0 to leave room for improvements. This means that there will be future
+                        releases to add new and improve existing features of this application.
+                    </p>
         
                 </div>
                 <div class="col-lg-6 text-right">
@@ -56,7 +68,15 @@
     <section class="bg-white pt-5 pb-5" id="contact">
 	    <div id="section1" class="container">
             <h2 class="text-left pb-3">Contact</h2>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3321.032111052666!2d72.85129321454374!3d33.65632984593844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfa28733e813ef%3A0x46b712701cb0cc77!2s6%20Street%2031%2C%20Block%20D%20Margalla%20View%20Block%20D%20D-17%2C%20Islamabad%2C%20Rawalpindi%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1576692169935!5m2!1sen!2s" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+            Clearview Services LLC
+            <br>
+            455 Concord Pkwy N.
+            <br>
+            Unit 7885
+            <br>
+            Concord, NC 28027
+            <br><br>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3251.863963103112!2d-80.6141218854033!3d35.40862235248306!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88540f981338f14b%3A0xfa6b058a2c6990f9!2s455%20Concord%20Pkwy%20N%20%237885%2C%20Concord%2C%20NC%2028025%2C%20USA!5e0!3m2!1sen!2s!4v1581574109817!5m2!1sen!2s" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
         </div>
     </section>
 </div>

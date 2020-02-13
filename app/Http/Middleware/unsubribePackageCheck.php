@@ -16,10 +16,10 @@ class unsubribePackageCheck
     public function handle($request, Closure $next)
     {
         $data =   DB::table('users')
-            ->join('administartion_users', 'users.id', '=', 'administartion_users.user_code')
+            ->join('administration_users', 'users.id', '=', 'administration_users.user_code')
             ->where('users.username',$request->username)
-            ->where('administartion_users.package_status',1)
-            ->select('users.*','administartion_users.*')
+            ->where('administration_users.package_status',1)
+            ->select('users.*','administration_users.*')
             ->count();
    
         //it means all packages are un-subscribed by user        

@@ -13,7 +13,7 @@ class AddColumnsToAdministartionUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('administartion_users', function (Blueprint $table) {
+        Schema::table('administration_users', function (Blueprint $table) {
              $table->boolean('package_status')->default(true)->comment('This Field will tell package is subscribed or not');
             //
         });
@@ -26,7 +26,7 @@ class AddColumnsToAdministartionUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('administartion_users', function (Blueprint $table) {
+        Schema::table('administration_users', function (Blueprint $table) {
             //
         });
     }

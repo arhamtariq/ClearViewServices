@@ -15,14 +15,174 @@
             {{session()->get('error')}}
         </div>
         @endif 
-        @if(!empty($user_detail))
-            <p>hello</p>
-           
-        @endif
-        <form action="{{ url('/updateuserdetails') }}" class="needs-validation" novalidate method="post">
-            {{ csrf_field() }}
-            <h4>Account Information</h4>
-            <hr>
+       
+    <div class="container bg-white pb-5 mb-4">
+        <h2 class="float-left">Packages List</h2>
+        <p class="float-right pt-2 pr-5" style="display:none"><button type="button" class="btn bg-yellow mb-2 text-white" data-toggle="modal" data-target="#addtaskModal">Add Task&nbsp;<i title="Add Task" class="fa fa-plus text-white"></i></button></p>            
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Package ID</th>
+              <th>Created By</th>
+             <!--  <th>Created On</th> -->
+              <th>Due Date</th>
+              <!-- <th>Assigned To</th> -->
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @inject('Obj','App\Http\Controllers\userController')
+            <?php $index=1;?>
+           @foreach($users as $user)
+            <tr>
+               <td>{{$index}}</td>
+                <td>{{$Obj::getNameById($user->created_by_code)}}</td>
+                <td>{{\Carbon\Carbon::parse($user->time_stamp_for_record_creation)->diffForHumans()}}</td>
+                
+                <td>@if($user->package_status==1)
+                {{'Active'}}
+                @else
+                {{'Un Active'}}
+                @endif</td>
+                
+                <td>
+                    @if($user->package_status==1)<button class="btn btn-danger" onclick="changeStatus({{$user->id}},2)">Change Status</button>
+                    @else
+                    <button class="btn btn-success" onclick="changeStatus({{$user->id}},1)">Change Status</button>
+                    @endif
+                </td>  
+            </tr>
+           <? $index=$index+1; ?>
+            @endforeach
+             
+          </tbody>
+        </table>
+        <ul class="pagination justify-content-end " style="margin:20px 0">
+            <li class="page-item"><a class="page-link text-black" href="javascript:void(0)" onclick="previous()"><<</a></li>
+            <li class="page-item"><a class="page-link text-black" href="#" onclick="page(1)">1</a></li>
+            <li class="page-item"><a class="page-link text-black" href="#" onclick="page(2)">2</a></li>
+            <li class="page-item"><a class="page-link text-black" href="#" onclick="page(3)">3</a></li>
+            <li class="page-item"><a class="page-link text-black" href="javascript:void(0)" onclick="Next()">>></a></li>
+        </ul>
+      </div>
+      
+    <div class="modal" id="addtaskModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ url('/createTask') }}" class="needs-validation" novalidate method="post">
+                @csrf
+                <!-- Modal Header -->
+                <div class="modal-header bg-yellow">
+                    <h4 class="modal-title">Add New Task</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col form-group">
+                            <label for="taskname">Task Name:</label>
+                            <input type="text" class="form-control" id="taskname" name="taskname" required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                        <div class="col form-group">
+                            <label for="createdby">Created By:</label>
+                            <input type="text" class="form-control" id="createdby" name="createdby" readonly="true" value="{{auth()->user()->username}}">
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                    </div>
+                    <div class="form-row ">
+                        <div class="col form-group">
+                            <label for="createdon">Created On:</label>
+                            <input type="text" class="form-control" id="createdon" name="createdon" required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                        <div class="col form-group">
+                            <label for="duedate">Due Date:</label>
+                            <input type="type" class="form-control" id="duedate" name="duedate" required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                    </div>
+                    <div class="form-row form-group">
+                        <div class="col">
+                            <label for="assignedto">Assigned To:</label>
+                            <input type="text" class="form-control typeahead" id="assignedto" name="assignedto" required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                        <div class="col form-group">
+                            <label for="status">Status:</label>
+                            <input type="text" class="form-control" id="status" name="status" required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                    </div>
+                    <div class="form-row form-group">
+                        <div class="col">
+                            <label for="assignedto">Esculate STask:</label>
+                            <input type="text" class="form-control" id="esculate_stask" name="esculate_stask" required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                        <div class="col form-group">
+                            <label for="status">Esculate_Task:</label>
+                            <input type="text" class="form-control" id="esculate_task" name="esculate_task" required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                    </div>
+                    <div class="form-row form-group">
+                        <div class="col">
+                            <label for="tasksnotes">Notes:</label>
+                            <textarea class="form-control rounded-1" id="tasksnotes" name="tasksnotes" rows="3"></textarea>
+                        </div>
+                        
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn bg-yellow">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- update modal -->
+<div class="modal" id="updatetaskModal">
+        <div class="modal-dialog mw-100 w-50 p-5">
+            <div class="modal-content">
+                <form action="/updatePackageStatus" class="needs-validation" novalidate method="post">
+                @csrf
+                <input type="hidden" name="task_id" id="task_id">
+                <!-- Modal Header -->
+                <div class="modal-header bg-yellow">
+                    <h4 class="modal-title">Subscribe/Un Subscribe Package</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-row">
+                        <p><b>Once you un-subscribe the package you will not be able to login after it expires</b></p>             
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn bg-yellow">Submit</button>
+                </div>
+                <input type="hidden" name="package_id" id="package_id">
+                <input type="hidden" name="P_Status" id="P_Status">   
+
+                @if(!empty($user_detail))
+                    <p>hello</p>
+                @endif
+                <form action="{{ url('/updateuserdetails') }}" class="needs-validation" novalidate method="post">
+                    {{ csrf_field() }}
+                    <h4>Account Information</h4>
+                    <hr>
             
             <div class="form-row mt-4">
                 <div class="col-sm-6 form-group">
@@ -148,21 +308,16 @@
             
         </form>
         @if ($userinfo[0]->role == 'manager') 
-            <h4 class="mt-5">Subscription Information</h4>
-            <hr>
-            <h6 class="mt-4">
-                Your subscription for this month has been started on <b>{{\Carbon\Carbon::parse(auth()->user()->time_stamp_for_record_creation)->format('Y/m/d')}}</b>. It will be expired on <b>{{\Carbon\Carbon::parse(auth()->user()->time_stamp_for_record_creation)->addDays(30)->format('Y/m/d')}}</b>.
+        <h4 class="mt-5">Subscription Information</h4>
+        <hr>
+        <h6 class="mt-4">
+            Your subscription for this month has been started on <b>{{\Carbon\Carbon::parse(auth()->user()->time_stamp_for_record_creation)->format('Y/m/d')}}</b>. It will be expired on <b>{{\Carbon\Carbon::parse(auth()->user()->time_stamp_for_record_creation)->addDays(30)->format('Y/m/d')}}</b>.
 
-                <a href="javascript:void(0)" onclick="submitPaymentForm()">Click here to renew your subscription</a> for the next month.
-                <br><br>
-                Currently you have  users registered with you, you can add more users by paying <a href="javascript:void(0)" onclick="payForUsers()"> $9.99</a> per user per month.
-            </h6>
-            
-            @if($users[0]->package_status==1)
-                <button class="btn btn-danger float-right" onclick="changeStatus({{$users[0]->id}},2)">Change Status</button>
-            @else
-                <button class="btn btn-success float-right" onclick="changeStatus({{$users[0]->id}},1)">Change Status</button>
-            @endif
+            <a href="javascript:void(0)" onclick="submitPaymentForm()">Click here to renew your subscription</a> for the next month.
+            <br><br>
+            Currently you have  users registered with you, you can add more users by paying <a href="javascript:void(0)" onclick="payForUsers()"> $9.99</a> per user per month.
+        </h6>
+        <a href="#" class="float-right">Cancel Subscription</a>
         @endif
     </div>
 </div>
@@ -213,43 +368,7 @@
         </div>
     </div>
 </div>
-<!-- Cancel Subscriiption modal -->
-<div class="modal" id="cancelModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="/updatePackageStatus" class="needs-validation" novalidate method="post">
-            @csrf
-            <input type="hidden" name="task_id" id="task_id">
-            <!-- Modal Header -->
-            <div class="modal-header bg-yellow">
-                <h4 class="modal-title">Subscribe/Un Subscribe Package</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <!-- Modal body -->
-            <div class="modal-body">
-                <div class="form-row">
-                    <p><b>Once you un-subscribe the package you will not be able to login after it expires</b></p>             
-                </div>
-            </div>
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="submit" class="btn bg-yellow">Submit</button>
-            </div>
-            <input type="hidden" name="package_id" id="package_id">
-            <input type="hidden" name="P_Status" id="P_Status">   
-            </form>
-        </div>
-    </div>
-</div>
 <script type="text/javascript">
-    function changeStatus($package_id,$status)
-    {
-        $('#P_Status').val($status);
-        $('#package_id').val($package_id);
-        $('#cancelModal').modal('show');
-
-        // alert($package_id);
-    }
     function changepassword($id)
     {
         $('#password').val('');

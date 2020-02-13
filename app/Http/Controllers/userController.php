@@ -32,9 +32,9 @@ class userController extends Controller
     $offset=0;
    }
     $users = DB::table('users')
-            ->join('administartion_users', 'users.id', '=', 'administartion_users.user_code')
-            ->where('administartion_users.user_code',auth()->user()->id)
-            ->select('users.*','administartion_users.*')
+            ->join('administration_users', 'users.id', '=', 'administration_users.user_code')
+            ->where('administration_users.user_code',auth()->user()->id)
+            ->select('users.*','administration_users.*')
             ->offset($offset)->limit(5)
             ->get();
             
@@ -47,7 +47,7 @@ class userController extends Controller
   }
  public function updatePackageStatus(Request $req)
 {
-  DB::table('administartion_users')->where('user_code',auth()->user()->id)->where('id',$req->package_id)->update(['package_status'=>$req->P_Status]);
+  DB::table('administration_users')->where('user_code',auth()->user()->id)->where('id',$req->package_id)->update(['package_status'=>$req->P_Status]);
   return redirect()->back()->withSuccess('Operation held successfully');
 }
   public function dologin(Request $req)

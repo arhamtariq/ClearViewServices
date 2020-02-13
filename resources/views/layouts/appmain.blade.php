@@ -49,10 +49,10 @@
             
             <!-- Right Side Of Navbar -->
             <ul id="navright" class="nav navbar-nav navbar-expand navbar-right" style="margin-right:0;margin-left:auto;">
-                <li class="nav-item text-white pr-1"><a class="nav-link text-white" href="#"><b>Hello! {{auth()->user()->username}}</b></a></li>
-                <li class="nav-item pr-1"><a title="Profile" class="nav-link text-white " href="{{ url('/profile') }}"><i class="fa fa-user"></i></a></li>
-                <li class="nav-item pr-1"><a title="Logoff" class="nav-link text-white" href="{{ url('/logout') }}"><i class="fa fa-sign-out"></i></a></li>
-                <li class="nav-item"><a title="Help" class="nav-link text-white" href="{{ url('/help') }}"><i class="fa fa-question"></i></a></li>
+                <li class="nav-item text-white pr-1"><a class="nav-link text-white" href="#"><b>Hello! {{auth()->user()->first_name}}</b></a></li>
+                <li class="nav-item pr-1"><a title="Profile" class="nav-link text-white " href="{{ url('/profile') }}"><i class="fa fa-user fa-lg"></i></a></li>
+                <li class="nav-item pr-1"><a title="Logoff" class="nav-link text-white" href="{{ url('/logout') }}"><i class="fa fa-sign-out fa-lg"></i></a></li>
+                <li class="nav-item"><a title="Help" class="nav-link text-white" href="{{ url('/help') }}"><i class="fa fa-question fa-lg"></i></a></li>
             </ul>
         </div>
     </nav>

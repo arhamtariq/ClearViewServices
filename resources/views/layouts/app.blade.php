@@ -34,15 +34,15 @@
                 <!-- Left Side Of Navbar -->
                 
                 <ul id="navleft" class="navbar-nav w-75 ml-0">
-                    <li class="nav-item text-white mr-5"><div class="fa fa-envelope"></div>&nbsp;info@clearviewservices.com</a></li>
-                    <li class="nav-item text-white mr-5"><div class="fa fa-phone"></div>&nbsp;+1 888 999 7777 </li>
+                    <li class="nav-item text-white mr-5"><div class="fa fa-envelope"></div>&nbsp;info@clvservises.com</a></li>
+                    <li class="nav-item text-white mr-5"><div class="fa fa-phone"></div>&nbsp;(850) 296-2720 </li>
                 </ul>
                 
                 <!-- Right Side Of Navbar -->
                 <ul id="navright" class="nav navbar-nav navbar-expand navbar-right" style="margin-right:0;margin-left:auto;">
                     <!-- Authentication Links -->
-                    <li class="nav-item"><a class="nav-link text-white" href="{{ url('/login') }}"><i class="fa fa-user"></i></a></li>
-                    <li class="nav-item pl-2 pr-2"><a class="nav-link text-white" href="{{ url('/register') }}"><i class="fa fa-user-plus"></i></a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{{ url('/login') }}"><i class="fa fa-user fa-lg"></i></a></li>
+                    <li class="nav-item pl-2 pr-2"><a class="nav-link text-white" href="{{ url('/register') }}"><i class="fa fa-user-plus fa-lg"></i></a></li>
                     
                     
                 </ul>
