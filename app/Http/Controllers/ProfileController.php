@@ -13,12 +13,28 @@ class ProfileController extends Controller
     //
     public function index(Request $req)
     {
+       // dd('reach');
         $userinfo = DB::table('users')->select('users.*' , 'company.company_name' , 'company.address as ca' , 'company.city as cc' , 'company.state as cs', 'company.zip_code as cz')
                     ->join('company' , 'users.company_code', '=', 'company.company_code')
                     ->where('id' , auth()->user()->id)
                     ->get();
+    if(isset($req->page)) 
+   {
+    $offset=5*($req->page-1);
+   }   
+   else
+   {
+    $offset=0;
+   }
+   $users = DB::table('users')
+            ->join('administration_users', 'users.id', '=', 'administration_users.user_code')
+            ->where('administration_users.user_code',auth()->user()->id)
+            ->select('users.*','administration_users.*')
+            ->offset($offset)->limit(5)
+            ->get();        
+        return view('profile',compact('users'))->with('userinfo',$userinfo);                
         
-        return view('profile')->with('userinfo',$userinfo);
+    /*    return view('profile')->with('userinfo',$userinfo);*/
     }
 
     public function updateuserdetails(Request $req)

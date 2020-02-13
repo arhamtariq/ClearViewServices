@@ -1,10 +1,6 @@
 @extends('layouts.appmain')
 
 @section('content')
-<<<<<<< HEAD
-<div class="jumbotron jumbotron-fluid p-0 pt-3 pb-0">
-    <div class="container pl-0">
-=======
 <div class="jumbotron jumbotron-fluid p-0 pt-3 pb-2">
     <div class="container pl-0">
         <h2>Manage your personal information</h2>
@@ -369,7 +365,6 @@
             <div class="modal-footer">
                 <button type="submit" class="btn bg-yellow text-white">Change Password</button>
             </div>
->>>>>>> b7684f6339e49f6a994859441a565e39753c4c8b
             </form>
         </div>
     </div>
